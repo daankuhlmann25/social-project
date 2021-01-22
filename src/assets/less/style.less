@@ -1,5 +1,71 @@
-@red: #FF0000;
+@import "colors";
 
 body {
-  background-color: @red;
+  background-color: @night-sky;
+  font-family: Inter, Helvetica, sans-serif;
+  color: @normal-grey;
 }
+
+p {
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 1em;
+}
+
+a {
+  color: @white;
+}
+
+h1 {
+  color: @sun;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+h2 {
+  color: @sunset;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+// Home
+
+.home h1 {
+  color: @cool-grey;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 21px;
+  text-align: center;
+}
+
+// Header
+
+header {
+  position: fixed;
+  padding: 16px 24px;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: fade(@night-sky, 70%);
+  backdrop-filter: blur(48px);
+}
+
+header .logo {
+  width: 34px;
+  height: 34px;
+}
+
+header a {
+  color: @pale-glow;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+
