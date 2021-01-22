@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <img alt="Social.gg logo" src="../assets/logo.svg" />
+    <h1>Play social games at home with your friends.</h1>
   </div>
 </template>
 
@@ -14,3 +15,7 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+
+</style>
