@@ -2,6 +2,7 @@
     <div class="games">
         <router-link :to="{ name: 'Song battle' }">Song battle</router-link><br />
         <router-link :to="{ name: 'Trivia' }">Trivia</router-link>
+        <router-view />
     </div>
 </template>
 
