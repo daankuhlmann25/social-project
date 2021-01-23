@@ -1,0 +1,67 @@
+//
+//  General
+//  _____________________________________________
+@app-width: 450px;
+
+//
+//  Colors
+//  _____________________________________________
+@white: #fff;
+@black: #000;
+@night-sky: #2F383E;
+@cool-grey: #8D959A;
+@normal-grey: #C7C7C7;
+@light-grey: #D6D6D6;
+
+@sun: #FFEF65;
+@pale-glow: #F5F7DC;
+@sunset: #E65F5C;
+
+//
+//  Fonts
+//  ---------------------------------------------
+@font-family__base: Inter, Helvetica, sans-serif;
+
+//
+//  Typography
+//  ---------------------------------------------
+@root__font-size: 62.5%; // Defines ratio between root font size and base font size, 1rem = 10px
+@font-size-ratio__base: 1.4; // Defines ratio of the root font-size to the base font-size
+
+@font-size-unit: rem; // The unit to which most typography values will be converted by default
+@font-size-unit-ratio: unit(@root__font-size * 16/100); // Ratio of the root font-size to the font-size unit
+@font-size-unit-convert: true; // Controls whether font-size values are converted to the specified font-size unit
+
+@font-size__base: 14px; // Base font size value in <b>px</b>
+@font-size-ratio__base: 1.3;
+
+// Usable fonts variables
+@font-size__xl: ceil(1.6 * @font-size__base); // 21px
+@font-size__l: ceil(1.35 * @font-size__base); // 18px
+@font-size__m: ceil(1.1 * @font-size__base); // 16px
+@font-size__ms: ceil(1.05 * @font-size__base); // 14px
+@font-size__s: floor(.95 * @font-size__base); // 12px
+@font-size__xs: floor(.85 * @font-size__base); // 11px
+
+//  Line heights
+@line-height__base: 1.428571429;
+@line-height__computed: floor(@font-size__base * @line-height__base);
+@line-height__xl: 1.7;
+@line-height__l: 1.5;
+@line-height__s: 1.33;
+
+// Font weights
+@font-weight__bold: 700;
+@font-weight__medium: 500;
+@font-weight__light: 300;
+
+//
+//  Indents
+//  ---------------------------------------------
+@indent__base: @line-height__computed; // 20px
+@indent__xl: @indent__base * 2; // 40px
+@indent__l: @indent__base * 1.5; // 30px
+@indent__m: @indent__base * 1.25; // 25px
+@indent__ms: @indent__base * .75; // 15px
+@indent__s: @indent__base / 2; // 10px
+@indent__xs: @indent__base / 4; // 5px
