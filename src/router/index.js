@@ -2,8 +2,10 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 import Home from "../views/Home.vue";
-import Game from "../views/Game.vue";
+import Games from "../views/Games.vue";
 import NotFound from "../views/NotFound.vue";
+import SongBattle from "../views/games/SongBattle.vue";
+import Trivia from "../views/games/Trivia.vue";
 
 Vue.use(VueRouter);
 
@@ -14,9 +16,21 @@ const routes = [
     component: Home
   },
   {
-    path: "/party-games/:gameName",
-    name: "Party Games",
-    component: Game
+    path: "/party-games",
+    name: "Games",
+    component: Games,
+    children: [
+      {
+        path: "song-battle",
+        name: "Song battle",
+        component: SongBattle
+      },
+      {
+        path: "trivia",
+        name: "Trivia",
+        component: Trivia
+      },
+    ]
   },
   {
     path: "/about",
