@@ -3,20 +3,18 @@
         <header>
             <a @click="$router.go(-1)">Back</a>
             <router-link to="/"><img class="logo" alt="Social.gg logo" src="../assets/logo.svg" /></router-link>
-            <a href="#">All games</a> <!-- TODO: Make it show game-list by adding class show to .game-list -->
+            <a v-on:click="show = !show">All games</a> <!-- TODO: Make it show game-list by adding class show to .game-list -->
         </header>
-        <game-list></game-list>
+        <game-list v-bind:class="{ show: show }"></game-list>
         <router-view />
     </main>
 </template>
 
 <script>
 import GameList from './GameList.vue'
+
 export default {
-  components: { GameList },
-    mounted() {
-        // console.log(this.$route.params);
-    }
+    components: { GameList },
 }
 </script>
 
