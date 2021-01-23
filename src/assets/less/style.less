@@ -12,7 +12,7 @@ body {
   color: @normal-grey;
 
   // General
-  p {
+  p, ul, ol {
     font-size: 14px;
     line-height: 20px;
     margin-bottom: 1em;
@@ -34,6 +34,7 @@ body {
     font-weight: 700;
     letter-spacing: 1.2px;
     text-transform: uppercase;
+    margin: @spacing__xxl 0 @spacing__ms;
   }
 
   // App styling
@@ -70,7 +71,7 @@ body {
     // Header
     header {
       position: sticky;
-      padding: 16px 24px;
+      padding: @spacing__m @spacing__l;
       left: 0px;
       top: 0px;
       width: 100%;
@@ -80,7 +81,7 @@ body {
       justify-content: space-between;
 
       background: fade(@night-sky, 70%);
-      backdrop-filter: blur(48px);
+      backdrop-filter: blur(@spacing__xxl);
 
       .logo {
         width: 34px;

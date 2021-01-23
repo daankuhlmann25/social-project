@@ -9,7 +9,7 @@
 <script>
 export default {
     mounted() {
-        console.log(this.$route.params.gameName);
+        // console.log(this.$route.params);
     }
 }
 </script>
