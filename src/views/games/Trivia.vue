@@ -1,10 +1,5 @@
 <template>
-    <div class="game song-battle">
-        <header>
-            <a @click="$router.go(-1)">Back</a>
-            <img class="logo" alt="Social.gg logo" src="../../assets/logo.svg" />
-            <a href="#">All games</a>
-        </header>
+    <div class="game trivia">
         <h1>{{$route.name}}</h1>
         <h2>How to play</h2>
         <p>You take turns answering questions. If your answer is correct, you gain one point and get to answer another question.</p>

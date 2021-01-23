@@ -1,13 +1,19 @@
 <template>
-    <div class="games">
-        <router-link :to="{ name: 'Song battle' }">Song battle</router-link><br />
-        <router-link :to="{ name: 'Trivia' }">Trivia</router-link>
+    <main class="games">
+        <header>
+            <a @click="$router.go(-1)">Back</a>
+            <router-link to="/"><img class="logo" alt="Social.gg logo" src="../assets/logo.svg" /></router-link>
+            <a href="#">All games</a> <!-- TODO: Make it show game-list by adding class show to .game-list -->
+        </header>
+        <game-list></game-list>
         <router-view />
-    </div>
+    </main>
 </template>
 
 <script>
+import GameList from './GameList.vue'
 export default {
+  components: { GameList },
     mounted() {
         // console.log(this.$route.params);
     }

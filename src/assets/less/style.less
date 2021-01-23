@@ -34,18 +34,13 @@ body {
     font-weight: 700;
     letter-spacing: 1.2px;
     text-transform: uppercase;
-    margin: @spacing__xxl 0 @spacing__ms;
+    margin: @spacing__xxl 0 @spacing__m;
   }
 
   // App styling
   #app {
     max-width: @app-width;
     margin: 0 auto;
-
-    .logo {
-      margin: @indent__s auto;
-      display: flex;
-    }
 
     // Menu
     #nav {
@@ -54,9 +49,18 @@ body {
       font-size: @font-size__ms;
     }
 
+    main {
+      padding: @spacing__l;
+    }
+
     // Home
 
     .home {
+      .logo {
+        margin: @indent__s auto;
+        display: flex;
+      }
+  
       h1 {
         color: @cool-grey;
         font-weight: @font-weight__medium;
@@ -96,28 +100,64 @@ body {
     }
 
     // Games group
-    // TODO: rebuild with flexbox and icons
     .games-group {
+      
       ul {
         margin: 0;
         padding: 0;
-
+        
         li {
           margin: 0;
           list-style-type: none;
           display: inline-block;
           width: 100%;
-          margin-bottom: @indent__ms;
+          border-bottom: fade(@black, 20%) 1px solid;
+          
+          a {
+            display: flex;
+            padding: @spacing__ms 0;
+            
+            .game-icon {
+              width: 36px;
+              height: 36px;
+              margin-right: @spacing__ms;
+            }
 
-          .title {
-            display: inline-block;
-            width: 100%;
+            .title {
+              display: inline-block;
+              width: 100%;
+              font-weight: 700;
+              color: @white;
+            }
+            
+            .subtitle {
+              display: inline-block;
+              width: 100%;
+              color: fade(@white, 50%);
+            }
           }
 
-          .subtitle {
-            display: inline-block;
-            width: 100%;
+          a:hover {
+            background-color: fade(@black, 10%);
           }
+        }
+
+        li:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+
+    .games {
+      .game-list {
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 80%;
+        height: 100%;
+
+        &.show {
+          left: 0;
         }
       }
     }
