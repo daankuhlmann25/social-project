@@ -1,7 +1,7 @@
 <template>
-  <div id="game-list" v-bind:class="{ show: show }">
+  <div id="game-list">
     <div class="game-list">
-      <a v-on:click="show = !show" class="close">
+      <a v-on:click="close()" class="close">
         <img alt="" src="../assets/icons/close.svg" />
       </a>
       <div class="games-group">
@@ -108,10 +108,10 @@
 
 <script>
 export default {
-  data() {
-        return {
-            show: false,
-        }
+  methods: {
+      close() {
+          this.$parent.show = false;
+      }
   }
 };
 </script>
