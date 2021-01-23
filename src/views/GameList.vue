@@ -8,7 +8,7 @@
         <!-- TODO: make dynamic -->
         <h2>Party games</h2>
         <ul>
-          <li>
+          <li v-on:click="close()">
             <router-link :to="{ name: 'Song battle' }">
             <img class="game-icon" alt="" src="../assets/icons/game-icon-music.svg" />
             <div class="game-info">
@@ -17,8 +17,8 @@
             </div>
             </router-link>
           </li>
-          <li>
-            <router-link :to="{ name: 'Trivia' }">
+          <li v-on:click="close()">
+            <router-link v-on:click="close()" :to="{ name: 'Trivia' }">
             <img class="game-icon" alt="" src="../assets/icons/game-icon-qna.svg" />
             <div class="game-info">
               <span class="title">Trivia</span>
@@ -26,8 +26,8 @@
             </div>
             </router-link>
           </li>
-          <li>
-            <router-link :to="{ name: 'Song battle' }">
+          <li v-on:click="close()">
+            <router-link v-on:click="close()" :to="{ name: 'Song battle' }">
             <img class="game-icon" alt="" src="../assets/icons/game-icon-qna.svg" />
             <div class="game-info">
               <span class="title">Quiz</span>
@@ -35,8 +35,8 @@
             </div>
             </router-link>
           </li>
-          <li>
-            <router-link :to="{ name: 'Song battle' }">
+          <li v-on:click="close()">
+            <router-link v-on:click="close()" :to="{ name: 'Song battle' }">
             <img class="game-icon" alt="" src="../assets/icons/game-icon-body.svg" />
             <div class="game-info">
               <span class="title">Charades</span>
@@ -44,8 +44,8 @@
             </div>
             </router-link>
           </li>
-          <li>
-            <router-link :to="{ name: 'Song battle' }">
+          <li v-on:click="close()">
+            <router-link v-on:click="close()" :to="{ name: 'Song battle' }">
             <img class="game-icon" alt="" src="../assets/icons/game-icon-words.svg" />
             <div class="game-info">
               <span class="title">Fictionary</span>
@@ -53,8 +53,8 @@
             </div>
             </router-link>
           </li>
-          <li>
-            <router-link :to="{ name: 'Song battle' }">
+          <li v-on:click="close()">
+            <router-link v-on:click="close()" :to="{ name: 'Song battle' }">
             <img class="game-icon" alt="" src="../assets/icons/game-icon-words.svg" />
             <div class="game-info">
               <span class="title">30 seconds</span>
@@ -62,8 +62,8 @@
             </div>
             </router-link>
           </li>
-          <li>
-            <router-link :to="{ name: 'Song battle' }">
+          <li v-on:click="close()">
+            <router-link v-on:click="close()" :to="{ name: 'Song battle' }">
             <img class="game-icon" alt="" src="../assets/icons/game-icon-words.svg" />
             <div class="game-info">
               <span class="title">20 questions</span>
@@ -71,8 +71,8 @@
             </div>
             </router-link>
           </li>
-          <li>
-            <router-link :to="{ name: 'Song battle' }">
+          <li v-on:click="close()">
+            <router-link v-on:click="close()" :to="{ name: 'Song battle' }">
             <img class="game-icon" alt="" src="../assets/icons/game-icon-words.svg" />
             <div class="game-info">
               <span class="title">Don't say yes</span>
@@ -85,21 +85,21 @@
       <div class="games-group">
         <h2>Drinking games</h2>
         <ul>
-          <li>Item 1</li>
-          <li>Item 2</li>
-          <li>Item 3</li>
-          <li>Item 4</li>
-          <li>Item 5</li>
+          <li v-on:click="close()">Item 1</li>
+          <li v-on:click="close()">Item 2</li>
+          <li v-on:click="close()">Item 3</li>
+          <li v-on:click="close()">Item 4</li>
+          <li v-on:click="close()">Item 5</li>
         </ul>
       </div>
       <div class="games-group">
         <h2>Conversation games</h2>
         <ul>
-          <li>Item 1</li>
-          <li>Item 2</li>
-          <li>Item 3</li>
-          <li>Item 4</li>
-          <li>Item 5</li>
+          <li v-on:click="close()">Item 1</li>
+          <li v-on:click="close()">Item 2</li>
+          <li v-on:click="close()">Item 3</li>
+          <li v-on:click="close()">Item 4</li>
+          <li v-on:click="close()">Item 5</li>
         </ul>
       </div>
     </div>
