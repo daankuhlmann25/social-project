@@ -1,6 +1,9 @@
 <template>
-  <div id="game-list">
+  <div id="game-list" v-bind:class="{ show: show }">
     <div class="game-list">
+      <a v-on:click="show = !show" class="close">
+        <img alt="" src="../assets/icons/close.svg" />
+      </a>
       <div class="games-group">
         <!-- TODO: make dynamic -->
         <h2>Party games</h2>
@@ -105,7 +108,11 @@
 
 <script>
 export default {
-  
+  data() {
+        return {
+            show: false,
+        }
+  }
 };
 </script>
 

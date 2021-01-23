@@ -70,6 +70,10 @@ body {
         max-width: 60%;
         margin: 0 auto;
       }
+      
+      .close {
+        display: none;
+      }
     }
 
     // Header
@@ -176,13 +180,28 @@ body {
         transition: all .3s ease;
         
         .game-list {
-          position: absolute;
+          position: relative;
+          display: flex;
+          flex-flow: column;
           top: 0;
           left: -100%;
           width: 87%;
           padding: @spacing__l;
           background-color: @night-sky;
           transition: all .3s ease;
+
+          .close {
+            position: fixed;
+            display: flex;
+            background-color: fade(@white, 10%);
+            backdrop-filter: blur(@spacing__l);
+            border-radius: 50%;
+            padding: @spacing__ms;
+            margin: -@spacing__ms -@spacing__ms 0 0;
+            width: 37px;
+            height: 37px;
+            align-self: flex-end;
+          }
         }
         
         &.show {

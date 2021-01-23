@@ -23,12 +23,12 @@ const routes = [
       {
         path: "song-battle",
         name: "Song battle",
-        component: SongBattle
+        component: SongBattle,
       },
       {
         path: "trivia",
         name: "Trivia",
-        component: Trivia
+        component: Trivia,
       },
     ]
   },
@@ -44,7 +44,7 @@ const routes = [
   {
     path: "*",
     name: "Not found",
-    component: NotFound
+    component: NotFound,
   }
 ];
 
