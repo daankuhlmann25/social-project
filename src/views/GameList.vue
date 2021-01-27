@@ -9,7 +9,7 @@
                 <ul>
                     <li v-for="(game, index) in games" :key="index" v-on:click="close()">
                         <router-link :to="{ name: 'Song battle' }">
-                            <img class="game-icon" alt="" src="../assets/icons/game-icon-music.svg"/>
+                            <img class="game-icon" width="36" height="36" alt="" src="../assets/icons/game-icon-music.svg"/>
                             <div class="game-info">
                                 <span class="title">{{ game.title }}</span>
                                 <span class="subtitle">{{ game.subtitle }}</span>

@@ -42,13 +42,6 @@ body {
     max-width: @app-width;
     margin: 0 auto;
 
-    // Menu
-    #nav {
-      text-align: center;
-      margin: @indent__ms 0;
-      font-size: @font-size__ms;
-    }
-
     main {
       padding: @spacing__l;
     }
@@ -70,7 +63,7 @@ body {
         max-width: 60%;
         margin: 0 auto;
       }
-      
+
       .close {
         display: none;
       }
@@ -79,9 +72,9 @@ body {
     // Header
     header {
       position: fixed;
-      padding: @spacing__m @spacing__l;
-      left: 0px;
+      padding: @spacing__m;
       top: 0px;
+      left: 0px;
       width: 100%;
 
       display: flex;
@@ -90,19 +83,27 @@ body {
 
       background: fade(@night-sky, 70%);
       backdrop-filter: blur(@spacing__xl);
-
-      
-      .logo {
-        width: 34px;
-        height: 34px;
-      }
       
       a {
         color: @pale-glow;
         font-size: @font-size__ms;
         font-weight: 700;
         text-decoration: none;
+        padding: @spacing__s @spacing__ms;
+        cursor: pointer;
+        border-radius: 3px;
+
+        &:hover {
+          color: @white;
+          background-color: fade(@black, 10%);
+        }
+
+        &.logo {
+            padding: 0;
+            display: flex;
+        }
       }
+      
     }
 
     // Games group
@@ -115,9 +116,10 @@ body {
         li {
           margin: 0;
           list-style-type: none;
-          display: inline-block;
-          width: 100%;
+          display: flex;
           border-top: fade(@black, 20%) 1px solid;
+          align-items: center;
+          align-content: stretch;
           
           &:active {
             border-top-color: transparent;
@@ -136,9 +138,9 @@ body {
             padding: @spacing__ms;
             margin: 0 -@spacing__ms;
 
+            flex-grow: 1;
+
             .game-icon {
-              width: 36px;
-              height: 36px;
               margin-right: @spacing__ms;
             }
 
@@ -152,7 +154,20 @@ body {
             .subtitle {
               display: inline-block;
               width: 100%;
+              font-size: @font-size__s;
               color: fade(@white, 50%);
+            }
+
+            &.deck-edit {
+              background-color: fade(@white, 15%);
+
+              flex-grow: 0;
+
+              font-size: @font-size__xs;
+              font-weight: bold;
+              letter-spacing: 1.2px;
+              text-transform: uppercase;
+              text-decoration: none;
             }
           }
 
