@@ -9,14 +9,14 @@
         <div class="games-group">
             <ul>
                 <li>
-                    <router-link :to="{ name: 'Play deck', params: {id: 1} }">
+                    <router-link :to="{ name: 'Deck', params: {deckId: 1} }">
                         <img class="game-icon" width="28" height="36" alt="" src="@/assets/icons/deck.svg" />
                         <div class="game-info">
                             <span class="title">My best deck</span>
                             <span class="subtitle">5 cards • My Name</span>
                         </div>
                     </router-link>
-                    <router-link :to="{ name: 'Edit deck', params: {id: 1} }" class="deck-edit">Edit</router-link>
+                    <router-link :to="{ name: 'Edit deck', params: {gameId: 1, deckId: 1} }" class="deck-edit">Edit</router-link>
                 </li>
             </ul>
         </div>

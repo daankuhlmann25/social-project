@@ -3,6 +3,9 @@ import VueRouter from "vue-router";
 
 import Home from "../views/Home.vue";
 import Games from "../views/Games.vue";
+import Play from "../views/Play.vue";
+import EditDeck from "../views/EditDeck.vue";
+import Deck from "../views/Deck.vue";
 import NotFound from "../views/NotFound.vue";
 import SongBattle from "../views/games/SongBattle.vue";
 import Trivia from "../views/games/Trivia.vue";
@@ -16,10 +19,25 @@ const routes = [
     component: Home
   },
   {
+    path: "/edit-deck",
+    name: "Edit deck",
+    component: EditDeck,
+  },
+  {
+    path: "/play",
+    name: "Play",
+    component: Play,
+  },
+  {
     path: "/party-games",
     name: "Games",
     component: Games,
     children: [
+      {
+        path: "deck",
+        name: "Deck",
+        component: Deck,
+      },
       {
         path: "song-battle",
         name: "Song battle",
