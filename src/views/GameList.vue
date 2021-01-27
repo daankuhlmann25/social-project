@@ -1,119 +1,75 @@
 <template>
-  <div id="game-list">
-    <div class="game-list">
-      <a v-on:click="close()" class="close">
-        <img alt="" src="../assets/icons/close.svg" />
-      </a>
-      <div class="games-group">
-        <!-- TODO: make dynamic -->
-        <h2>Party games</h2>
-        <ul>
-          <li v-on:click="close()">
-            <router-link :to="{ name: 'Song battle' }">
-            <img class="game-icon" alt="" src="../assets/icons/game-icon-music.svg" />
-            <div class="game-info">
-              <span class="title">Song battle</span>
-              <span class="subtitle">Finish the lyrics, sing together</span>
+    <div id="game-list">
+        <div class="game-list">
+            <a v-on:click="close()" class="close">
+                <img alt="" src="../assets/icons/close.svg"/>
+            </a>
+            <div class="games-group">
+                <h2>Party games</h2>
+                <ul>
+                    <li v-for="(game, index) in games" :key="index" v-on:click="close()">
+                        <router-link :to="{ name: 'Song battle' }">
+                            <img class="game-icon" alt="" src="../assets/icons/game-icon-music.svg"/>
+                            <div class="game-info">
+                                <span class="title">{{ game.title }}</span>
+                                <span class="subtitle">{{ game.subtitle }}</span>
+                            </div>
+                        </router-link>
+                    </li>
+                </ul>
             </div>
-            </router-link>
-          </li>
-          <li v-on:click="close()">
-            <router-link v-on:click="close()" :to="{ name: 'Trivia' }">
-            <img class="game-icon" alt="" src="../assets/icons/game-icon-qna.svg" />
-            <div class="game-info">
-              <span class="title">Trivia</span>
-              <span class="subtitle">Questions and answers</span>
+            <div class="games-group">
+                <h2>Drinking games</h2>
+                <ul>
+                    <li v-on:click="close()">Item 1</li>
+                    <li v-on:click="close()">Item 2</li>
+                    <li v-on:click="close()">Item 3</li>
+                    <li v-on:click="close()">Item 4</li>
+                    <li v-on:click="close()">Item 5</li>
+                </ul>
             </div>
-            </router-link>
-          </li>
-          <li v-on:click="close()">
-            <router-link v-on:click="close()" :to="{ name: 'Song battle' }">
-            <img class="game-icon" alt="" src="../assets/icons/game-icon-qna.svg" />
-            <div class="game-info">
-              <span class="title">Quiz</span>
-              <span class="subtitle">Description</span>
+            <div class="games-group">
+                <h2>Conversation games</h2>
+                <ul>
+                    <li v-on:click="close()">Item 1</li>
+                    <li v-on:click="close()">Item 2</li>
+                    <li v-on:click="close()">Item 3</li>
+                    <li v-on:click="close()">Item 4</li>
+                    <li v-on:click="close()">Item 5</li>
+                </ul>
             </div>
-            </router-link>
-          </li>
-          <li v-on:click="close()">
-            <router-link v-on:click="close()" :to="{ name: 'Song battle' }">
-            <img class="game-icon" alt="" src="../assets/icons/game-icon-body.svg" />
-            <div class="game-info">
-              <span class="title">Charades</span>
-              <span class="subtitle">No words, say it with your body</span>
-            </div>
-            </router-link>
-          </li>
-          <li v-on:click="close()">
-            <router-link v-on:click="close()" :to="{ name: 'Song battle' }">
-            <img class="game-icon" alt="" src="../assets/icons/game-icon-words.svg" />
-            <div class="game-info">
-              <span class="title">Fictionary</span>
-              <span class="subtitle">Guess the definition of obscure words</span>
-            </div>
-            </router-link>
-          </li>
-          <li v-on:click="close()">
-            <router-link v-on:click="close()" :to="{ name: 'Song battle' }">
-            <img class="game-icon" alt="" src="../assets/icons/game-icon-words.svg" />
-            <div class="game-info">
-              <span class="title">30 seconds</span>
-              <span class="subtitle">Describe the word without using it</span>
-            </div>
-            </router-link>
-          </li>
-          <li v-on:click="close()">
-            <router-link v-on:click="close()" :to="{ name: 'Song battle' }">
-            <img class="game-icon" alt="" src="../assets/icons/game-icon-words.svg" />
-            <div class="game-info">
-              <span class="title">20 questions</span>
-              <span class="subtitle">Only answers allowed: “Yes” and “No”</span>
-            </div>
-            </router-link>
-          </li>
-          <li v-on:click="close()">
-            <router-link v-on:click="close()" :to="{ name: 'Song battle' }">
-            <img class="game-icon" alt="" src="../assets/icons/game-icon-words.svg" />
-            <div class="game-info">
-              <span class="title">Don't say yes</span>
-              <span class="subtitle">Never mention the forbidden words</span>
-            </div>
-            </router-link>
-          </li>
-        </ul>
-      </div>
-      <div class="games-group">
-        <h2>Drinking games</h2>
-        <ul>
-          <li v-on:click="close()">Item 1</li>
-          <li v-on:click="close()">Item 2</li>
-          <li v-on:click="close()">Item 3</li>
-          <li v-on:click="close()">Item 4</li>
-          <li v-on:click="close()">Item 5</li>
-        </ul>
-      </div>
-      <div class="games-group">
-        <h2>Conversation games</h2>
-        <ul>
-          <li v-on:click="close()">Item 1</li>
-          <li v-on:click="close()">Item 2</li>
-          <li v-on:click="close()">Item 3</li>
-          <li v-on:click="close()">Item 4</li>
-          <li v-on:click="close()">Item 5</li>
-        </ul>
-      </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-export default {
-  methods: {
-      close() {
-          this.$parent.show = false;
+  import db from '@/firebase/config';
+
+  export default {
+    name: 'Index',
+    data() {
+      return {
+        games: []
       }
-  }
-};
+    },
+    methods: {
+      close() {
+        this.$parent.show = false;
+      },
+    },
+    created() {
+      //Fetch data from database
+      db.collection('games').get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            console.log(doc.id, " => ", doc.data());
+            let game = doc.data()
+            game.id = doc.id
+            this.games.push(game)
+          })
+        })
+    }
+  };
 </script>
 
 <style scoped>
