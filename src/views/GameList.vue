@@ -8,7 +8,7 @@
                 <h2>Party games</h2>
                 <ul>
                     <li v-for="(game, index) in games" :key="index" v-on:click="close()">
-                        <router-link :to="{ name: 'Song battle' }">
+                        <router-link :to="{ name: game.title }">
                             <img class="game-icon" width="36" height="36" alt="" src="../assets/icons/game-icon-music.svg"/>
                             <div class="game-info">
                                 <span class="title">{{ game.title }}</span>

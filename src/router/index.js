@@ -7,7 +7,7 @@ import Play from "../views/Play.vue";
 import EditDeck from "../views/EditDeck.vue";
 import Deck from "../views/Deck.vue";
 import NotFound from "../views/NotFound.vue";
-import SongBattle from "../views/games/SongBattle.vue";
+import SingTogether from "../views/games/SingTogether.vue";
 import Trivia from "../views/games/Trivia.vue";
 
 Vue.use(VueRouter);
@@ -24,6 +24,11 @@ const routes = [
     component: EditDeck,
   },
   {
+    path: "/add-deck",
+    name: "Add deck",
+    component: EditDeck,
+  },
+  {
     path: "/play",
     name: "Play",
     component: Play,
@@ -34,19 +39,24 @@ const routes = [
     component: Games,
     children: [
       {
-        path: "deck",
-        name: "Deck",
-        component: Deck,
+        path: "sing-together",
+        name: "Sing together",
+        component: SingTogether,
       },
       {
-        path: "song-battle",
-        name: "Song battle",
-        component: SongBattle,
+        path: "sing-together/:id",
+        name: "Sing together deck",
+        component: Deck,
       },
       {
         path: "trivia",
         name: "Trivia",
         component: Trivia,
+      },
+      {
+        path: "trivia/:id",
+        name: "Trivia deck",
+        component: Deck,
       },
     ]
   },

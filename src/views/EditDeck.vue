@@ -4,7 +4,7 @@
             <a @click="$router.go(-1)">Back</a>
             <router-link to="/" class="logo"><img class="logo" alt="Social.gg logo" width="34" height="34" src="../assets/logo.svg" /></router-link>
         </header>
-        <small>Song battle</small>
+        <small>Sing together</small>
         <h1>{{$route.name}}</h1>
         <h2>Name <span>0/40</span></h2>
         <input type="text" name="deck-name" id="deck-name" maxlength="40">
