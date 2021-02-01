@@ -37,28 +37,31 @@ const routes = [
     path: "/party-games",
     name: "Games",
     component: Games,
-    children: [
-      {
-        path: "sing-together",
-        name: "Sing together",
-        component: SingTogether,
-      },
-      {
-        path: "sing-together/:id",
-        name: "Sing together deck",
-        component: Deck,
-      },
-      {
-        path: "trivia",
-        name: "Trivia",
-        component: Trivia,
-      },
-      {
-        path: "trivia/:id",
-        name: "Trivia deck",
-        component: Deck,
-      },
-    ]
+  },
+  {
+    path: "/party-games/sing-together",
+    name: "Sing together",
+    component: SingTogether,
+  },
+  {
+    path: "sing-together/:id",
+    name: "Sing together deck",
+    component: Deck,
+  },
+  {
+    path: "/party-games/:gameId/add-deck",
+    name: "Add deck",
+    component: EditDeck,
+  },
+  {
+    path: "trivia",
+    name: "Trivia",
+    component: Trivia,
+  },
+  {
+    path: "trivia/:id",
+    name: "Trivia deck",
+    component: Deck,
   },
   {
     path: "/about",
