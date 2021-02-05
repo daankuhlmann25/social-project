@@ -1,14 +1,14 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import Home from "../views/Home.vue";
-import Games from "../views/Games.vue";
-import Play from "../views/Play.vue";
-import EditDeck from "../views/EditDeck.vue";
-import Deck from "../views/Deck.vue";
-import NotFound from "../views/NotFound.vue";
-import SingTogether from "../views/games/SingTogether.vue";
-import Trivia from "../views/games/Trivia.vue";
+import Home from "../views/Home";
+import Games from "../views/Games";
+import Play from "../views/Play";
+import EditDeck from "../views/EditDeck";
+import Deck from "../views/Deck";
+import NotFound from "../views/NotFound";
+import SingTogether from "../views/games/SingTogether";
+import Trivia from "../views/games/Trivia";
 
 Vue.use(VueRouter);
 
@@ -37,28 +37,31 @@ const routes = [
     path: "/party-games",
     name: "Games",
     component: Games,
-    children: [
-      {
-        path: "sing-together",
-        name: "Sing together",
-        component: SingTogether,
-      },
-      {
-        path: "sing-together/:id",
-        name: "Sing together deck",
-        component: Deck,
-      },
-      {
-        path: "trivia",
-        name: "Trivia",
-        component: Trivia,
-      },
-      {
-        path: "trivia/:id",
-        name: "Trivia deck",
-        component: Deck,
-      },
-    ]
+  },
+  {
+    path: "/party-games/sing-together",
+    name: "Sing together",
+    component: SingTogether,
+  },
+  {
+    path: "sing-together/:id",
+    name: "Sing together deck",
+    component: Deck,
+  },
+  {
+    path: "/party-games/:gameId/add-deck",
+    name: "Add deck",
+    component: EditDeck,
+  },
+  {
+    path: "trivia",
+    name: "Trivia",
+    component: Trivia,
+  },
+  {
+    path: "trivia/:id",
+    name: "Trivia deck",
+    component: Deck,
   },
   {
     path: "/about",

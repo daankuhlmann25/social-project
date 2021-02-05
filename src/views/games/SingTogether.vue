@@ -20,10 +20,10 @@
                     <router-link :to="{ name: 'Edit deck', params: {gameId: 1, deckId: 1} }" class="deck-edit">Edit</router-link>
                 </li>
                 <li>
-                    <router-link :to="{ name: 'Add deck', params: { gameId: 1 } }">
+                    <router-link :to="{ path: 'add-deck'}" append>
                         <div class="add-deck"><img width="14" height="14" alt="" src="@/assets/icons/plus.svg" /></div>
                         <div class="game-info">
-                            <span class="title">Add deck</span>
+                            <span class="title">Add deck (test)</span>
                             <span class="subtitle">Missing a deck? Create one here.</span>
                         </div>
                     </router-link>
