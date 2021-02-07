@@ -1,5 +1,7 @@
 <template>
-    <div class="game sing-together">
+    <main class="game sing-together">
+        <header-comp></header-comp>
+        <game-list v-bind:class="{ show: show }"></game-list>
         <!-- TODO: Fetch info from firebase and parse markdown for How to play (vue-simple-markdown?) -->
         <h1>{{$route.name}}</h1>
         <h2>How to play</h2>
@@ -44,13 +46,21 @@
                 </li>
             </ul>
         </div>
-    </div>
+    </main>
 </template>
 
 
 <script>
-export default {
+import GameList from '@/components/GameList'
+import HeaderComp from '@/components/Header'
 
+export default {
+    components: { GameList, HeaderComp },
+    data() {
+        return {
+            show: false,
+        }
+    }
 }
 </script>
 

@@ -4,7 +4,7 @@
             <a v-on:click="close()" class="close">
                 <img alt="" src="../assets/icons/close.svg"/>
             </a>
-            <div class="games-group">
+            <section class="games-group">
                 <h2>Party games</h2>
                 <ul>
                     <li v-for="(game, index) in games" :key="index" v-on:click="close()">
@@ -17,27 +17,13 @@
                         </router-link>
                     </li>
                 </ul>
-            </div>
-            <div class="games-group">
-                <h2>Drinking games</h2>
-                <ul>
-                    <li v-on:click="close()">Item 1</li>
-                    <li v-on:click="close()">Item 2</li>
-                    <li v-on:click="close()">Item 3</li>
-                    <li v-on:click="close()">Item 4</li>
-                    <li v-on:click="close()">Item 5</li>
-                </ul>
-            </div>
-            <div class="games-group">
+            </section>
+            <section class="games-group">
                 <h2>Conversation games</h2>
                 <ul>
-                    <li v-on:click="close()">Item 1</li>
-                    <li v-on:click="close()">Item 2</li>
-                    <li v-on:click="close()">Item 3</li>
-                    <li v-on:click="close()">Item 4</li>
-                    <li v-on:click="close()">Item 5</li>
+                    <li v-on:click="close()">Conversation starters</li>
                 </ul>
-            </div>
+            </section>
         </div>
     </div>
 </template>
