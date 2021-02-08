@@ -36,14 +36,14 @@ export default {
     numberWithSpaces(num) {
       return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "&nbsp;");
     },
-    easeOutCubic(x) {
+    easeOut(x) {
       return 1 - Math.pow(1 - x, 3.5);
     },
     animateValue(obj, start, end, duration) {
       let startTimestamp = null;
       const step = (timestamp) => {
         if (!startTimestamp) startTimestamp = timestamp;
-        const progress = this.easeOutCubic(Math.min((timestamp - startTimestamp) / duration, 1));
+        const progress = this.easeOut(Math.min((timestamp - startTimestamp) / duration, 1));
         obj.innerHTML = this.numberWithSpaces(Math.ceil(progress * (end - start) + start));
         obj.style.opacity = progress;
         if (progress < 1) {

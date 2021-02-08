@@ -26,6 +26,7 @@ body {
     color: @sun;
     font-size: 28px;
     font-weight: 700;
+    margin: 0;
   }
 
   h2 {
@@ -35,17 +36,27 @@ body {
     margin: @spacing__xxl 0 @spacing__m;
   }
 
+  h5 {
+    font-weight: 600;
+    font-size: 12px;
+    
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: fade(@white, 50%);
+    margin: 0 0 @spacing__base 0;
+  }
+  
   // App styling
   #app {
     max-width: @app-width;
     margin: 0 auto;
-
+    
     main {
-      padding: @spacing__m;
+      padding: @spacing__xxl*2 @spacing__m @spacing__m;
     }
-
+    
     // Home
-
+    
     .home {
       padding: 0;
 
@@ -83,7 +94,6 @@ body {
 
       display: flex;
       align-items: center;
-      justify-content: space-between;
 
       background: fade(@night-sky, 70%);
       backdrop-filter: blur(@spacing__xl);
@@ -96,15 +106,24 @@ body {
         padding: @spacing__s @spacing__ms;
         cursor: pointer;
         border-radius: 3px;
-
+        width: 33.3%;
+        
         &:hover {
           color: @white;
-          background-color: fade(@black, 10%);
         }
-
+        
+        &.left {
+          text-align: left;
+        }
+        
         &.logo {
-            padding: 0;
-            display: flex;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+        }
+        
+        &.right {
+          text-align: right;
         }
       }
       
@@ -121,46 +140,55 @@ body {
           margin: 0;
           list-style-type: none;
           display: flex;
-          border-top: fade(@black, 20%) 1px solid;
           align-items: center;
           align-content: stretch;
           
-          &:active {
-            border-top-color: transparent;
-
-            a {
-              background-color: fade(@black, 10%);
-            }
-          }
-
-          &:active + li {
-            border-top-color: transparent;
-          }
           
           a {
             display: flex;
-            padding: @spacing__ms;
-            margin: 0 -@spacing__ms;
-
+            align-items: center;
             flex-grow: 1;
+            padding: 16px;
+            margin: 0 0 @spacing__base;
+            border-radius: 6px;
+            background-color: fade(@black, 15%);
+            
+            &:hover.add-deck, :active.add-deck {
+              background-color: fade(@black, 10%);
+            }
+
+            &.add-deck {
+              background-color: fade(@black, 3%);
+              border: 2px solid fade(@black, 15%);
+            }
 
             .game-icon, .add-deck {
               margin-right: @spacing__ms;
+              flex-shrink: 0;
             }
 
-            .add-deck {
-              display: flex;
-              width: 32px;
-              height: 32px;
-              background: yellow;
-              border-radius: 50%;
-              align-items: center;
-              justify-content: center;
+            &:hover, :active {
+              background-color: fade(@black, 20%);
+
+              .icon-arrow {
+                opacity: 1;
+              }
+            }
+            
+            .icon-arrow {
+              flex-shrink: 0;
+              opacity: .5;
+            }
+            
+            .game-info {
+              flex-grow: 1;
+              margin-right: @spacing__ms;
             }
 
             .title {
               display: inline-block;
               width: 100%;
+              font-size: @font-size__m;
               font-weight: 700;
               color: @white;
             }
@@ -168,12 +196,13 @@ body {
             .subtitle {
               display: inline-block;
               width: 100%;
-              font-size: @font-size__s;
+              font-size: @font-size__ms;
               color: fade(@white, 50%);
             }
 
             &.deck-edit {
-              background-color: fade(@white, 15%);
+              margin-left: @spacing__xs;
+              place-self: normal;
 
               flex-grow: 0;
 
@@ -186,70 +215,124 @@ body {
           }
 
         }
-
-        li:first-child {
-          border-top: none;
-        }
       }
     }
 
-    .edit-deck {
-      padding-top: @spacing__xxl * 1.5;
+    main:not(.home) #game-list {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: fade(@black, 20%);
+      overflow-y: auto;
+      opacity: 0;
+      pointer-events: none;
+      transition: all .3s ease;
+      
+      .game-list {
+        position: relative;
+        display: flex;
+        flex-flow: column;
+        top: 0;
+        left: -100%;
+        width: 87%;
+        padding: @spacing__l;
+        background-color: @night-sky;
+        transition: all .3s ease;
+        min-height: 100%;
+
+        .close {
+          position: fixed;
+          display: flex;
+          background-color: fade(@white, 10%);
+          backdrop-filter: blur(@spacing__l);
+          border-radius: 50%;
+          padding: @spacing__ms;
+          margin: -@spacing__ms -@spacing__ms 0 0;
+          width: 37px;
+          height: 37px;
+          align-self: flex-end;
+          cursor: pointer;
+        }
+      }
+      
+      &.show {
+        opacity: 1;
+        pointer-events: auto;
+
+        .game-list {
+          left: 0;
+        }
+      }
+
+      .close {
+        background: fade(@night-sky, 70%);
+        backdrop-filter: blur(@spacing__xl);
+      }
     }
 
-    .game {
-      padding-top: @spacing__xxl * 1.5;
-
-      #game-list {
+    #how-to-play {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: fade(@black, 20%);
+      overflow-y: auto;
+      opacity: 0;
+      pointer-events: none;
+      transition: all .3s ease;
+      display: flex;
+      justify-content: center;
+      
+      .how-to-play {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: fade(@black, 20%);
-        overflow-y: auto;
-        opacity: 0;
-        pointer-events: none;
+        display: flex;
+        flex-flow: column;
+        bottom: -87%;
+        height: 87%;
+        padding: @spacing__m;
+        background-color: @night-sky;
         transition: all .3s ease;
-        
-        .game-list {
-          position: relative;
-          display: flex;
-          flex-flow: column;
-          top: 0;
-          left: -100%;
-          width: 87%;
-          padding: @spacing__l;
-          background-color: @night-sky;
-          transition: all .3s ease;
+        border-radius: @spacing__m @spacing__m 0 0;
+        max-width: @app-width;
 
-          .close {
-            position: fixed;
-            display: flex;
-            background-color: fade(@white, 10%);
-            backdrop-filter: blur(@spacing__l);
-            border-radius: 50%;
-            padding: @spacing__ms;
-            margin: -@spacing__ms -@spacing__ms 0 0;
-            width: 37px;
-            height: 37px;
-            align-self: flex-end;
-          }
+        h2 {
+          color: @white;
+          margin: 0;
         }
-        
-        &.show {
-          opacity: 1;
-          pointer-events: auto;
 
-          .game-list {
-            left: 0;
-          }
+        h5 {
+          margin-top: @spacing__l;
         }
 
         .close {
-          background: fade(@night-sky, 70%);
-          backdrop-filter: blur(@spacing__xl);
+          position: fixed;
+          display: flex;
+          background-color: fade(@white, 10%);
+          backdrop-filter: blur(@spacing__l);
+          border-radius: 50%;
+          padding: @spacing__ms;
+          width: 37px;
+          height: 37px;
+          align-self: flex-end;
+          cursor: pointer;
         }
+      }
+      
+      &.show {
+        opacity: 1;
+        pointer-events: auto;
+
+        .how-to-play {
+          bottom: 0;
+        }
+      }
+
+      .close {
+        background: fade(@night-sky, 70%);
+        backdrop-filter: blur(@spacing__xl);
       }
     }
     

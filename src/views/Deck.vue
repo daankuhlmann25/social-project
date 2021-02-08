@@ -1,7 +1,7 @@
 <template>
     <main class="deck">
-        <header-comp></header-comp>
-        <game-list v-bind:class="{ show: show }"></game-list>
+        <HeaderComp></HeaderComp>
+        <GameList v-bind:class="{ show: show }"></GameList>
         <small>Sing together</small>
         <h1>Songs you sing in the shower</h1>
         <p>Description of this deck goes here.</p>
