@@ -1,26 +1,28 @@
 <template>
-    <main class="deck">
-        <HeaderComp></HeaderComp>
-        <GameList v-bind:class="{ show: show }"></GameList>
-        <small>Sing together</small>
-        <h1>Songs you sing in the shower</h1>
-        <p>Description of this deck goes here.</p>
-        <router-link :to="{ name: 'Play', params: {id: 1} }">Play</router-link>
-    </main>
+  <main class="deck">
+    <Header right="gameList"></Header>
+    <GameList v-bind:class="{ show: showGameList }"></GameList>
+    <hgroup>
+      <h5>Sing together</h5>
+      <h1>Songs you sing in the shower</h1>
+    </hgroup>
+    <p>Description of this deck goes here.</p>
+    <router-link :to="{ name: 'Play', params: {id: 1} }">Play</router-link>
+  </main>
 </template>
 
 
 <script>
 import GameList from '@/components/GameList'
-import HeaderComp from '@/components/Header'
+import Header from '@/components/Header'
 
 export default {
-    components: { GameList, HeaderComp },
-    data() {
-        return {
-            show: false,
-        }
+  components: { GameList, Header },
+  data() {
+    return {
+      showGameList: false,
     }
+  }
 }
 </script>
 

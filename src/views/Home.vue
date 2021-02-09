@@ -27,7 +27,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import GameList from '@/components/GameList';
 
 export default {

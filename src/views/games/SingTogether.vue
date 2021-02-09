@@ -1,9 +1,12 @@
 <template>
   <main class="game sing-together">
-    <HeaderComp />
-    <GameList v-bind:class="{ show: showGameList }"></GameList>
+    <Header right="gameList" />
+    <GameList v-bind:class="{ show: showGameList }" />
     <!-- TODO: Fetch info from firebase and parse markdown for How to play (vue-simple-markdown?) -->
-    <h1>{{$route.name}}</h1>
+    <hgroup>
+      <h1>Sing together</h1>
+      <h4>Team up, finish the lyrics</h4>
+    </hgroup>
     <section class="how-to-play-section">
       <h2>How to play</h2>
       <p>Divide your group into two teams. The team with the phone sings the first part. If the other team can sing the second part, they get one point.</p>
@@ -57,10 +60,10 @@
 
 <script>
 import GameList from '@/components/GameList'
-import HeaderComp from '@/components/Header'
+import Header from '@/components/Header'
 
 export default {
-  components: { GameList, HeaderComp },
+  components: { GameList, Header },
   data() {
     return {
       showGameList: false,

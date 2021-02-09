@@ -1,17 +1,17 @@
 <template>
   <main class="NotFound">
-    <HeaderComp />
-    <GameList v-bind:class="{ show: showGameList }"></GameList>
+    <Header right="gameList" />
+    <GameList v-bind:class="{ show: showGameList }" />
     <h1>Page not found</h1>
   </main>
 </template>
 
 <script>
 import GameList from '@/components/GameList'
-import HeaderComp from '@/components/Header'
+import Header from '@/components/Header'
 
 export default {
-    components: { GameList, HeaderComp },
+    components: { GameList, Header },
     data() {
         return {
             showGameList: false,
