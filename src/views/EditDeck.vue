@@ -1,10 +1,6 @@
 <template>
     <main class="edit-deck">
-        <header>
-            <a @click="$router.go(-1)">Back</a>
-            <router-link to="/" class="logo"><img class="logo" alt="Social.gg logo" width="34" height="34"
-                                                  src="../assets/logo.svg"/></router-link>
-        </header>
+        <Header />
         <h1>{{$route.name}} to: Sing together</h1>
 
         <form @submit.prevent="AddDeck">
@@ -50,8 +46,10 @@
 
 <script>
   import db from '@/firebase/config';
+  import Header from '@/components/Header'
 
   export default {
+    components: { Header },
     data() {
       return {
         gameId: Number,
