@@ -1,0 +1,165 @@
+.main-container.play-game {
+  height: 100%;
+  position: relative;
+
+  hr {
+    border: none;
+    border-top: 1px solid fade(@black, 20%);
+    margin-bottom: 40px;
+  }
+
+  .number .legend {
+    font-size: 16px;
+  }
+
+  button {
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: @black;
+    height: 30px;
+    line-height: 30px;
+    border: none;
+    border-radius: 3px;
+    margin-bottom: 15px;
+    padding: 10px;
+
+    &:hover {
+      background-color: fade(@black, 40%);
+      color: @white;
+      cursor: pointer;
+    }
+  }
+
+  .current-song-container {
+    display: flex;
+
+    .current-song {
+      background-color: fade(@black, 40%);
+      padding: 15px;
+      width: auto;
+      margin: 0 auto;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 3px;
+
+      .icon {
+        img {
+          margin-right: 15px;
+        }
+      }
+
+      .current-song-container {
+        display: flex;
+        flex-direction: column;
+
+        .song-artist, .song-title {
+          font-size: 16px;
+          flex: 0 0 100%;
+        }
+
+        .song-artist {
+          color: #C7C7C7;
+        }
+
+        .song-title {
+          color: @white;
+        }
+      }
+    }
+  }
+
+  .container-spacer {
+    margin: 40px 0;
+  }
+
+  #you-sing, #they-sing {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+  }
+
+  #you-sing {
+    color: @sun;
+  }
+
+  #they-sing {
+    color: @white;
+  }
+
+  .information p {
+    text-align: center;
+    font-size: 16px;
+    color: #C7C7C7;
+    margin-top: 30px;
+  }
+
+  .navigation {
+    background-color: fade(@night-sky, 70%);
+    backdrop-filter: blur(@spacing__xl);
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+    align-items: center;
+    height: 90px;
+    padding: 15px 0;
+
+    .icon-cards {
+      background-color: #C7C7C7;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      position: absolute;
+      display: flex;
+      text-align: center;
+      vertical-align: middle;
+      align-items: center;
+
+      &.colored {
+        background-color: #FFEF65;
+      }
+
+      img {
+        margin: 0 auto;
+      }
+
+      &.left {
+        left: 0;
+
+        img {
+          transform: rotate(180deg);
+        }
+      }
+
+      &.right {
+        right: 0;
+        background-color: #FFEF65;
+      }
+    }
+
+    .amount-of-cards {
+      vertical-align: middle;
+      align-items: center;
+
+      .legend {
+        font-size: 14px;
+      }
+
+      .counting {
+        font-size: 18px;
+        font-weight: bold;
+        color: @white;
+      }
+    }
+  }
+}

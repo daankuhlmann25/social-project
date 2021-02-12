@@ -1,6 +1,7 @@
 @import "variables";
 @import "reset";
 @import "normalize";
+@import "play-game";
 
 html, body {
   height: 100%;
@@ -47,24 +48,42 @@ body {
   h5 {
     font-weight: @font-weight__semi-bold;
     font-size: 12px;
-    
+
     letter-spacing: 1.2px;
     text-transform: uppercase;
     color: fade(@white, 50%);
     margin: 0 0 @spacing__base 0;
   }
-  
+
+  // Generic styling
+  .number {
+    margin: 15px 0;
+
+    .legend {
+      margin-top: 6px;
+      font-weight: normal;
+      font-size: 12px;
+      text-align: center;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      opacity: 0.7;
+    }
+  }
+
   // App styling
   #app {
     max-width: @app-width;
     margin: 0 auto;
-    
+    height: 100%;
+
     main {
-      padding: @spacing__xxl*2 @spacing__m @spacing__m;
+      padding: @spacing__xxl*2 @spacing__m 0;
+      height: 100%;
     }
-    
+
     // Home
-    
+
     .home {
       padding: 0;
 
@@ -76,7 +95,7 @@ body {
         margin: @indent__s auto;
         display: flex;
       }
-  
+
       h1 {
         color: @white;
         font-weight: @font-weight__semi-bold;
@@ -99,10 +118,9 @@ body {
       top: 0px;
       left: 0px;
       width: 100%;
-      
       background: fade(@night-sky, 70%);
       backdrop-filter: blur(@spacing__xl);
-      
+
       .header-wrap {
         display: flex;
         align-items: center;
@@ -119,11 +137,11 @@ body {
           cursor: pointer;
           border-radius: 3px;
           width: 44%;
-          
+
           &.left {
             text-align: left;
           }
-          
+
           &.logo {
             padding: 0;
             display: flex;
@@ -134,7 +152,7 @@ body {
               margin: 0;
             }
           }
-          
+
           &.right {
             text-align: right;
           }
@@ -149,19 +167,19 @@ body {
 
     // Games group
     .games-group {
-      
+
       ul {
         margin: 0;
         padding: 0;
-        
+
         li {
           margin: 0;
           list-style-type: none;
           display: flex;
           align-items: center;
           align-content: stretch;
-          
-          
+
+
           a {
             display: flex;
             align-items: center;
@@ -170,7 +188,7 @@ body {
             margin: 0 0 @spacing__base;
             border-radius: 6px;
             background-color: fade(@black, 15%);
-            
+
             &:hover.add-deck, :active.add-deck {
               background-color: fade(@black, 10%);
             }
@@ -192,12 +210,12 @@ body {
                 opacity: 1;
               }
             }
-            
+
             .icon-arrow {
               flex-shrink: 0;
               opacity: .5;
             }
-            
+
             .game-info {
               flex-grow: 1;
               margin-right: @spacing__ms;
@@ -210,7 +228,7 @@ body {
               font-weight: 700;
               color: @white;
             }
-            
+
             .subtitle {
               display: inline-block;
               width: 100%;
@@ -248,7 +266,7 @@ body {
       pointer-events: none;
       transition: all .3s ease;
       z-index: 10;
-      
+
       .game-list {
         position: absolute;
         display: flex;
@@ -276,7 +294,7 @@ body {
           cursor: pointer;
         }
       }
-      
+
       &.show {
         opacity: 1;
         pointer-events: auto;
@@ -306,7 +324,7 @@ body {
       display: flex;
       justify-content: center;
       z-index: 9;
-      
+
       .how-to-play {
         position: absolute;
         display: flex;
@@ -341,7 +359,7 @@ body {
           cursor: pointer;
         }
       }
-      
+
       &.show {
         opacity: 1;
         pointer-events: auto;
@@ -356,6 +374,6 @@ body {
         backdrop-filter: blur(@spacing__xl);
       }
     }
-    
+
   }
 }

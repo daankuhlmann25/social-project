@@ -2,28 +2,58 @@
     <main class="play">
         <Header right="howToPlay"></Header>
         <HowToPlay v-bind:class="{ show: showHowToPlay }"></HowToPlay>
-        <router-view />
+        <router-view/>
 
-        <div class="main-container">
+        <div class="main-container play-game">
 
             <form @submit.prevent="setToLocalstorage">
-                <button type="submit">Randomize Deck</button>
+                <button style="display:none" type="submit">Randomize Deck</button>
             </form>
 
-            <div class="song-title">
-                <span class="icon">- </span>
-                Blue Swede - Hooked on a Feeling
+            <div class="current-song-container">
+                <div class="current-song">
+                <span class="icon"><img src="@/assets/icons/music-note.svg" width="28" height="28"
+                                        alt="Current song"></span>
+                    <div class="current-song-container">
+                        <span class="song-title">{{ song }}</span>
+                        <span class="song-artist">By: {{ artist }}</span>
+                    </div>
+                </div>
             </div>
-            <h3>You sing:</h3>
-            <div id="you-sing">{{ yousing }}</div>
-            <h3>They sing:</h3>
-            <div id="they-sing">{{ theysing }}</div>
+
+            <div class="container-spacer">
+                <div class="number">
+                    <div class="legend">YOU SING:</div>
+                </div>
+                <div id="you-sing">{{ yousing }}</div>
+            </div>
+
+            <div class="container-spacer">
+                <div class="number">
+                    <div class="legend">THEY SING:</div>
+                </div>
+                <div id="they-sing">{{ theysing }}</div>
+            </div>
+
             <hr/>
             <div class="information">
                 <p>Pass the phone before hitting next</p>
             </div>
             <div class="navigation">
-                CARD 1/125
+                <span :class="cardCounter > 0 ? 'icon-cards left colored' : 'icon-cards left'" v-on:click="goToPreviousCard()">
+                    <img src="@/assets/icons/arrow-next.svg" width="16" height="16" alt="Previous song">
+                </span>
+                <span class="icon-cards right" v-on:click="goToNextCard()">
+                    <img src="@/assets/icons/arrow-next.svg" width="16" height="16" alt="Next song">
+                </span>
+                <span class="amount-of-cards">
+                    <div class="number">
+                    <div class="legend">CARD</div>
+                </div>
+                    <span class="counting">
+                        {{ cardCounter + 1 }} / {{ amountOfCards }}
+                    </span>
+                </span>
             </div>
         </div>
     </main>
@@ -35,14 +65,18 @@
   import Header from '@/components/Header'
 
   export default {
-    components: { HowToPlay, Header },
+    components: {HowToPlay, Header},
 
     data() {
       return {
         showHowToPlay: false,
+        'artist': '',
+        'song': '',
         'yousing': '',
         'theysing': '',
         'songArray': [],
+        'amountOfCards': '',
+        'cardCounter': 0,
         'randomizedsongArray': [],
         'localStorageData': []
       }
@@ -59,11 +93,13 @@
         }
         return array
       },
-      updateTemplate () {
-        this.yousing = JSON.parse(localStorage.getItem('deck-list'))[0][0]['you-sing']
-        this.theysing = JSON.parse(localStorage.getItem('deck-list'))[0][0]['they-sing']
+      updateTemplate() {
+        this.artist = JSON.parse(localStorage.getItem('deck-list'))[0][this.cardCounter]['artist']
+        this.song = JSON.parse(localStorage.getItem('deck-list'))[0][this.cardCounter]['song']
+        this.yousing = JSON.parse(localStorage.getItem('deck-list'))[0][this.cardCounter]['you-sing']
+        this.theysing = JSON.parse(localStorage.getItem('deck-list'))[0][this.cardCounter]['they-sing']
       },
-      setToLocalstorage () {
+      setToLocalstorage() {
         // First clear content from localstorage before setting new value
         localStorage.removeItem("deck-list")
         this.randomizedsongArray = []
@@ -71,6 +107,23 @@
         this.randomizedsongArray.push(this.songArray)
         localStorage.setItem("deck-list", JSON.stringify(this.randomizedsongArray))
         this.updateTemplate()
+      },
+      goToPreviousCard() {
+        if (this.cardCounter > 0){
+          this.cardCounter = this.cardCounter - 1
+          this.updateTemplate()
+        }
+      },
+      goToNextCard() {
+        if (this.cardCounter < this.amountOfCards - 1) {
+          this.cardCounter = this.cardCounter + 1
+          this.updateTemplate()
+        } else{
+          this.finishGame()
+        }
+      },
+      finishGame() {
+        console.log('route to finish component')
       }
     },
     created() {
@@ -82,12 +135,11 @@
             this.songArray.push(doc.data())
           });
           this.shuffle(this.songArray);
+          this.amountOfCards = querySnapshot.size;
         })
         .catch((error) => {
           console.log("Error getting documents: ", error)
         });
-
-
     },
     mounted() {
       this.updateTemplate()
