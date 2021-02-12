@@ -29,19 +29,19 @@
         </form>
 
 
-        <!--        <h2>Name <span>0/40</span></h2>-->
-        <!--        <input type="text" name="deck-name" id="deck-name" maxlength="40">-->
-        <!--        <h2>Cards</h2>-->
-        <!--        <h2>Your name <span>Public</span></h2>-->
-        <!--        <input type="text" name="name" id="name">-->
-        <!--        <h2>E-mail <span>Not public</span></h2>-->
-        <!--        <input type="email" name="email" id="email">-->
-        <!--        <h2>E-mail <span>Not public</span></h2>-->
-        <!--        <textarea name="message" id="message" cols="30" rows="10"></textarea>-->
-        <!--        <input type="submit" value="Save">-->
-        <!--        <p>We would love you to share your fantastic deck with all our fellow players!</p>-->
-        <!--        <p>When you feel happy with your creation, please publish it.</p>-->
-        <!--        <button type="submit">Publish on social.gg</button>-->
+<!--                <h2>Name <span>0/40</span></h2>-->
+<!--                <input type="text" name="deck-name" id="deck-name" maxlength="40">-->
+<!--                <h2>Cards</h2>-->
+<!--                <h2>Your name <span>Public</span></h2>-->
+<!--                <input type="text" name="name" id="name">-->
+<!--                <h2>E-mail <span>Not public</span></h2>-->
+<!--                <input type="email" name="email" id="email">-->
+<!--                <h2>E-mail <span>Not public</span></h2>-->
+<!--                <textarea name="message" id="message" cols="30" rows="10"></textarea>-->
+<!--                <input type="submit" value="Save">-->
+<!--                <p>We would love you to share your fantastic deck with all our fellow players!</p>-->
+<!--                <p>When you feel happy with your creation, please publish it.</p>-->
+<!--                <button type="submit">Publish on social.gg</button>-->
     </main>
 </template>
 
