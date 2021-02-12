@@ -95,52 +95,56 @@ body {
     // Header
     header {
       position: fixed;
-      padding: @spacing__base;
+      padding: @spacing__base 0;
       top: 0px;
       left: 0px;
       width: 100%;
-
-      display: flex;
-      align-items: center;
-
+      
       background: fade(@night-sky, 70%);
       backdrop-filter: blur(@spacing__xl);
       
-      a {
-        color: @pale-glow;
-        font-size: @font-size__ms;
-        font-weight: 700;
-        text-decoration: none;
-        padding: @spacing__s @spacing__ms;
-        cursor: pointer;
-        border-radius: 3px;
-        width: 44%;
-        
-        &.left {
-          text-align: left;
-        }
-        
-        &.logo {
-          padding: 0;
-          display: flex;
-          justify-content: center;
-          width: 12%;
+      .header-wrap {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        max-width: @app-width;
+        margin: 0 auto;
+
+        a {
+          color: @pale-glow;
+          font-size: @font-size__ms;
+          font-weight: 700;
+          text-decoration: none;
+          padding: @spacing__s @spacing__ms;
+          cursor: pointer;
+          border-radius: 3px;
+          width: 44%;
+          
+          &.left {
+            text-align: left;
+          }
+          
+          &.logo {
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            width: 12%;
+
+            img {
+              margin: 0;
+            }
+          }
+          
+          &.right {
+            text-align: right;
+          }
 
           img {
-            margin: 0;
+            margin-right: 8px;
+            vertical-align: text-top;
           }
         }
-        
-        &.right {
-          text-align: right;
-        }
-
-        img {
-          margin-right: 8px;
-          vertical-align: text-top;
-        }
       }
-      
     }
 
     // Games group
