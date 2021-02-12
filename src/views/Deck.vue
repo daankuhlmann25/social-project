@@ -3,7 +3,7 @@
     <Header right="gameList"></Header>
     <GameList v-bind:class="{ show: showGameList }"></GameList>
     <hgroup>
-      <h5>Sing together</h5>
+      <h5>{{gameId}}</h5>
       <h1>Songs you sing in the shower</h1>
     </hgroup>
     <p>Description of this deck goes here.</p>
@@ -21,6 +21,7 @@ export default {
   data() {
     return {
       showGameList: false,
+      gameId: this.$route.params.gameId,
     }
   }
 }

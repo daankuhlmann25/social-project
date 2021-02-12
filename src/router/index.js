@@ -1,14 +1,16 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import Home from "../views/Home";
-import Games from "../views/Games";
-import Play from "../views/Play";
-import EditDeck from "../views/EditDeck";
-import Deck from "../views/Deck";
-import NotFound from "../views/NotFound";
-import SingTogether from "../views/games/SingTogether";
-import Trivia from "../views/games/Trivia";
+import Home from "@/views/Home";
+import Play from "@/views/Play";
+import EditDeck from "@/views/EditDeck";
+import Deck from "@/views/Deck";
+import NotFound from "@/views/NotFound";
+
+// GAMES
+import Games from "@/views/Games";
+import SingTogether from "@/views/games/SingTogether";
+import Trivia from "@/views/games/Trivia";
 
 Vue.use(VueRouter);
 
@@ -16,37 +18,21 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: Home,
   },
   {
-    path: "/edit-deck",
-    name: "Edit deck",
-    component: EditDeck,
-  },
-  {
-    path: "/add-deck",
-    name: "Add deck",
-    component: EditDeck,
-  },
-  {
-    path: "/play",
-    name: "Play",
-    component: Play,
-  },
-  {
-    path: "/party-games",
-    name: "Games",
+    path: "/party-games/",
     component: Games,
-  },
-  {
-    path: "/party-games/sing-together",
-    name: "Sing together",
-    component: SingTogether,
-  },
-  {
-    path: "sing-together/:id",
-    name: "Sing together deck",
-    component: Deck,
+    children: [
+      {
+        path: ":gameId",
+        name: "Game",
+        components: {
+          'sing-together': SingTogether,
+          trivia: Trivia,
+        },
+      }
+    ],
   },
   {
     path: "/party-games/:gameId/add-deck",
@@ -54,13 +40,18 @@ const routes = [
     component: EditDeck,
   },
   {
-    path: "trivia",
-    name: "Trivia",
-    component: Trivia,
+    path: "/party-games/:gameId/:deckId/edit",
+    name: "Edit deck",
+    component: EditDeck,
   },
   {
-    path: "trivia/:id",
-    name: "Trivia deck",
+    path: "/party-games/:gameId/:deckId/play",
+    name: "Play",
+    component: Play,
+  },
+  {
+    path: "/party-games/:gameId/:deckId",
+    name: "Deck",
     component: Deck,
   },
   {

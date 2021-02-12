@@ -1,24 +1,25 @@
 <template>
     <main class="games">
-        <header>
-            <a @click="$router.go(-1)">Back</a>
-            <router-link to="/" class="logo"><img class="logo" alt="Social.gg logo" width="34" height="34" src="../assets/logo.svg" /></router-link>
-            <a v-on:click="show = !show">All games</a>
-        </header>
-        <game-list v-bind:class="{ show: show }"></game-list>
-        <router-view />
+        <Header right="gameList" />
+        <GameList v-bind:class="{ show: showGameList }" />
+        <!-- TODO: Add nice error message if gameId is wrong -->
+        <router-view :name="$route.params.gameId" />
     </main>
 </template>
 
 <script>
+import Header from '@/components/Header'
 import GameList from '@/components/GameList'
 
 export default {
-    components: { GameList },
+    components: { GameList, Header },
     data() {
         return {
-            show: false,
+            showGameList: false,
         }
+    },
+    mounted() {
+        console.log(this.$route);
     }
 }
 </script>

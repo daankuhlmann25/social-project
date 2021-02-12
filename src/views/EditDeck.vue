@@ -1,7 +1,8 @@
 <template>
     <main class="edit-deck">
         <Header />
-        <h1>{{$route.name}} to: Sing together</h1>
+        <h5>{{$route.params.gameId}}</h5>
+        <h1>{{$route.name}}</h1>
 
         <form @submit.prevent="AddDeck">
             <div class="field title">

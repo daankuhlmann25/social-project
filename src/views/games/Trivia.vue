@@ -1,7 +1,5 @@
 <template>
-  <main class="game trivia">
-    <Header right="gameList" />
-    <GameList v-bind:class="{ show: showGameList }" />
+  <div class="game trivia">
     <hgroup>
       <h1>Trivia</h1>
       <h4>Questions and answers</h4>
@@ -15,19 +13,19 @@
         <li>Pen & paper (for counting points)</li>
       </ul>
     </section>
-  </main>
+    <ListDecks />
+  </div>
 </template>
 
 
 <script>
-import GameList from '@/components/GameList'
-import Header from '@/components/Header'
+import ListDecks from '@/components/ListDecks'
 
 export default {
-  components: { GameList, Header },
+  components: { ListDecks },
   data() {
     return {
-      showGameList: false,
+      
     }
   }
 }

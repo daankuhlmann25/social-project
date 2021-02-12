@@ -20,7 +20,7 @@
   // import db from '@/firebase/config';
 
   export default {
-    name: 'Index',
+    name: 'HowToPlay',
     data() {
       return {
         games: []
@@ -32,7 +32,7 @@
       },
     },
     created() {
-      //TODO: Fetch data from database
+      //TODO: Fetch data from database (local storage)
       // db.collection('games').get()
       //   .then(snapshot => {
       //     snapshot.forEach(doc => {

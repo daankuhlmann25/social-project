@@ -9,9 +9,8 @@
         <h2>Party games</h2>
         <ul>
           <li v-for="(game, index) in games" :key="index" v-on:click="close()">
-            <router-link :to="{ name: game.title }">
-              <!-- TODO: make icon dynamic -->
-              <img class="game-icon" width="50" height="50" alt="" src="@/assets/icons/game-icon-music.svg"/>
+            <router-link :to="'/party-games/' + game.slug">
+              <img class="game-icon" width="50" height="50" :alt="game['icon-name'] + ' icon'" :src="iconUrl(game['icon-name'])"/>
               <div class="game-info">
                 <span class="title">{{ game.title }}</span>
                 <span class="subtitle">{{ game.subtitle }}</span>
@@ -45,6 +44,10 @@
       close() {
         this.$parent.showGameList = false;
       },
+      iconUrl(icon) {
+        const url = require('@/assets/icons/game-icon-' + icon + '.svg');
+        return url;
+      }
     },
     created() {
       //Fetch data from database
