@@ -1,6 +1,5 @@
 .main-container.play-game {
-  height: 100%;
-  position: relative;
+  min-height: 100%;
 
   hr {
     border: none;
@@ -8,8 +7,10 @@
     margin-bottom: 40px;
   }
 
-  .number .legend {
+  .legend {
     font-size: 16px;
+    margin-bottom: 8px;
+    text-align: center;
   }
 
   button {
@@ -104,22 +105,20 @@
     background-color: fade(@night-sky, 70%);
     backdrop-filter: blur(@spacing__xl);
     text-align: center;
-    position: absolute;
+    position: sticky;
     bottom: 0;
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     vertical-align: middle;
     align-items: center;
-    height: 90px;
-    padding: 15px 0;
+    padding: 8px 0;
 
     .icon-cards {
       background-color: #C7C7C7;
       width: 65px;
       height: 65px;
       border-radius: 50%;
-      position: absolute;
       display: flex;
       text-align: center;
       vertical-align: middle;
@@ -150,6 +149,10 @@
     .amount-of-cards {
       vertical-align: middle;
       align-items: center;
+
+      .number {
+        margin: 0 0 4px;
+      }
 
       .legend {
         font-size: 14px;

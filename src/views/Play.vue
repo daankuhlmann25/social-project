@@ -22,17 +22,13 @@
             </div>
 
             <div class="container-spacer">
-                <div class="number">
-                    <div class="legend">YOU SING:</div>
-                </div>
-                <div id="you-sing">{{ yousing }}</div>
+              <div class="legend">YOU SING:</div>
+              <div id="you-sing">{{ yousing }}</div>
             </div>
 
             <div class="container-spacer">
-                <div class="number">
-                    <div class="legend">THEY SING:</div>
-                </div>
-                <div id="they-sing">{{ theysing }}</div>
+              <div class="legend">THEY SING:</div>
+              <div id="they-sing">{{ theysing }}</div>
             </div>
 
             <hr/>
@@ -43,16 +39,16 @@
                 <span :class="cardCounter > 0 ? 'icon-cards left colored' : 'icon-cards left'" v-on:click="goToPreviousCard()">
                     <img src="@/assets/icons/arrow-next.svg" width="16" height="16" alt="Previous song">
                 </span>
-                <span class="icon-cards right" v-on:click="goToNextCard()">
-                    <img src="@/assets/icons/arrow-next.svg" width="16" height="16" alt="Next song">
-                </span>
                 <span class="amount-of-cards">
-                    <div class="number">
+                  <div class="number">
                     <div class="legend">CARD</div>
-                </div>
+                  </div>
                     <span class="counting">
                         {{ cardCounter + 1 }} / {{ amountOfCards }}
                     </span>
+                </span>
+                <span class="icon-cards right" v-on:click="goToNextCard()">
+                    <img src="@/assets/icons/arrow-next.svg" width="16" height="16" alt="Next song">
                 </span>
             </div>
         </div>
