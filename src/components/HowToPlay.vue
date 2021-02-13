@@ -8,12 +8,13 @@
                 <h5>Sing together</h5>
                 <h2>How to play</h2>
               </hgroup>
-              <p>Divide your group into two teams. The team with the phone sings the first part. If the other team can sing the second part, they get one point.</p>
-              <p>Divide your group into two teams. The team with the phone sings the first part. If the other team can sing the second part, they get one point.</p>
-              <p>Pass the phone to the other team and let them go to the next card.</p>
-              <h3>What you need</h3>
-              <p>Divide your group into two teams. The team with the phone sings the first part. If the other team can sing the second part, they get one point.</p>
-
+              <section class="how-to-play-content">
+                <p>Divide your group into two teams. The team with the phone sings the first part. If the other team can sing the second part, they get one point.</p>
+                <p>Divide your group into two teams. The team with the phone sings the first part. If the other team can sing the second part, they get one point.</p>
+                <p>Pass the phone to the other team and let them go to the next card.</p>
+                <h3>What you need</h3>
+                <p>Divide your group into two teams. The team with the phone sings the first part. If the other team can sing the second part, they get one point.</p>
+              </section>
         </div>
     </div>
 </template>

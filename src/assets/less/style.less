@@ -19,6 +19,14 @@ body {
     margin-bottom: 1em;
   }
 
+  ul, ol {
+    padding-left: @spacing__xl;
+  }
+
+  li {
+    margin-bottom: @spacing__s;
+  }
+
   a {
     color: @white;
   }
@@ -190,6 +198,18 @@ body {
         }
       }
     }
+
+    // Games
+    .games {
+
+      .how-to-play-section {
+
+        h2, h3, h4 {
+          color: @white;
+        }
+      }
+    }
+
     // Games group
     .games-group {
 
@@ -221,6 +241,7 @@ body {
             &.add-deck {
               background-color: fade(@black, 3%);
               border: 2px solid fade(@black, 15%);
+              padding: 14px;
             }
 
             .game-icon, .add-deck {
@@ -278,7 +299,7 @@ body {
         }
       }
     }
-
+    
     main:not(.home) #game-list {
       position: fixed;
       top: 0;
