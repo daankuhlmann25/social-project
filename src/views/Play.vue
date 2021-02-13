@@ -4,7 +4,7 @@
         <HowToPlay v-bind:class="{ show: showHowToPlay }"></HowToPlay>
         <router-view/>
 
-        <div class="main-container play-game">
+        <div class="play-container play-game">
 
             <form @submit.prevent="setToLocalstorage">
                 <button style="display:none" type="submit">Randomize Deck</button>
