@@ -23,12 +23,12 @@
 
             <div class="container-spacer">
               <div class="legend">YOU SING:</div>
-              <div id="you-sing">{{ yousing }}</div>
+              <div id="you-sing">{{ youSing }}</div>
             </div>
 
             <div class="container-spacer">
               <div class="legend">THEY SING:</div>
-              <div id="they-sing">{{ theysing }}</div>
+              <div id="they-sing">{{ theySing }}</div>
             </div>
 
             <hr/>
@@ -68,18 +68,19 @@
         showHowToPlay: false,
         'artist': '',
         'song': '',
-        'yousing': '',
-        'theysing': '',
+        'youSing': '',
+        'theySing': '',
         'songArray': [],
         'amountOfCards': '',
         'cardCounter': 0,
         'randomizedsongArray': [],
-        'localStorageData': []
+        'localStorageData': [],
+        'deckList': [],
       }
     },
     methods: {
       shuffle(array) {
-        var ctr = array.length, temp, index;
+        let ctr = array.length, temp, index;
         while (ctr > 0) {
           index = Math.floor(Math.random() * ctr)
           ctr--
@@ -90,10 +91,11 @@
         return array
       },
       updateTemplate() {
-        this.artist = JSON.parse(localStorage.getItem('deck-list'))[0][this.cardCounter]['artist']
-        this.song = JSON.parse(localStorage.getItem('deck-list'))[0][this.cardCounter]['song']
-        this.yousing = JSON.parse(localStorage.getItem('deck-list'))[0][this.cardCounter]['you-sing']
-        this.theysing = JSON.parse(localStorage.getItem('deck-list'))[0][this.cardCounter]['they-sing']
+        this.deckList = JSON.parse(localStorage.getItem('deck-list'))
+        this.artist = this.deckList[0][this.cardCounter]['artist']
+        this.song = this.deckList[0][this.cardCounter]['song']
+        this.youSing = this.deckList[0][this.cardCounter]['you-sing']
+        this.theySing = this.deckList[0][this.cardCounter]['they-sing']
       },
       setToLocalstorage() {
         // First clear content from localstorage before setting new value
@@ -114,7 +116,7 @@
         if (this.cardCounter < this.amountOfCards - 1) {
           this.cardCounter = this.cardCounter + 1
           this.updateTemplate()
-        } else{
+        } else {
           this.finishGame()
         }
       },

@@ -7,7 +7,10 @@
       <h1>Songs you sing in the shower</h1>
     </hgroup>
     <p>Description of this deck goes here.</p>
-    <router-link :to="{ name: 'Play', params: {id: 1} }">Play</router-link>
+    <div class="play-deck">
+      <router-link :to="{ name: 'Play', params: {id: 1} }"><img src="@/assets/icons/play.svg" width="30" height="30" alt="Play icon"></router-link>
+      <span>Play</span>
+    </div>
   </main>
 </template>
 
