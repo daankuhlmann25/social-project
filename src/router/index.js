@@ -10,7 +10,12 @@ import NotFound from "@/views/NotFound";
 // GAMES
 import Games from "@/views/Games";
 import SingTogether from "@/views/games/SingTogether";
+import PlaySingTogether from "@/views/games/PlaySingTogether";
 import Trivia from "@/views/games/Trivia";
+import PlayTrivia from "@/views/games/PlayTrivia";
+
+// Play
+
 
 Vue.use(VueRouter);
 
@@ -29,7 +34,7 @@ const routes = [
         name: "Game",
         components: {
           'sing-together': SingTogether,
-          trivia: Trivia,
+          'trivia': Trivia,
         },
       }
     ],
@@ -46,8 +51,17 @@ const routes = [
   },
   {
     path: "/party-games/:gameId/:deckId/play",
-    name: "Play",
     component: Play,
+    children: [
+      {
+        path: "",
+        name: "Play",
+        components: {
+          'sing-together': PlaySingTogether,
+          'trivia': PlayTrivia,
+        }
+      }
+    ]
   },
   {
     path: "/party-games/:gameId/:deckId",
