@@ -117,7 +117,7 @@
         }
       },
       finishGame() {
-        console.log('route to finish component')
+        this.$router.push({name: "The end"});
       }
     },
     created() {

@@ -18,9 +18,6 @@ export default {
             showGameList: false,
         }
     },
-    mounted() {
-        console.log(this.$route);
-    }
 }
 </script>
 

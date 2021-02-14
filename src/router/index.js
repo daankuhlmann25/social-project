@@ -5,6 +5,7 @@ import Home from "@/views/Home";
 import Play from "@/views/Play";
 import EditDeck from "@/views/EditDeck";
 import Deck from "@/views/Deck";
+import TheEnd from "@/views/TheEnd";
 import NotFound from "@/views/NotFound";
 
 // GAMES
@@ -48,6 +49,11 @@ const routes = [
     path: "/party-games/:gameId/:deckId/edit",
     name: "Edit deck",
     component: EditDeck,
+  },
+  {
+    path: "/party-games/:gameId/:deckId/the-end",
+    name: "The end",
+    component: TheEnd,
   },
   {
     path: "/party-games/:gameId/:deckId/play",
