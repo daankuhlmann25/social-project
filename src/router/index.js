@@ -51,12 +51,12 @@ const routes = [
     component: EditDeck,
   },
   {
-    path: "/party-games/:gameId/:deckId/the-end",
+    path: "/party-games/:gameId/:deckSlug?/:deckId/the-end",
     name: "The end",
     component: TheEnd,
   },
   {
-    path: "/party-games/:gameId/:deckId/play",
+    path: "/party-games/:gameId/:deckSlug?/:deckId/play/:cardPosition?",
     component: Play,
     children: [
       {
@@ -70,7 +70,7 @@ const routes = [
     ]
   },
   {
-    path: "/party-games/:gameId/:deckId",
+    path: "/party-games/:gameId/:deckSlug?/:deckId",
     name: "Deck",
     component: Deck,
   },

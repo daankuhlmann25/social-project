@@ -34,7 +34,7 @@
   import db from '@/firebase/config';
 
   export default {
-    name: 'Index',
+    name: 'GameList',
     data() {
       return {
         games: []

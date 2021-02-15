@@ -8,7 +8,7 @@
     </hgroup>
     <p>Description of this deck goes here.</p>
     <div class="play-deck">
-      <router-link :to="{ name: 'Play', params: {id: 1} }"><img src="@/assets/icons/play.svg" width="30" height="30" alt="Play icon"></router-link>
+      <router-link to="play" append><img src="@/assets/icons/play.svg" width="30" height="30" alt="Play icon"></router-link>
       <span>Play</span>
     </div>
   </main>
@@ -26,7 +26,10 @@ export default {
       showGameList: false,
       gameId: this.$route.params.gameId,
     }
-  }
+  },
+  created() {
+    localStorage.setItem('currentDeck', this.$route.params.deckId)
+  },
 }
 </script>
 

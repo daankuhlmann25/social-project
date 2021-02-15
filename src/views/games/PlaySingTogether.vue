@@ -32,7 +32,7 @@
       <p>Pass the phone before hitting next</p>
     </div>
     <div class="navigation">
-      <span :class="cardCounter > 0 ? 'icon-cards left colored' : 'icon-cards left'" v-on:click="goToPreviousCard()">
+      <span :class="currentCard > 0 ? 'icon-cards left colored' : 'icon-cards left'" v-on:click="goToPreviousCard()">
           <img src="@/assets/icons/arrow-next.svg" width="16" height="16" alt="Previous song">
       </span>
       <span class="amount-of-cards">
@@ -40,10 +40,10 @@
           <div class="legend">CARD</div>
         </div>
           <span class="counting">
-              {{ cardCounter + 1 }} / {{ amountOfCards }}
+              {{ currentCard + 1 }} / {{ amountOfCards }}
           </span>
       </span>
-      <span class="icon-cards right" v-on:click="goToNextCard()">
+      <span :class="currentCard === amountOfCards ? 'icon-cards right last' : 'icon-cards right'" v-on:click="goToNextCard()">
           <img src="@/assets/icons/arrow-next.svg" width="16" height="16" alt="Next song">
       </span>
     </div>
@@ -62,16 +62,16 @@
     data() {
       return {
         showHowToPlay: false,
-        'artist': '',
-        'song': '',
-        'youSing': '',
-        'theySing': '',
-        'songArray': [],
-        'amountOfCards': '',
-        'cardCounter': 0,
-        'randomizedsongArray': [],
-        'localStorageData': [],
-        'deckList': [],
+        artist: '',
+        song: '',
+        youSing: '',
+        theySing: '',
+        songArray: [],
+        amountOfCards: '',
+        currentCard: 0,
+        randomizedSongArray: [],
+        localStorageData: [],
+        cards: [],
       }
     },
     methods: {
@@ -87,56 +87,75 @@
         return array
       },
       updateTemplate() {
-        this.deckList = JSON.parse(localStorage.getItem('deck-list'))
-        this.artist = this.deckList[0][this.cardCounter]['artist']
-        this.song = this.deckList[0][this.cardCounter]['song']
-        this.youSing = this.deckList[0][this.cardCounter]['you-sing']
-        this.theySing = this.deckList[0][this.cardCounter]['they-sing']
+        this.cards = JSON.parse(localStorage.getItem('cards'))
+        this.artist = this.cards[this.currentCard]['artist']
+        this.song = this.cards[this.currentCard]['song']
+        this.youSing = this.cards[this.currentCard]['you-sing']
+        this.theySing = this.cards[this.currentCard]['they-sing']
+        localStorage.setItem('currentCard', this.currentCard)
       },
       setToLocalstorage() {
-        // First clear content from localstorage before setting new value
-        localStorage.removeItem("deck-list")
-        this.randomizedsongArray = []
-        this.shuffle(this.songArray)
-        this.randomizedsongArray.push(this.songArray)
-        localStorage.setItem("deck-list", JSON.stringify(this.randomizedsongArray))
+        this.randomizedSongArray = this.shuffle(this.songArray)
+        localStorage.setItem("cards", JSON.stringify(this.randomizedSongArray))
         this.updateTemplate()
       },
+      generatePlayPath(cardPosition) {
+        // Remove trailing front slash + digits from current path and add cardPosition
+        return this.$route.path.replace(/\/?\d*$/, "") + '/' + cardPosition
+      },
+      goToCard(cardPosition, replace = true) {
+        this.currentCard = cardPosition
+        this.updateTemplate()
+        if (replace)
+          this.$router.replace({path: this.generatePlayPath(this.currentCard)})
+      },
       goToPreviousCard() {
-        if (this.cardCounter > 0){
-          this.cardCounter = this.cardCounter - 1
-          this.updateTemplate()
+        if (this.currentCard > 0) {
+          this.currentCard--
+          this.goToCard(this.currentCard)
         }
       },
       goToNextCard() {
-        if (this.cardCounter < this.amountOfCards - 1) {
-          this.cardCounter = this.cardCounter + 1
-          this.updateTemplate()
-        } else {
-          this.finishGame()
+        if (this.currentCard < this.amountOfCards - 1) {
+          this.currentCard++
+          this.goToCard(this.currentCard)
         }
+        else
+          this.finishGame()
       },
       finishGame() {
         this.$router.push({name: "The end"});
       }
     },
     created() {
-      // Fetch from database
-      db.collection("games").doc("kLPcReHvy654lK68qYYE").collection("decks").doc("JQO7kVtkgnkjY60ycauZ").collection("cards")
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            this.songArray.push(doc.data())
-          });
-          this.shuffle(this.songArray);
-          this.amountOfCards = querySnapshot.size;
-        })
-        .catch((error) => {
-          console.log("Error getting documents: ", error)
-        });
+      //Deck from localStorage (My decks)
+      if (!this.$route.params.deckSlug) {
+        console.log('My decks');
+      }
+      // Deck from db (All decks)
+      else {
+        db.collection("games").doc("kLPcReHvy654lK68qYYE").collection("decks").doc("JQO7kVtkgnkjY60ycauZ").collection("cards")
+          .get()
+          .then(snapshot => {
+            snapshot.forEach((doc) => {
+              this.songArray.push(doc.data())
+            });
+
+            this.shuffle(this.songArray);
+            this.amountOfCards = snapshot.size;
+
+            if (!this.$route.params.cardPosition) //When you just pushed the Play-button
+              this.setToLocalstorage()
+            else
+              this.goToCard(parseInt(this.$route.params.cardPosition), false) //Go to card without route change
+          })
+          .catch((error) => {
+            console.log("Error getting documents: ", error)
+          })
+      }
     },
     mounted() {
-      this.updateTemplate()
+      // this.updateTemplate()
     }
   }
 </script>
