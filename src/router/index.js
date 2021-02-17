@@ -15,9 +15,6 @@ import PlaySingTogether from "@/views/games/PlaySingTogether";
 import Trivia from "@/views/games/Trivia";
 import PlayTrivia from "@/views/games/PlayTrivia";
 
-// Play
-
-
 Vue.use(VueRouter);
 
 const routes = [
@@ -36,43 +33,43 @@ const routes = [
         components: {
           'sing-together': SingTogether,
           'trivia': Trivia,
-        },
-      }
-    ],
-  },
-  {
-    path: "/party-games/:gameId/add-deck",
-    name: "Add deck",
-    component: EditDeck,
-  },
-  {
-    path: "/party-games/:gameId/:deckId/edit",
-    name: "Edit deck",
-    component: EditDeck,
-  },
-  {
-    path: "/party-games/:gameId/:deckSlug?/:deckId/the-end",
-    name: "The end",
-    component: TheEnd,
-  },
-  {
-    path: "/party-games/:gameId/:deckSlug?/:deckId/play/:cardPosition?",
-    component: Play,
-    children: [
-      {
-        path: "",
-        name: "Play",
-        components: {
-          'sing-together': PlaySingTogether,
-          'trivia': PlayTrivia,
         }
-      }
-    ]
-  },
-  {
-    path: "/party-games/:gameId/:deckSlug?/:deckId",
-    name: "Deck",
-    component: Deck,
+      },
+      {
+        path: ":gameId/add-deck",
+        name: "Add deck",
+        component: EditDeck,
+      },
+      {
+        path: ":gameId/:deckId/edit",
+        name: "Edit deck",
+        component: EditDeck,
+      },
+      {
+        path: ":gameId/:deckSlug?/:deckId/the-end",
+        name: "The end",
+        component: TheEnd,
+      },
+      {
+        path: ":gameId/:deckSlug?/:deckId/play/:cardPosition?",
+        component: Play,
+        children: [
+          {
+            path: "",
+            name: "Play",
+            components: {
+              'sing-together': PlaySingTogether,
+              'trivia': PlayTrivia,
+            }
+          }
+        ]
+      },
+      {
+        path: ":gameId/:deckSlug?/:deckId",
+        name: "Deck",
+        component: Deck,
+      },
+    ],
   },
   {
     path: "/about",

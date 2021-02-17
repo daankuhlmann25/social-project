@@ -1,7 +1,5 @@
 <template>
-  <main class="play play-container play-game">
-    <Header right="howToPlay"></Header>
-    <HowToPlay v-bind:class="{ show: showHowToPlay }"></HowToPlay>
+  <div class="play-container play-game">
     <form @submit.prevent="setToLocalstorage">
       <button style="display:none" type="submit">Randomize Deck</button>
     </form>
@@ -33,7 +31,7 @@
     </div>
     <div class="navigation">
       <span :class="currentCard > 0 ? 'icon-cards left colored' : 'icon-cards left'" v-on:click="goToPreviousCard()">
-          <img src="@/assets/icons/arrow-next.svg" width="16" height="16" alt="Previous song">
+          <img src="@/assets/icons/arrow-next.svg" width="16" height="16" alt="Previous">
       </span>
       <span class="amount-of-cards">
         <div class="number">
@@ -43,21 +41,18 @@
               {{ currentCard + 1 }} / {{ amountOfCards }}
           </span>
       </span>
-      <span :class="currentCard === amountOfCards ? 'icon-cards right last' : 'icon-cards right'" v-on:click="goToNextCard()">
-          <img src="@/assets/icons/arrow-next.svg" width="16" height="16" alt="Next song">
+      <span class="icon-cards right" v-on:click="goToNextCard()">
+          <img :src="currentCard === amountOfCards - 1 ? require('@/assets/icons/check.svg') : require('@/assets/icons/arrow-next.svg')" width="16" height="16" alt="Next">
       </span>
     </div>
-  </main>
+  </div>
 </template>
 
 
 <script>
-  import Header from '@/components/Header'
-  import HowToPlay from '@/components/HowToPlay'
-  import db from '@/firebase/config';
+import db from '@/firebase/config';
 
   export default {
-    components: { HowToPlay, Header },
 
     data() {
       return {
@@ -74,6 +69,7 @@
         cards: [],
       }
     },
+    
     methods: {
       shuffle(array) {
         let ctr = array.length, temp, index;
@@ -127,7 +123,11 @@
         this.$router.push({name: "The end"});
       }
     },
+
     created() {
+      // Set header right
+      this.$store.commit('header/setRight', 'howToPlay')
+
       //Deck from localStorage (My decks)
       if (!this.$route.params.deckSlug) {
         console.log('My decks');
@@ -154,9 +154,6 @@
           })
       }
     },
-    mounted() {
-      // this.updateTemplate()
-    }
   }
 </script>
 

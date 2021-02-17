@@ -1,7 +1,5 @@
 <template>
-  <main class="deck">
-    <Header right="gameList"></Header>
-    <GameList v-bind:class="{ show: showGameList }"></GameList>
+  <div class="deck">
     <hgroup>
       <h5>{{gameId}}</h5>
       <h1>Songs you sing in the shower</h1>
@@ -11,23 +9,22 @@
       <router-link to="play" append><img src="@/assets/icons/play.svg" width="30" height="30" alt="Play icon"></router-link>
       <span>Play</span>
     </div>
-  </main>
+  </div>
 </template>
 
 
 <script>
-import GameList from '@/components/GameList'
-import Header from '@/components/Header'
 
 export default {
-  components: { GameList, Header },
   data() {
     return {
-      showGameList: false,
       gameId: this.$route.params.gameId,
     }
   },
   created() {
+    // Set header right
+    this.$store.commit('header/setRight', 'gameList')
+    
     localStorage.setItem('currentDeck', this.$route.params.deckId)
   },
 }

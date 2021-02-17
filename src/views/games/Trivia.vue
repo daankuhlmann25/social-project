@@ -23,11 +23,6 @@ import ListDecks from '@/components/ListDecks'
 
 export default {
   components: { ListDecks },
-  data() {
-    return {
-      
-    }
-  }
 }
 </script>
 

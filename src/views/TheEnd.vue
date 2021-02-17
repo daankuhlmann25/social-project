@@ -1,7 +1,5 @@
 <template>
-  <main class="the-end">
-    <Header right="gameList" />
-    <GameList v-bind:class="{ show: showGameList }" />
+  <div class="the-end">
     <lottie-animation
       ref="theEnd"
       :animationData="require('@/assets/animations/the-end.json')"
@@ -20,18 +18,16 @@
       <h1>You have reached the end of <span>{{$route.params.deckId}}</span></h1>
     </hgroup>
     <ListDecks />
-  </main>
+  </div>
 </template>
 
 
 <script>
 import ListDecks from '@/components/ListDecks'
-import Header from '@/components/Header'
-import GameList from '@/components/GameList'
 import LottieAnimation from 'lottie-web-vue'
 
 export default {
-  components: { ListDecks, GameList, Header, LottieAnimation },
+  components: { ListDecks, LottieAnimation },
   
   data() {
     return {
@@ -43,6 +39,10 @@ export default {
       if (this.$refs.theEnd.anim.currentFrame > 64)
         this.$refs.theEnd.pause()
     }
+  },
+  created() {
+    // Set header right
+    this.$store.commit('header/setRight', 'gameList')
   },
   mounted() {
     setTimeout(() => { 

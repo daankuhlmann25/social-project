@@ -1,6 +1,5 @@
 <template>
   <main class="play play-container play-game">
-    <Header right="howToPlay"></Header>
     <HowToPlay v-bind:class="{ show: showHowToPlay }"></HowToPlay>
     <h1>Play Trivia</h1>
   </main>
@@ -8,17 +7,20 @@
 
 
 <script>
-  import Header from '@/components/Header'
   import HowToPlay from '@/components/HowToPlay'
 
   export default {
-    components: { HowToPlay, Header },
+    components: { HowToPlay },
 
     data() {
       return {
         showHowToPlay: false,
       }
     },
+    created() {
+      // Set header right
+      this.$store.commit('header/setRight', 'howToPlay')
+    }
   }
 </script>
 

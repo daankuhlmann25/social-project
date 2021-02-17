@@ -1,7 +1,7 @@
 <template>
     <div id="how-to-play">
         <div class="how-to-play">
-            <a v-on:click="close()" class="close">
+            <a v-on:click="closeHowToPlay" class="close">
                 <img alt="Close" src="@/assets/icons/close.svg"/>
             </a>
               <hgroup>
@@ -20,33 +20,37 @@
 </template>
 
 <script>
-  // import db from '@/firebase/config';
+// import db from '@/firebase/config';
+import { mapMutations, mapState } from 'vuex'
 
-  export default {
-    name: 'HowToPlay',
-    data() {
-      return {
-        games: []
-      }
-    },
-    methods: {
-      close() {
-        this.$parent.showHowToPlay = false;
-      },
-    },
-    created() {
-      //TODO: Fetch data from database (local storage)
-      // db.collection('games').get()
-      //   .then(snapshot => {
-      //     snapshot.forEach(doc => {
-      //       console.log(doc.id, " => ", doc.data());
-      //       let game = doc.data()
-      //       game.id = doc.id
-      //       this.games.push(game)
-      //     })
-      //   })
-    }
-  };
+export default {
+  name: 'HowToPlay',
+  
+  computed: {
+    ...mapState({
+      showHowToPlay: state => state.header.showHowToPlay,
+    }),
+  },
+
+  methods: {
+    ...mapMutations({
+      closeHowToPlay: 'header/closeHowToPlay',
+    }),
+  },
+  
+  created() {
+    //TODO: Fetch data from database (local storage)
+    // db.collection('games').get()
+    //   .then(snapshot => {
+    //     snapshot.forEach(doc => {
+    //       console.log(doc.id, " => ", doc.data());
+    //       let game = doc.data()
+    //       game.id = doc.id
+    //       this.games.push(game)
+    //     })
+    //   })
+  }
+};
 </script>
 
 <style scoped>

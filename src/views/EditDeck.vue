@@ -1,6 +1,5 @@
 <template>
-    <main class="edit-deck">
-        <Header />
+    <div class="edit-deck">
         <h5>{{$route.params.gameId}}</h5>
         <h1>{{$route.name}}</h1>
 
@@ -42,15 +41,13 @@
 <!--                <p>We would love you to share your fantastic deck with all our fellow players!</p>-->
 <!--                <p>When you feel happy with your creation, please publish it.</p>-->
 <!--                <button type="submit">Publish on social.gg</button>-->
-    </main>
+    </div>
 </template>
 
 <script>
   import db from '@/firebase/config';
-  import Header from '@/components/Header'
 
   export default {
-    components: { Header },
     data() {
       return {
         gameId: Number,
