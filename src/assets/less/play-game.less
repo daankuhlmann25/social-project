@@ -125,25 +125,34 @@
       vertical-align: middle;
       align-items: center;
 
-      &.colored {
-        background-color: #FFEF65;
-      }
-
+      
       img {
         margin: 0 auto;
       }
-
+      
       &.left {
-        left: 0;
 
+        &.colored {
+          background-color: @sun;
+          cursor: pointer;
+
+          &:hover {
+            background-color: mix(@pale-glow, @sun);
+          }
+        }
+        
         img {
           transform: rotate(180deg);
         }
       }
 
       &.right {
-        right: 0;
-        background-color: #FFEF65;
+        background-color: @sun;
+        cursor: pointer;
+
+        &:hover {
+          background-color: mix(@pale-glow, @sun);
+        }
       }
     }
 

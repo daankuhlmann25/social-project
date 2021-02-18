@@ -1,27 +1,27 @@
 <template>
-  <main class="play play-container play-game">
+  <div class="play-container play-game">
     <HowToPlay v-bind:class="{ show: showHowToPlay }"></HowToPlay>
     <h1>Play Trivia</h1>
-  </main>
+  </div>
 </template>
 
-
 <script>
-  import HowToPlay from '@/components/HowToPlay'
+import HowToPlay from '@/components/HowToPlay'
 
-  export default {
-    components: { HowToPlay },
+export default {
+  components: { HowToPlay },
 
-    data() {
-      return {
-        showHowToPlay: false,
-      }
-    },
-    created() {
-      // Set header right
-      this.$store.commit('header/setRight', 'howToPlay')
+  data() {
+    return {
+      showHowToPlay: false,
     }
+  },
+  
+  created() {
+    // Set header right
+    this.$store.commit('header/setRight', 'howToPlay')
   }
+}
 </script>
 
 <style scoped>
