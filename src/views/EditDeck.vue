@@ -28,9 +28,16 @@
         <textarea name="they_sing" id="they_sing" rows="6" v-model="they_sing" placeholder="Lyrics"></textarea>
         <button type="button" @click="removeCard()" class="delete-card"><img src="@/assets/icons/delete.svg" width="16" height="16" alt="Delete card" title="Delete this card"></button>
       </section>
-      <button type="submit">Save Deck</button>
+      <!-- TODO: Implement something like: https://github.com/runkids/vue2-timeago -->
+      <aside class="save-status">
+        <p><strong>Deck saved!</strong> <span id="save-time">Just seconds ago</span></p>
+      </aside>
+      <nav class="deck-navigation">
+        <router-link  class="button" :to="{ name: 'Game', params: { gameId: this.gameId } }"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" alt="Back arrow icon">Done editing</router-link>
+        <router-link class="button right" :to="{ name: 'Deck', params: { deckId: this.deckId } }"><img src="@/assets/icons/deck.svg" width="17" height="17" alt="Play icon">Play deck</router-link>
+      </nav>
       <p v-if="feedback" class="errors">{{ feedback }}</p>
-
+      <h2 class="white">Want to publish your deck?</h2>
       <p>We would love you to share your fantastic deck with all our fellow players!</p>
       <p>When you feel happy with your creation, please publish it.</p>
     </form>
@@ -58,8 +65,8 @@
   export default {
     data() {
       return {
-        gameId: Number,
-        deckId: Number,
+        gameId: this.$route.params.gameId,
+        deckId: 1,
         another: null,
         id: null,
         card_id: 0,
