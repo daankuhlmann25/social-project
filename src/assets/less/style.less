@@ -75,10 +75,20 @@ body {
     background-color: fade(@black, 27%);
     padding: 10px 12px;
     border: none;
+    border-radius: 3px;
     color: @white;
     display: block;
     width: 100%;
     font-size: 14px;
+
+    &:focus {
+      outline: none;
+      background-color: fade(@black, 40%);
+    }
+  }
+
+  *:focus {
+    outline-color: transparent;
   }
 
   // Generic styling

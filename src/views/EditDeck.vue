@@ -14,7 +14,7 @@
         <textarea name="description" id="description" cols="30" rows="10" placeholder="What is in the deck?" v-model="description"></textarea>
       </div>
       <h2>Cards</h2>
-      <button type="button" :class="card_id === index ? 'card selected' : 'card'" @click="selectCard(index)" v-for="(card, index) in cards" :key="card[index]" :v-model="card[index]">{{ index }}</button>
+      <button type="button" :class="card_id === index ? 'card selected' : 'card'" @click="selectCard(index)" v-for="(card, index) in cards" :key="card[index]" :v-model="card[index]">{{ index+1 }}</button>
       <button type="button" class="add-card" name="add-card" @click="addCard"><img src="@/assets/icons/plus.svg" width="20" height="20" alt="Plus icon"></button>
       <section class="edit-card">
         <input type="hidden" name="card_id" id="card_id" v-model="card_id">
@@ -126,8 +126,12 @@
           console.log('- slice: '+this.card_id);
           
           this.cards.splice(this.card_id, 1)
-          this.selectCard(0, false)
+          this.selectCard(this.getPreviousCard(this.card_id), false)
         }
+      },
+      getPreviousCard(cardId) {
+        // Return cardId-1 if it's not 0, then return 0
+        return cardId ? cardId-1 : 0;
       },
       clearCard() {
         console.log('clearCard ' + this.card_id)
