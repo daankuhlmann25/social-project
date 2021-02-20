@@ -35,7 +35,7 @@
         <p><strong>Deck saved!</strong> <span id="save-time">Just seconds ago</span></p>
       </aside>
       <nav class="deck-navigation">
-        <router-link  class="button" :to="{ name: 'Game', params: { gameId: this.gameId } }"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" alt="Back arrow icon">Done editing</router-link>
+        <router-link class="button" :to="{ name: 'Game', params: { gameId: this.gameId } }"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" alt="Back arrow icon">Done editing</router-link>
         <router-link class="button right" :to="{ name: 'Deck', params: { deckId: this.deckId } }"><img src="@/assets/icons/deck.svg" width="17" height="17" alt="Play icon">Play deck</router-link>
       </nav>
       <p v-if="feedback" class="errors">{{ feedback }}</p>

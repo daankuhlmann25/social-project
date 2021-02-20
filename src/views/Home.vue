@@ -80,10 +80,6 @@ export default {
   text-align: center;
 }
 
-.statistics p img {
-  vertical-align: text-top;
-}
-
 .number {
   margin: 0 12px;
 }

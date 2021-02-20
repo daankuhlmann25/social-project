@@ -1,12 +1,12 @@
 <template>
   <div class="send-deck">
-    <h1>Deck Send!</h1>
+    <h1>Deck sent!</h1>
     <p>We’ll take a look at it and publish it as soon as possible, promise.</p>
-    <p>Thank you, you’re the best! ❤</p>
+    <p>Thank you, you’re the best! <img width="14" height="17" src="../assets/icons/text-heart.svg" alt="Heart icon"></p>
     <div class="button-container">
       <!-- TODO: make arrow-left-black version -->
       <!-- TODO: Change link to correct position, whats that? Current game main page. -->
-      <a class="white-button" @click="$router.go(-1)"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" alt="Back arrow icon">Sing Together</a>
+      <router-link class="button" :to="{ name: 'Game', params: { gameId: this.gameId } }"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" alt="Back arrow icon">Sing Together</router-link>
     </div>
   </div>
 </template>
@@ -16,7 +16,7 @@ export default {
 
   data() {
     return {
-
+      gameId: this.$route.params.gameId,
     }
   },
 }
