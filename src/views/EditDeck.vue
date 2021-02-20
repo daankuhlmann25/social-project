@@ -21,7 +21,7 @@
       <section class="edit-card">
         <input type="hidden" name="card_id" id="card_id" v-model="card_id">
         <label for="artist"><h3>Artist</h3></label>
-        <input type="text" name="artist" id="artist" placeholder="Artist name" v-model="artist" v-on:blur="saveCard">
+        <input type="text" name="artist" id="artist" placeholder="{{ this.artist }} - Artist name" v-model="artist" v-on:blur="saveCard">
         <label for="song"><h3>Song</h3></label>
         <input type="text" name="song" id="song" v-model="song" v-on:blur="saveCard" placeholder="Song name">
         <label for="you_sing"><h3>You sing</h3></label>
@@ -88,6 +88,7 @@
         you_sing: "",
         they_sing: "",
         feedback: null,
+        customAddDeck: null
       }
     },
     methods: {
@@ -115,8 +116,6 @@
                   'Deck description': this.description,
                   'Deck cards': [this.cards],
           });
-          console.dir(this.cards);
-          console.log('LOCALSTORAGE = '+JSON.stringify(this.localStorageDeck))
 
           this.setToLocalstorage()
 
@@ -139,15 +138,40 @@
       updateTemplate() {
         // TODO: Place contents in fields if localstorage exists
 
-        this.customAddDeck = JSON.parse(localStorage.getItem('customAddDeck'))
+        this.customAddDeck = localStorage.getItem('customAddDeck')
+
         // this.artist = this.cards[this.currentCard]['artist']
         // this.song = this.cards[this.currentCard]['song']
         // this.youSing = this.cards[this.currentCard]['you-sing']
         // this.theySing = this.cards[this.currentCard]['they-sing']
       },
       setToLocalstorage() {
-        localStorage.setItem("customAddDeck", JSON.stringify(this.localStorageDeck))
+        // // Get the existing data
+        // let existing = JSON.parse(localStorage.getItem('customAddDeck'));
+        // console.log('existing = '+existing)
+        //
+        // // If no existing data, use the value by itself
+        // // Otherwise, add the new value to it
+        // let data = existing ? existing + 'customAddDeck' : JSON.stringify(this.localStorageDeck);
+        // console.log('data = '+data)
+        //
+        // // Save back to localStorage
+        // localStorage.setItem('customAddDeck', data);
+
+        localStorage.setItem("customAddDeck" + "-" + this.deck_name, JSON.stringify(this.localStorageDeck))
         this.updateTemplate()
+      },
+      getLocalstorage() {
+        // TODO: Get all the localstorage with indexOf customAddDeck, to create list of items to edit maybe?
+        for (var i = 0; i < localStorage.length; i++){
+          if ( localStorage.key(i).indexOf('customAddDeck') != -1 ) {
+            var item = localStorage.getItem(localStorage.key(i));
+            console.log(item)
+          }
+        }
+
+        // let localGames = localStorage.getItem("customAddDeck")
+        // console.log(JSON.parse(localGames))
       },
       removeCard() {
         console.log('removeCard ' + this.card_id)
@@ -193,8 +217,11 @@
         this.cards[this.card_id].song       = this.song
         this.cards[this.card_id].you_sing   = this.you_sing
         this.cards[this.card_id].they_sing  = this.they_sing
-      },
-    }
+      }
+    },
+    created() {
+      // this.getLocalstorage()
+    },
   }
 </script>
 
