@@ -4,7 +4,13 @@
     <div class="decks-group">
       <ul>
         <li>
-          <!-- TODO: Make this dynamic, Fetch from localstorage -->
+          <!-- TODO: Make this dynamic, Fetch from localstorage
+          Step 1: Add deck and send to localstorage
+          Step 2: Retrieve games from localstorage and put in <li> with router-link
+          Step 3: Fix Edit Deck and make it possible to edit deck and save it to localstorage
+          Step 4: Make it possible to "Send deck" from localstorage to seperate collection in Firebase
+          -->
+
           <router-link :to="{ name: 'Deck', params: { deckId: 1 } }">
             <img class="game-icon" width="28" height="28" alt="Deck icon" src="@/assets/icons/deck.svg" />
             <div class="game-info">

@@ -4,7 +4,7 @@
     <h1>{{$route.name}}</h1>
 
     <!-- <form @submit.prevent="addDeck"> -->
-    <form>
+    <form v-on:change="addDeck">
       <div class="field title">
         <label for="deck_name"><h2>Deck name:</h2></label>
         <input type="text" id="deck_name" name="deck_name" placeholder="Name your deck" v-model="deck_name">
@@ -44,7 +44,6 @@
       <p>When you feel happy with your creation, please publish it.</p>
     </form>
 
-
 <!--                <h2>Name <span>0/40</span></h2>-->
 <!--                <input type="text" name="deck-name" id="deck-name" maxlength="40">-->
 <!--                <h2>Cards</h2>-->
@@ -62,7 +61,7 @@
 </template>
 
 <script>
-  import db from '@/firebase/config';
+  // import db from '@/firebase/config';
 
   export default {
     data() {
@@ -77,10 +76,11 @@
         description: null,
         cards: [
             {
-              artist: "Artist 1",
-              song: "Song 1",
-              you_sing: "You sing 1",
-              they_sing: "they sing 1",
+              id: '1',
+              artist: null,
+              song: null,
+              you_sing: null,
+              they_sing: null,
             },
           ],
         artist: "",
@@ -91,39 +91,63 @@
       }
     },
     methods: {
+      addCard() {
+        console.log('addCard'+this.cards.length)
+        this.saveCard()
+        this.cards.push({
+          id: this.cards.length + 1,
+          artist: "",
+          song: "",
+          you_sing: "",
+          they_sing: "",
+        })
+        this.selectCard(this.cards.length-1)
+
+      },
       addDeck() {
-        console.log('Deck name = '+this.deck_name)
-        console.log('Description = '+this.description)
 
         if (this.deck_name) {
           this.feedback = null
+          this.localStorageDeck = []
 
-          // Add to database
-          db.collection("games").doc("kLPcReHvy654lK68qYYE").collection("decks").add({
-            id: this.id,
-            name: this.deck_name,
-            description: this.description,
-          }).then(() => {
-            this.$router.push({name: ''})
-          }).catch(err => {
-            console.log(err)
-          })
+          this.localStorageDeck.push({
+                  'Deck name': this.deck_name,
+                  'Deck description': this.description,
+                  'Deck cards': [this.cards],
+          });
+          console.dir(this.cards);
+          console.log('LOCALSTORAGE = '+JSON.stringify(this.localStorageDeck))
+
+          this.setToLocalstorage()
+
+          // TODO: First add to localstorage, later we can send to DB
+          // // Add to database
+          // db.collection("games").doc("kLPcReHvy654lK68qYYE").collection("decks").add({
+          //   id: this.id,
+          //   name: this.deck_name,
+          //   description: this.description,
+          // }).then(() => {
+          //   this.$router.push({name: ''})
+          // }).catch(err => {
+          //   console.log(err)
+          // })
 
         } else {
           this.feedback = 'You must enter a deck name!'
         }
       },
-      addCard() {
-        console.log('addCard'+this.cards.length)
-        this.saveCard()
-        this.cards.push({
-            id: this.cards.length,
-            artist: "",
-            song: "",
-            you_sing: "",
-            they_sing: "",
-          })
-        this.selectCard(this.cards.length-1)
+      updateTemplate() {
+        // TODO: Place contents in fields if localstorage exists
+
+        this.customAddDeck = JSON.parse(localStorage.getItem('customAddDeck'))
+        // this.artist = this.cards[this.currentCard]['artist']
+        // this.song = this.cards[this.currentCard]['song']
+        // this.youSing = this.cards[this.currentCard]['you-sing']
+        // this.theySing = this.cards[this.currentCard]['they-sing']
+      },
+      setToLocalstorage() {
+        localStorage.setItem("customAddDeck", JSON.stringify(this.localStorageDeck))
+        this.updateTemplate()
       },
       removeCard() {
         console.log('removeCard ' + this.card_id)

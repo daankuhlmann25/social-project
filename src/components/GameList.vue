@@ -60,7 +60,7 @@ export default {
     db.collection('games').get()
       .then(snapshot => {
         snapshot.forEach(doc => {
-          console.log(doc.id, " => ", doc.data());
+          // console.log(doc.id, " => ", doc.data());
           let game = doc.data()
           game.id = doc.id
           this.games.push(game)
