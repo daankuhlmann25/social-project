@@ -6,8 +6,8 @@
     <!-- <form @submit.prevent="addDeck"> -->
     <form v-on:change="addDeck">
       <div class="field title">
-        <label for="deck_name"><h2>Deck name:</h2></label>
-        <input type="text" id="deck_name" name="deck_name" placeholder="Name your deck" v-model="deck_name">
+        <label for="deckName"><h2>Deck name:</h2></label>
+        <input type="text" id="deckName" name="deckName" placeholder="Name your deck" v-model="deckName">
       </div>
       <div class="description">
         <label for="description"><h2>Description:</h2></label>
@@ -15,19 +15,19 @@
       </div>
       <h2>Cards</h2>
         <div class="cards-container">
-            <button type="button" :class="card_id === index ? 'card selected' : 'card'" @click="selectCard(index)" v-for="(card, index) in cards" :key="card[index]" :v-model="card[index]">{{ index+1 }}</button>
+            <button type="button" :class="cardId === index ? 'card selected' : 'card'" @click="selectCard(index)" v-for="(card, index) in cards" :key="card[index]" :v-model="card[index]">{{ index+1 }}</button>
             <button type="button" class="add-card" name="add-card" @click="addCard"><img src="@/assets/icons/plus.svg" width="20" height="20" alt="Plus icon"></button>
         </div>
       <section class="edit-card">
-        <input type="hidden" name="card_id" id="card_id" v-model="card_id">
+        <input type="hidden" name="cardId" id="cardId" v-model="cardId">
         <label for="artist"><h3>Artist</h3></label>
         <input type="text" name="artist" id="artist" placeholder="Artist name" v-model="artist" v-on:blur="saveCard">
         <label for="song"><h3>Song</h3></label>
         <input type="text" name="song" id="song" v-model="song" v-on:blur="saveCard" placeholder="Song name">
-        <label for="you_sing"><h3>You sing</h3></label>
-        <textarea name="you_sing" id="you_sing" rows="6" v-model="you_sing" v-on:blur="saveCard" placeholder="Lyrics"></textarea>
-        <label for="they_sing"><h3>They sing</h3></label>
-        <textarea name="they_sing" id="they_sing" rows="6" v-model="they_sing" placeholder="Lyrics"></textarea>
+        <label for="youSing"><h3>You sing</h3></label>
+        <textarea name="youSing" id="youSing" rows="6" v-model="youSing" v-on:blur="saveCard" placeholder="Lyrics"></textarea>
+        <label for="theySing"><h3>They sing</h3></label>
+        <textarea name="theySing" id="theySing" rows="6" v-model="theySing" placeholder="Lyrics"></textarea>
         <button type="button" @click="removeCard()" class="delete-card"><img src="@/assets/icons/delete.svg" width="16" height="16" alt="Delete card" title="Delete this card"></button>
       </section>
       <!-- TODO: Implement something like: https://github.com/runkids/vue2-timeago -->
@@ -70,23 +70,23 @@
         deckId: 1,
         another: null,
         id: null,
-        card_id: 0,
-        deck_name: null,
+        cardId: 0,
+        deckName: null,
         name: null,
         description: null,
         cards: [
             {
-              id: '1',
+              id: 0,
               artist: null,
               song: null,
-              you_sing: null,
-              they_sing: null,
+              youSing: null,
+              theySing: null,
             },
           ],
         artist: "",
         song: "",
-        you_sing: "",
-        they_sing: "",
+        youSing: "",
+        theySing: "",
         feedback: null,
       }
     },
@@ -98,22 +98,22 @@
           id: this.cards.length + 1,
           artist: "",
           song: "",
-          you_sing: "",
-          they_sing: "",
+          youSing: "",
+          theySing: "",
         })
         this.selectCard(this.cards.length-1)
 
       },
       addDeck() {
 
-        if (this.deck_name) {
+        if (this.deckName) {
           this.feedback = null
           this.localStorageDeck = []
 
           this.localStorageDeck.push({
-                  'Deck name': this.deck_name,
-                  'Deck description': this.description,
-                  'Deck cards': [this.cards],
+                  deckName: this.deckName,
+                  deckDescription: this.description,
+                  deckCards: [this.cards],
           });
           console.dir(this.cards);
           console.log('LOCALSTORAGE = '+JSON.stringify(this.localStorageDeck))
@@ -124,7 +124,7 @@
           // // Add to database
           // db.collection("games").doc("kLPcReHvy654lK68qYYE").collection("decks").add({
           //   id: this.id,
-          //   name: this.deck_name,
+          //   name: this.deckName,
           //   description: this.description,
           // }).then(() => {
           //   this.$router.push({name: ''})
@@ -150,16 +150,16 @@
         this.updateTemplate()
       },
       removeCard() {
-        console.log('removeCard ' + this.card_id)
+        console.log('removeCard ' + this.cardId)
 
         if (this.cards.length === 1)
           this.clearCard(0)
 
         else {
-          console.log('- slice: '+this.card_id);
+          console.log('- slice: '+this.cardId);
 
-          this.cards.splice(this.card_id, 1)
-          this.selectCard(this.getPreviousCard(this.card_id), false)
+          this.cards.splice(this.cardId, 1)
+          this.selectCard(this.getPreviousCard(this.cardId), false)
         }
       },
       getPreviousCard(cardId) {
@@ -167,12 +167,12 @@
         return cardId ? cardId-1 : 0;
       },
       clearCard() {
-        console.log('clearCard ' + this.card_id)
+        console.log('clearCard ' + this.cardId)
 
-        this.cards[this.card_id].artist     = this.artist     = ""
-        this.cards[this.card_id].song       = this.song       = ""
-        this.cards[this.card_id].you_sing   = this.you_sing   = ""
-        this.cards[this.card_id].they_sing  = this.they_sing  = ""
+        this.cards[this.cardId].artist     = this.artist     = ""
+        this.cards[this.cardId].song       = this.song       = ""
+        this.cards[this.cardId].youSing   = this.youSing   = ""
+        this.cards[this.cardId].theySing  = this.theySing  = ""
       },
       selectCard(cardId, save = true) {
         console.log('selectCard('+cardId+")")
@@ -180,19 +180,19 @@
         if (save)
           this.saveCard()
 
-        this.card_id    = cardId
+        this.cardId    = cardId
         this.artist     = this.cards[cardId].artist
         this.song       = this.cards[cardId].song
-        this.you_sing   = this.cards[cardId].you_sing
-        this.they_sing  = this.cards[cardId].they_sing
+        this.youSing   = this.cards[cardId].youSing
+        this.theySing  = this.cards[cardId].theySing
       },
       saveCard() {
-        console.log('saveCard ' + this.card_id)
+        console.log('saveCard ' + this.cardId)
 
-        this.cards[this.card_id].artist     = this.artist
-        this.cards[this.card_id].song       = this.song
-        this.cards[this.card_id].you_sing   = this.you_sing
-        this.cards[this.card_id].they_sing  = this.they_sing
+        this.cards[this.cardId].artist     = this.artist
+        this.cards[this.cardId].song       = this.song
+        this.cards[this.cardId].youSing   = this.youSing
+        this.cards[this.cardId].theySing  = this.theySing
       },
     }
   }

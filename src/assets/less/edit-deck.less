@@ -52,8 +52,6 @@
     margin-bottom: 15px;
 
     button {
-      border: none;
-      cursor: pointer;
 
       &.card, &.add-card {
         font-size: 10px;
@@ -88,22 +86,21 @@
         padding: 20px;
       }
 
-      &.delete-card {
-        padding: 12px;
-        background-color: @sunset;
-        margin: 16px 0 0 auto;
-        display: flex;
-        border-radius: 6px;
-
-        &:focus, &:hover {
-          background-color: #b12d3c;
-        }
-      }
-
+      
       &:focus, &:hover {
-        outline: none;
         background-color: fade(@black, 40%);
       }
+    }
+  }
+  button.delete-card {
+    padding: 12px;
+    background-color: @sunset;
+    margin: 16px 0 0 auto;
+    display: flex;
+    border-radius: 6px;
+
+    &:focus, &:hover {
+      background-color: #b12d3c;
     }
   }
 
