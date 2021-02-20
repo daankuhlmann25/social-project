@@ -4,7 +4,7 @@
     font-size: 16px;
     margin: @spacing__l 0 @spacing__ms;
   }
-  
+
   h3 {
     font-weight: bold;
     font-size: 12px;
@@ -26,11 +26,11 @@
     background-color: fade(@black, 15%);
     padding: 1px 8px @spacing__m;
   }
-  
+
   .deck-navigation {
     display: flex;
     justify-content: space-between;
-    
+
     margin-top: @spacing__l;
   }
 
@@ -46,58 +46,65 @@
     }
   }
 
-  button {
-    border: none;
-    cursor: pointer;
+  .cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
 
-    &.card, &.add-card {
-      font-size: 10px;
-      color: @light-grey;
-      text-align: left;
-      padding: 2px 4px 16px;
-      margin-right: 8px;
-      background-color: fade(@black, 15%);
-      border-radius: 3px;
-    }
+    button {
+      border: none;
+      cursor: pointer;
 
-    &.card::after {
-      content: "";
-      background-color: @light-grey;
-      width: 21px;
-      height: 29px;
-      display: block;
-      margin: 2px 16px 0;
-      border-radius: 3px;
-    }
+      &.card, &.add-card {
+        font-size: 10px;
+        color: @light-grey;
+        text-align: left;
+        padding: 2px 4px 16px;
+        margin-right: 8px;
+        margin-bottom: 8px;
+        background-color: fade(@black, 15%);
+        border-radius: 3px;
+      }
 
-    &.card.selected {
-      background-color: fade(@black, 33%);
+      &.card::after {
+        content: "";
+        background-color: @light-grey;
+        width: 21px;
+        height: 29px;
+        display: block;
+        margin: 2px 16px 0;
+        border-radius: 3px;
+      }
+
+      &.card.selected {
+        background-color: fade(@black, 33%);
+
+        &:focus, &:hover {
+          background-color: fade(@black, 50%);
+        }
+      }
+
+      &.add-card {
+        padding: 20px;
+      }
+
+      &.delete-card {
+        padding: 12px;
+        background-color: @sunset;
+        margin: 16px 0 0 auto;
+        display: flex;
+        border-radius: 6px;
+
+        &:focus, &:hover {
+          background-color: #b12d3c;
+        }
+      }
 
       &:focus, &:hover {
-        background-color: fade(@black, 50%);
+        outline: none;
+        background-color: fade(@black, 40%);
       }
-    }
-
-    &.add-card {
-      padding: 16px;
-    }
-    
-    &.delete-card {
-      padding: 12px;
-      background-color: @sunset;
-      margin: 16px 0 0 auto;
-      display: flex;
-      border-radius: 6px;
-
-      &:focus, &:hover {
-        background-color: #b12d3c;
-      }
-    }
-
-    &:focus, &:hover {
-      outline: none;
-      background-color: fade(@black, 40%);
     }
   }
-  
+
 }

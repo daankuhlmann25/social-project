@@ -1,10 +1,10 @@
 <template>
   <section class="list-decks">
     <h2>My decks ({{ gameId }})</h2>
-    <!-- TODO: Fetch decks from local storage -->
     <div class="decks-group">
       <ul>
         <li>
+          <!-- TODO: Make this dynamic, Fetch from localstorage -->
           <router-link :to="{ name: 'Deck', params: { deckId: 1 } }">
             <img class="game-icon" width="28" height="28" alt="Deck icon" src="@/assets/icons/deck.svg" />
             <div class="game-info">
@@ -19,7 +19,7 @@
           <router-link class="add-deck" :to="{ path: 'add-deck'}" append>
             <img class="add-deck" width="28" height="28" alt="Add deck icon" src="@/assets/icons/add-deck.svg" />
             <div class="game-info">
-              <div class="title">Add deck (test)</div>
+              <div class="title">Add deck</div>
               <div class="subtitle">Missing a deck? Create one here.</div>
             </div>
             <img class="icon-arrow" width="9" height="14" alt="" src="@/assets/icons/arrow-right.svg"/>

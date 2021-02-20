@@ -14,8 +14,10 @@
         <textarea name="description" id="description" cols="30" rows="10" placeholder="What is in the deck?" v-model="description"></textarea>
       </div>
       <h2>Cards</h2>
-      <button type="button" :class="card_id === index ? 'card selected' : 'card'" @click="selectCard(index)" v-for="(card, index) in cards" :key="card[index]" :v-model="card[index]">{{ index+1 }}</button>
-      <button type="button" class="add-card" name="add-card" @click="addCard"><img src="@/assets/icons/plus.svg" width="20" height="20" alt="Plus icon"></button>
+        <div class="cards-container">
+            <button type="button" :class="card_id === index ? 'card selected' : 'card'" @click="selectCard(index)" v-for="(card, index) in cards" :key="card[index]" :v-model="card[index]">{{ index+1 }}</button>
+            <button type="button" class="add-card" name="add-card" @click="addCard"><img src="@/assets/icons/plus.svg" width="20" height="20" alt="Plus icon"></button>
+        </div>
       <section class="edit-card">
         <input type="hidden" name="card_id" id="card_id" v-model="card_id">
         <label for="artist"><h3>Artist</h3></label>
@@ -75,7 +77,7 @@
         description: null,
         cards: [
             {
-              artist: "Artist 1", 
+              artist: "Artist 1",
               song: "Song 1",
               you_sing: "You sing 1",
               they_sing: "they sing 1",
@@ -116,7 +118,7 @@
         this.saveCard()
         this.cards.push({
             id: this.cards.length,
-            artist: "", 
+            artist: "",
             song: "",
             you_sing: "",
             they_sing: "",
@@ -125,13 +127,13 @@
       },
       removeCard() {
         console.log('removeCard ' + this.card_id)
-        
+
         if (this.cards.length === 1)
           this.clearCard(0)
 
         else {
           console.log('- slice: '+this.card_id);
-          
+
           this.cards.splice(this.card_id, 1)
           this.selectCard(this.getPreviousCard(this.card_id), false)
         }
@@ -142,7 +144,7 @@
       },
       clearCard() {
         console.log('clearCard ' + this.card_id)
-        
+
         this.cards[this.card_id].artist     = this.artist     = ""
         this.cards[this.card_id].song       = this.song       = ""
         this.cards[this.card_id].you_sing   = this.you_sing   = ""
@@ -150,10 +152,10 @@
       },
       selectCard(cardId, save = true) {
         console.log('selectCard('+cardId+")")
-        
+
         if (save)
           this.saveCard()
-        
+
         this.card_id    = cardId
         this.artist     = this.cards[cardId].artist
         this.song       = this.cards[cardId].song
@@ -162,7 +164,7 @@
       },
       saveCard() {
         console.log('saveCard ' + this.card_id)
-        
+
         this.cards[this.card_id].artist     = this.artist
         this.cards[this.card_id].song       = this.song
         this.cards[this.card_id].you_sing   = this.you_sing

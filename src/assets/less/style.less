@@ -28,6 +28,13 @@ body {
     margin-bottom: @spacing__s;
   }
 
+  .button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
   a {
     color: @white;
 
@@ -39,6 +46,21 @@ body {
       text-decoration: none;
       font-size: @font-size__m;
       font-weight: @font-weight__bold;
+
+      img {
+        margin-right: @spacing__base;
+      }
+    }
+
+    &.white-button {
+      text-align: center;
+      background: @white;
+      padding: 10px 15px;
+      color: @black;
+      border-radius: 3px;
+      margin: 10px 0;
+      font-weight: bold;
+      color: #2A2831;
 
       img {
         margin-right: @spacing__base;
@@ -169,7 +191,7 @@ body {
 
           li {
             align-items: stretch;
-            
+
             a {
               margin: 0;
               flex-wrap: wrap;
@@ -252,9 +274,9 @@ body {
         margin: 0 auto;
         flex-direction: column;
         align-items: center;
-        
+
         margin-top: 56px;
-        
+
         a {
           display: inline-flex;
           border-radius: 50%;
@@ -381,11 +403,11 @@ body {
 
     // The end
     .the-end {
-      
+
       hgroup {
         text-align: center;
       }
-      
+
       h1 {
 
         span {
@@ -489,7 +511,7 @@ body {
         h2, h3 {
           color: @white;
         }
-        
+
         hgroup h2 {
           margin: 0;
         }
@@ -524,6 +546,13 @@ body {
       .close {
         background: fade(@night-sky, 70%);
         backdrop-filter: blur(@spacing__xl);
+      }
+    }
+
+    // Send Deck
+    .send-deck {
+      h1, p {
+        text-align: center;
       }
     }
 

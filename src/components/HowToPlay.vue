@@ -25,7 +25,7 @@ import { mapMutations, mapState } from 'vuex'
 
 export default {
   name: 'HowToPlay',
-  
+
   computed: {
     ...mapState({
       showHowToPlay: state => state.header.showHowToPlay,

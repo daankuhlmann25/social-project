@@ -14,6 +14,7 @@ import SingTogether from "@/views/games/SingTogether";
 import PlaySingTogether from "@/views/games/PlaySingTogether";
 import Trivia from "@/views/games/Trivia";
 import PlayTrivia from "@/views/games/PlayTrivia";
+import SendDeck from "../views/SendDeck";
 
 Vue.use(VueRouter);
 
@@ -44,6 +45,11 @@ const routes = [
         path: ":gameId/:deckId/edit",
         name: "Edit deck",
         component: EditDeck,
+      },
+      {
+        path: "/send-deck",
+        name: "Send deck",
+        component: SendDeck,
       },
       {
         path: ":gameId/:deckSlug?/:deckId/the-end",
