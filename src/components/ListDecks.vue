@@ -41,7 +41,7 @@
             <img class="game-icon" width="28" height="36" alt="" src="@/assets/icons/deck.svg" />
             <div class="game-info">
               <div class="title">{{ deck.name }}</div>
-              <div class="subtitle">{{ deck.numberOfCards }} cards • {{ deck.user.id }}</div>
+              <div class="subtitle">{{ deck.numberOfCards }} cards • {{ deck.user }}</div>
             </div>
             <img class="icon-arrow" width="9" height="14" alt="" src="@/assets/icons/arrow-right.svg"/>
           </router-link> 
@@ -64,17 +64,17 @@ import db from '@/firebase/config'
       }
     },
     created() {
-      db.collection('games').doc("kLPcReHvy654lK68qYYE").collection("decks")
+      // TODO: Should be like this: db.collection("games").doc(this.$route.params.gameId).collection("decks")
+      db.collection("games").doc("J3DYLUL2yczOcwUVOBbW").collection("decks")
         .get()
         .then(snapshot => {
           snapshot.forEach(doc => {
-            console.log(doc.id, " => ", doc.data());
             let deck = doc.data()
             deck.id = doc.id
             this.decks.push(deck)
           })
         })
-    }
+    },
   }
 </script>
 

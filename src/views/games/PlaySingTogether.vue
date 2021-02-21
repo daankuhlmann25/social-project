@@ -86,8 +86,8 @@ import db from '@/firebase/config';
         this.cards = JSON.parse(localStorage.getItem('cards'))
         this.artist = this.cards[this.currentCard]['artist']
         this.song = this.cards[this.currentCard]['song']
-        this.youSing = this.cards[this.currentCard]['you-sing']
-        this.theySing = this.cards[this.currentCard]['they-sing']
+        this.youSing = this.cards[this.currentCard]['youSing']
+        this.theySing = this.cards[this.currentCard]['theySing']
         localStorage.setItem('currentCard', this.currentCard)
       },
       setToLocalstorage() {
@@ -134,7 +134,8 @@ import db from '@/firebase/config';
       }
       // Deck from db (All decks)
       else {
-        db.collection("games").doc("kLPcReHvy654lK68qYYE").collection("decks").doc("JQO7kVtkgnkjY60ycauZ").collection("cards")
+        // TODO: Should be: db.collection("games").doc(this.$route.params.gameId).collection("decks").doc(this.$route.params.deckId).collection("cards")
+        db.collection("games").doc("J3DYLUL2yczOcwUVOBbW").collection("decks").doc(this.$route.params.deckId).collection("cards")
           .get()
           .then(snapshot => {
             snapshot.forEach((doc) => {

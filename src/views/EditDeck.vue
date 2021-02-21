@@ -121,7 +121,7 @@
 
           // TODO: First add to localstorage, later we can send to DB
           // // Add to database
-          // db.collection("games").doc("kLPcReHvy654lK68qYYE").collection("decks").add({
+          // db.collection("games").doc("J3DYLUL2yczOcwUVOBbW").collection("decks").add({
           //   id: this.id,
           //   name: this.deckName,
           //   description: this.description,

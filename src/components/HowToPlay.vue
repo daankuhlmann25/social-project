@@ -40,7 +40,7 @@ export default {
   
   created() {
     //TODO: Fetch data from database (local storage)
-    // db.collection('games').get()
+    // db.collection("games").get()
     //   .then(snapshot => {
     //     snapshot.forEach(doc => {
     //       console.log(doc.id, " => ", doc.data());
