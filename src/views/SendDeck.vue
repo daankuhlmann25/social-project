@@ -4,8 +4,6 @@
     <p>We’ll take a look at it and publish it as soon as possible, promise.</p>
     <p>Thank you, you’re the best! <img width="14" height="17" src="../assets/icons/text-heart.svg" alt="Heart icon"></p>
     <div class="button-container">
-      <!-- TODO: make arrow-left-black version -->
-      <!-- TODO: Change link to correct position, whats that? Current game main page. -->
       <router-link class="button" :to="{ name: 'Game', params: { gameId: this.gameId } }"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" alt="Back arrow icon">Sing Together</router-link>
     </div>
   </div>
