@@ -65,6 +65,7 @@ export default {
 </script>
 
 <style scoped>
+/* TODO: make grunt compile scoped css and use @import url("./assets/css/home.css"); */
 .statistics {
   text-align: center;
   margin-top: 24px;
