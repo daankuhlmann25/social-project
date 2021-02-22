@@ -130,7 +130,15 @@ import db from '@/firebase/config';
 
       //Deck from localStorage (My decks)
       if (!this.$route.params.deckSlug) {
-        console.log('My decks');
+        console.log('Deck from localStorage (My decks)')
+
+        this.songArray = JSON.parse(localStorage.getItem("myDecks"))[this.$route.params.gameId].decks[this.$route.params.deckId].cards
+        this.amountOfCards = this.songArray.length
+
+        if (!this.$route.params.cardPosition) //When you just pushed the Play-button
+          this.setToLocalstorage()
+        else
+          this.goToCard(parseInt(this.$route.params.cardPosition), false) //Go to card without route change
       }
       // Deck from db (All decks)
       else {
