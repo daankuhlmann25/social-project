@@ -1,25 +1,20 @@
 <template>
   <section class="list-decks">
-    <h2>My decks ({{ gameId }})</h2>
+    <h2>My decks</h2>
     <div class="decks-group">
       <ul>
-        <li>
-          <!-- TODO: Make this dynamic, Fetch from localstorage
-          Step 1: Add deck and send to localstorage
-          Step 2: Retrieve games from localstorage and put in <li> with router-link
-          Step 3: Fix Edit Deck and make it possible to edit deck and save it to localstorage
-          Step 4: Make it possible to "Send deck" from localstorage to seperate collection in Firebase
-          -->
+        <li v-for="(deck, index) in myDecks" :key="index">
+          <!-- TODO: Make it possible to "Send deck" from localstorage to seperate collection in Firebase -->
 
-          <router-link :to="{ name: 'Deck', params: { deckId: 1 } }">
+          <router-link :to="{ name: 'Deck', params: { deckId: index } }">
             <img class="game-icon" width="28" height="28" alt="Deck icon" src="@/assets/icons/deck.svg" />
             <div class="game-info">
-              <div class="title">My best deck</div>
-              <div class="subtitle">5 cards • My Name</div>
+              <div class="title">{{ deck.name }}</div>
+              <div class="subtitle">{{ deck.cards.length }} • {{ deck.author }}</div>
             </div>
             <img class="icon-arrow" width="9" height="14" alt="" src="@/assets/icons/arrow-right.svg"/>
           </router-link>
-          <router-link :to="{ name: 'Edit deck', params: {deckId: 1} }" class="deck-edit" append>Edit</router-link>
+          <router-link :to="{ name: 'Edit deck', params: {deckId: index} }" class="deck-edit" append>Edit</router-link>
         </li>
         <li>
           <router-link class="add-deck" :to="{ path: 'add-deck'}" append>
@@ -64,6 +59,8 @@ import db from '@/firebase/config'
       }
     },
     created() {
+      this.populateMyDecks()
+
       // TODO: Should be like this: db.collection("games").doc(this.$route.params.gameId).collection("decks")
       db.collection("games").doc("J3DYLUL2yczOcwUVOBbW").collection("decks")
         .get()
@@ -75,6 +72,15 @@ import db from '@/firebase/config'
           })
         })
     },
+    methods: {
+      populateMyDecks() {
+        if (localStorage.getItem("myDecks")) {
+          const myDecks = JSON.parse(localStorage.getItem("myDecks"))
+
+          this.myDecks = myDecks[this.gameId].decks.length ? myDecks[this.gameId].decks : []
+        }
+      },
+    }
   }
 </script>
 
