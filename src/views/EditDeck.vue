@@ -6,8 +6,8 @@
     <!-- <form @submit.prevent="saveDeck"> -->
     <form v-on:change="saveDeck">
       <div class="field title">
-        <label for="deck-name"><h2>Deck name:</h2></label>
-        <input type="text" id="deck-name" name="deck-name" placeholder="Name your deck" v-model="name">
+        <label for="deck-name"><h2>Deck name:<span>0/40</span></h2></label>
+        <input type="text" id="deck-name" name="deck-name" placeholder="Name your deck" maxlength="40" v-model="name">
       </div>
       <div class="description">
         <label for="description"><h2>Description:</h2></label>
@@ -30,6 +30,13 @@
         <textarea name="theySing" id="theySing" rows="6" v-model="theySing" placeholder="Lyrics"></textarea>
         <button type="button" @click="removeCard()" class="delete-card"><img src="@/assets/icons/delete.svg" width="16" height="16" alt="Delete card" title="Delete this card"></button>
       </section>
+      <h2 class="white">Want to publish your deck?</h2>
+      <h2>Your name <span>Public</span></h2>
+      <input type="text" name="author" id="author" v-model="author">
+      <h2>E-mail <span>Not public</span></h2>
+      <input type="email" name="email" id="email" v-model="email">
+      <h2>Message <span>Not public</span></h2>
+      <textarea name="message" id="message" rows="6" v-model="message"></textarea>
       <!-- TODO: Implement something like: https://github.com/runkids/vue2-timeago -->
       <aside class="save-status">
         <p><strong>Deck saved!</strong> <span id="save-time">Just seconds ago</span></p>
@@ -39,24 +46,11 @@
         <router-link class="button right" :to="{ name: 'Deck', params: { deckId: this.deckId } }"><img src="@/assets/icons/deck.svg" width="17" height="17" alt="Play icon">Play deck</router-link>
       </nav>
       <!-- <p v-if="feedback" class="errors">{{ feedback }}</p> -->
-      <h2 class="white">Want to publish your deck?</h2>
       <p>We would love you to share your fantastic deck with all our fellow players!</p>
       <p>When you feel happy with your creation, please publish it.</p>
+      <button type="button">Publish on social.gg</button>
     </form>
 
-<!--                <h2>Name <span>0/40</span></h2>-->
-<!--                <input type="text" name="deck-name" id="deck-name" maxlength="40">-->
-<!--                <h2>Cards</h2>-->
-<!--                <h2>Your name <span>Public</span></h2>-->
-<!--                <input type="text" name="name" id="name">-->
-<!--                <h2>E-mail <span>Not public</span></h2>-->
-<!--                <input type="email" name="email" id="email">-->
-<!--                <h2>E-mail <span>Not public</span></h2>-->
-<!--                <textarea name="message" id="message" rows="6"></textarea>-->
-<!--                <input type="submit" value="Save">-->
-<!--                <p>We would love you to share your fantastic deck with all our fellow players!</p>-->
-<!--                <p>When you feel happy with your creation, please publish it.</p>-->
-<!--                <button type="submit">Publish on social.gg</button>-->
   </div>
 </template>
 
@@ -72,6 +66,9 @@
         myDecks: {},
         name: "",
         description: "",
+        author: "",
+        email: "",
+        message: "",
         cards: [
             {
               artist: "",
@@ -84,13 +81,13 @@
         song: "",
         youSing: "",
         theySing: "",
-        feedback: "",
+        // feedback: "",
       }
     },
     created() {
 
       // Edit an existing deck
-      if (this.$route.params.deckId) {
+      if (this.$route.params.deckId >= 0) {
         console.log("Edit an existing deck");
         this.deckId = this.$route.params.deckId
         this.myDecks = JSON.parse(localStorage.getItem("myDecks"))
@@ -102,6 +99,9 @@
 
           this.name = myDeck.name
           this.description = myDeck.description
+          this.author = myDeck.author
+          this.email = myDeck.email
+          this.message = myDeck.message
           this.cards = myDeck.cards
 
           this.selectCard(this.currentCard, false, false)
@@ -152,6 +152,9 @@
         return {
           name: this.name,
           description: this.description,
+          author: this.author,
+          email: this.email,
+          message: this.message,
           cards: this.cards,
         }
       },
@@ -168,9 +171,11 @@
       saveDeck() {
         console.log("saveDeck()");
 
-
         this.myDecks[this.gameId].decks[this.deckId].name = this.name
         this.myDecks[this.gameId].decks[this.deckId].description = this.description
+        this.myDecks[this.gameId].decks[this.deckId].author = this.author
+        this.myDecks[this.gameId].decks[this.deckId].email = this.email
+        this.myDecks[this.gameId].decks[this.deckId].message = this.message
         this.saveCard()
         this.myDecks[this.gameId].decks[this.deckId].cards = this.cards
 
