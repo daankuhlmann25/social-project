@@ -21,8 +21,6 @@ export default {
   created() {
     // Set header right
     this.$store.commit('header/setRight', 'gameList')
-
-    localStorage.setItem('currentGame', this.$route.params.gameId)
   },
 }
 </script>

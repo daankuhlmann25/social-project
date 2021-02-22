@@ -88,7 +88,6 @@ import db from '@/firebase/config';
         this.song = this.cards[this.currentCard]['song']
         this.youSing = this.cards[this.currentCard]['youSing']
         this.theySing = this.cards[this.currentCard]['theySing']
-        localStorage.setItem('currentCard', this.currentCard)
       },
       setToLocalstorage() {
         this.randomizedSongArray = this.shuffle(this.songArray)
