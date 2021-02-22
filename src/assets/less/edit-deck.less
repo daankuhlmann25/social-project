@@ -1,8 +1,34 @@
 .edit-deck {
 
   h2 {
+    display: flex;
+    justify-content: space-between;
     font-size: 16px;
     margin: @spacing__l 0 @spacing__ms;
+
+    &.white {
+      font-size: 20px;
+      margin: 32px 0 16px;
+      color: @white;
+    }
+
+    .counter {
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: fade(@white, 50%);
+      align-self: center;
+    }
+    
+    .visibility {
+      font-weight: normal;
+      font-size: 12px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: @sunset;
+      align-self: center;
+    }
   }
 
   h3 {
@@ -70,7 +96,7 @@
         width: 21px;
         height: 29px;
         display: block;
-        margin: 2px 16px 0;
+        margin: 2px 12px 0;
         border-radius: 3px;
       }
 
@@ -83,7 +109,8 @@
       }
 
       &.add-card {
-        padding: 20px;
+        padding: 16px;
+        margin-right: 0;
       }
 
       
@@ -92,6 +119,7 @@
       }
     }
   }
+
   button.delete-card {
     padding: 12px;
     background-color: @sunset;
