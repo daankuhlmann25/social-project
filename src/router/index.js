@@ -37,12 +37,12 @@ const routes = [
         }
       },
       {
-        path: ":gameId/add-deck",
+        path: ":gameId/:deckId?/add-deck/:cardPosition?",
         name: "Add deck",
         component: EditDeck,
       },
       {
-        path: ":gameId/:deckId/edit",
+        path: ":gameId/:deckId/edit-deck/:cardPosition?",
         name: "Edit deck",
         component: EditDeck,
       },
