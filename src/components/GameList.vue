@@ -10,7 +10,7 @@
         <ul>
           <li v-for="(game, index) in games" :key="index" v-on:click="closeGameList">
             <router-link :to="'/party-games/' + game.slug">
-              <img class="game-icon" width="50" height="50" :alt="game['icon-name'] + ' icon'" :src="iconUrl(game['icon-name'])"/>
+              <img class="game-icon" width="50" height="50" :alt="game.iconName + ' icon'" :src="iconUrl(game.iconName)"/>
               <div class="game-info">
                 <span class="title">{{ game.title }}</span>
                 <span class="subtitle">{{ game.subtitle }}</span>
@@ -57,7 +57,7 @@ export default {
   },
   created() {
     //Fetch data from database
-    db.collection('games').get()
+    db.collection("games").get()
       .then(snapshot => {
         snapshot.forEach(doc => {
           // console.log(doc.id, " => ", doc.data());
