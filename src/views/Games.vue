@@ -15,6 +15,14 @@ import GameList from '@/components/GameList'
 export default {
   name: 'Games',
   components: { GameList, Header },
+  data() {
+    return {
+      niceGameName: {
+        ['sing-together']: "Sing together",
+        trivia: "Trivia"
+      },
+    }
+  },
   computed: {
     showGameList () { return this.$store.state.header.showGameList }
   },

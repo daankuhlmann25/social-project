@@ -15,7 +15,7 @@
     />
     <hgroup>
       <h5>All done!</h5>
-      <h1>You have reached the end of <span>{{$route.params.deckId}}</span></h1>
+      <h1>You have reached the end of <span>{{ deckName }}</span></h1>
     </hgroup>
     <ListDecks />
   </div>
@@ -32,6 +32,7 @@ export default {
   data() {
     return {
       showGameList: false,
+      deckName: this.$route.params.deckId, // TODO: change to deck name
     }
   },
   methods: {

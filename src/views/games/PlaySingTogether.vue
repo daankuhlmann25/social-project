@@ -33,16 +33,16 @@
       <span :class="currentCard > 0 ? 'icon-cards left colored' : 'icon-cards left'" v-on:click="goToPreviousCard()">
           <img src="@/assets/icons/arrow-next.svg" width="16" height="16" alt="Previous">
       </span>
-      <span class="amount-of-cards">
+      <span class="number-of-cards">
         <div class="number">
           <div class="legend">CARD</div>
         </div>
           <span class="counting">
-              {{ currentCard + 1 }} / {{ amountOfCards }}
+              {{ currentCard + 1 }} / {{ numberOfCards }}
           </span>
       </span>
       <span class="icon-cards right" v-on:click="goToNextCard()">
-          <img :src="currentCard === amountOfCards - 1 ? require('@/assets/icons/check.svg') : require('@/assets/icons/arrow-next.svg')" width="16" height="16" alt="Next">
+          <img :src="currentCard === numberOfCards - 1 ? require('@/assets/icons/check.svg') : require('@/assets/icons/arrow-next.svg')" width="16" height="16" alt="Next">
       </span>
     </div>
   </div>
@@ -62,7 +62,7 @@ import db from '@/firebase/config';
         youSing: '',
         theySing: '',
         songArray: [],
-        amountOfCards: '',
+        numberOfCards: '',
         currentCard: 0,
         randomizedSongArray: [],
         localStorageData: [],
@@ -111,7 +111,7 @@ import db from '@/firebase/config';
         }
       },
       goToNextCard() {
-        if (this.currentCard < this.amountOfCards - 1) {
+        if (this.currentCard < this.numberOfCards - 1) {
           this.currentCard++
           this.goToCard(this.currentCard)
         }
@@ -132,7 +132,7 @@ import db from '@/firebase/config';
         console.log('Deck from localStorage (My decks)')
 
         this.songArray = JSON.parse(localStorage.getItem("myDecks"))[this.$route.params.gameId].decks[this.$route.params.deckId].cards
-        this.amountOfCards = this.songArray.length
+        this.numberOfCards = this.songArray.length
 
         if (!this.$route.params.cardPosition) //When you just pushed the Play-button
           this.setToLocalstorage()
@@ -141,16 +141,14 @@ import db from '@/firebase/config';
       }
       // Deck from db (All decks)
       else {
-        // TODO: Should be: db.collection("games").doc(this.$route.params.gameId).collection("decks").doc(this.$route.params.deckId).collection("cards")
-        db.collection("games").doc("J3DYLUL2yczOcwUVOBbW").collection("decks").doc(this.$route.params.deckId).collection("cards")
+        db.collection("games").doc(this.$route.params.gameId).collection("decks").doc(this.$route.params.deckId).collection("cards")
           .get()
           .then(snapshot => {
             snapshot.forEach((doc) => {
               this.songArray.push(doc.data())
             });
 
-            this.shuffle(this.songArray);
-            this.amountOfCards = snapshot.size;
+            this.numberOfCards = snapshot.size;
 
             if (!this.$route.params.cardPosition) //When you just pushed the Play-button
               this.setToLocalstorage()

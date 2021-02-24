@@ -1,16 +1,16 @@
 <template>
   <div class="edit-deck">
-    <h5>{{$route.params.gameId}}</h5>
+    <h5>{{ gameName }}</h5>
     <h1>{{$route.name}}</h1>
 
     <form v-on:change="saveDeck">
       <div class="field title">
-        <label for="deck-name"><h2>Deck name:<span class="counter">0/40</span></h2></label>
+        <label for="deck-name"><h2>Deck name:<span class="counter">{{ name.length }}/40</span></h2></label>
         <input type="text" id="deck-name" name="deck-name" placeholder="Name your deck" maxlength="40" v-model="name">
       </div>
       <div class="description">
         <label for="description"><h2>Description:</h2></label>
-        <textarea name="description" id="description" cols="30" rows="10" placeholder="What is in the deck?" v-model="description"></textarea>
+        <textarea name="description" id="description" rows="6" placeholder="What is in the deck?" v-model="description"></textarea>
       </div>
       <h2>Cards</h2>
         <div class="cards-container">
@@ -24,9 +24,9 @@
         <label for="song"><h3>Song</h3></label>
         <input type="text" name="song" id="song" v-model="song" placeholder="Song name">
         <label for="youSing"><h3>You sing</h3></label>
-        <textarea name="youSing" id="youSing" rows="6" v-model="youSing" placeholder="Lyrics"></textarea>
+        <textarea name="youSing" id="youSing" rows="3" v-model="youSing" placeholder="Lyrics"></textarea>
         <label for="theySing"><h3>They sing</h3></label>
-        <textarea name="theySing" id="theySing" rows="6" v-model="theySing" placeholder="Lyrics"></textarea>
+        <textarea name="theySing" id="theySing" rows="3" v-model="theySing" placeholder="Lyrics"></textarea>
         <button type="button" @click="removeCard()" class="delete-card"><img src="@/assets/icons/delete.svg" width="16" height="16" alt="Delete card" title="Delete this card"></button>
       </section>
       <h2>Your name <span class="visibility">Public</span></h2>
@@ -60,6 +60,7 @@
     data() {
       return {
         gameId: this.$route.params.gameId,
+        gameName: this.$parent.niceGameName[this.$route.params.gameId],
         deckId: null,
         currentCard: this.$route.params.cardPosition ? this.$route.params.cardPosition : 0,
         myDecks: {},
@@ -144,6 +145,8 @@
           [this.gameId]: this.generateDecksObject()
         })
         )
+
+        this.myDecks = JSON.parse(localStorage.getItem("myDecks"))
       }
     },
     methods: {
@@ -169,6 +172,7 @@
       },
       saveDeck() {
         console.log("saveDeck()");
+        console.log(this.gameId);
 
         this.myDecks[this.gameId].decks[this.deckId].name = this.name
         this.myDecks[this.gameId].decks[this.deckId].description = this.description
@@ -182,7 +186,7 @@
 
         // TODO: First add to localstorage, later we can send to DB
         // // Add to database
-        // db.collection("games").doc("J3DYLUL2yczOcwUVOBbW").collection("decks").add({
+        // db.collection("games").doc(this.$route.params.gameId).collection("decks").add({
         //   name: this.name,
         //   description: this.description,
         // }).then(() => {
