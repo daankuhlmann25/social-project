@@ -62,7 +62,7 @@ export default {
             id: "Sing together",
             slug: "sing-together",
             title: "Sing together",
-            subTitle: "Subtitle of the game",
+            subtitle: "Subtitle of the game",
             howToPlay: "You take turns answering questions. If your answer is correct, you gain one point and get to answer another question. If you get it wrong, it’s the next persons turn.",
             iconName: "music",
         });
@@ -90,7 +90,7 @@ export default {
             id: "trivia",
             slug: "trivia",
             title: "Trivia",
-            subTitle: "Questions and answers",
+            subtitle: "Questions and answers",
             howToPlay: "You take turns answering questions. If your answer is correct, you gain one point and get to answer another question. If you get it wrong, it’s the next persons turn.",
             iconName: "qna",
         });
