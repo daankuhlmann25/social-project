@@ -15,6 +15,7 @@ import PlaySingTogether from "@/views/games/PlaySingTogether";
 import Trivia from "@/views/games/Trivia";
 import PlayTrivia from "@/views/games/PlayTrivia";
 import SendDeck from "@/views/SendDeck";
+import UpdateDatabase from "../views/UpdateDatabase";
 
 Vue.use(VueRouter);
 
@@ -85,6 +86,11 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
     import(/* webpackChunkName: "about" */ "../views/About.vue")
+  },
+  {
+    path: "/update-db",
+    name: "Update database",
+    component: UpdateDatabase,
   },
   {
     path: "*",
