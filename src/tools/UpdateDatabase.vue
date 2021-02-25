@@ -42,7 +42,7 @@ export default {
     pushSingleFile() {
       db.collection("games").doc("sing-together").update({
         // Change this for 1 item.
-        id: "Sing together"
+        author: "Martin Beast"
       })
       .then(() => {
         console.log("Item successfully updated!");
@@ -67,37 +67,16 @@ export default {
             iconName: "music",
         });
 
-        // Add "decks" & "cards"
-        // Try to do it with an array with multiple values, but diddnt work they will get seperated because of the generated unknown ID from firebase.
-        // let array = [
-        // {
-        //   artist: "Beyonce",
-        //   song: "Single Ladies (Put a Ring on It)",
-        //   theySing: "Now put your hands up, oh, oh, oh",
-        //   youSing: "All the single ladies"
-        // },
-        // {
-        //   artist: "Michael Jackson",
-        //   song: "Billie Jean",
-        //   theySing: "She's just a girl who claims that I am the one",
-        //   youSing: "Billie Jean is not my lover",
-        // }
-        // ]
-        // array.forEach((doc) => {
-        // let docRef = db.collection("games").doc("sing-together").collection("decks").doc().collection("cards").doc();
-        // batch.set(docRef, doc);
-        // });
-
-        let addDecks1 = db.collection("games").doc("sing-together").collection("decks").doc().collection("cards").doc();
+        let addDecks1 = db.collection("games").doc("sing-together").collection("decks").doc("BurKw8KXWhdmPPth2ybV").collection("cards").doc();
 
         batch.set(addDecks1, {
-            artist: "Beyonce",
-            song: "Single Ladies (Put a Ring on It)",
-            theySing: "Now put your hands up, oh, oh, oh",
-            youSing: "All the single ladies",
+          artist: "Beyonce",
+          song: "Single Ladies (Put a Ring on It)",
+          theySing: "Now put your hands up, oh, oh, oh",
+          youSing: "All the single ladies",
         });
 
-        let addDecks2 = db.collection("games").doc("sing-together").collection("decks").doc().collection("cards").doc();
+        let addDecks2 = db.collection("games").doc("sing-together").collection("decks").doc("BurKw8KXWhdmPPth2ybV").collection("cards").doc();
         batch.set(addDecks2, {
             artist: "Michael Jackson",
             song: "Billie Jean",
@@ -125,36 +104,6 @@ export default {
         })
         .catch(err => console.log(`There was an error: ${err}`))
 
-
-
-      // db.collection("games").doc("sing-together").set({
-      //   id: "Sing together",
-      //   slug: "sing-together",
-      //   title: "Sing together",
-      //   subTitle: "Subtitle of the game",
-      //   howToPlay: "You take turns answering questions. If your answer is correct, you gain one point and get to answer another question. If you get it wrong, it’s the next persons turn.",
-      //   iconName: "music",
-      // })
-      // .then(() => {
-      //   console.log("Document successfully updated!");
-      // })
-      // .catch((error) => {
-      //   // The document probably doesn't exist.
-      //   console.error("Error updating document: ", error);
-      // });
-
-
-      // // Add to database
-      // db.collection("games").doc("J3DYLUL2yczOcwUVOBbW").collection("decks").add({
-      //   id: this.id,
-      //   name: this.deckName,
-      //   description: this.description,
-      // }).then(() => {
-      //   this.$router.push({name: ''})
-      // }).catch(err => {
-      //   console.log(err)
-      // })
-      // console.log('SEND IT ALL TO THE DB!')
     }
   }
 }

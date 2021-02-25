@@ -15,7 +15,9 @@ import PlaySingTogether from "@/views/games/PlaySingTogether";
 import Trivia from "@/views/games/Trivia";
 import PlayTrivia from "@/views/games/PlayTrivia";
 import SendDeck from "@/views/SendDeck";
-import UpdateDatabase from "../views/UpdateDatabase";
+
+// TOOLS
+import UpdateDatabase from "@/tools/UpdateDatabase";
 
 Vue.use(VueRouter);
 
