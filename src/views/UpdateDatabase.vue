@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     pushSingleFile() {
-      db.collection("games").doc("J3DYLUL2yczOcwUVOBbW").update({
+      db.collection("games").doc("sing-together").update({
         // Change this for 1 item.
         id: "Sing together"
       })
@@ -66,8 +66,9 @@ export default {
             howToPlay: "You take turns answering questions. If your answer is correct, you gain one point and get to answer another question. If you get it wrong, it’s the next persons turn.",
             iconName: "music",
         });
+
         // Add "decks" & "cards"
-        // Try to do it with an array with multiple values, but diddnt work.
+        // Try to do it with an array with multiple values, but diddnt work they will get seperated because of the generated unknown ID from firebase.
         // let array = [
         // {
         //   artist: "Beyonce",
