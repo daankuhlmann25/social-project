@@ -14,6 +14,10 @@
       </div>
       <h2>Cards</h2>
       <div class="cards-container">
+        <!--
+        - TODO: Initialize slider only when more then 6 items.
+        - TODO: Redesign this part to make it visually better (maybe we can add arrows right/left etc?)
+        -->
         <carousel :items="6" :nav="false">
           <button type="button" :class="currentCard === index ? 'card selected' : 'card'" @click="selectCard(index)" v-for="(card, index) in cards" :key="card[index]" :v-model="card[index]">
             {{ index+1 }}
