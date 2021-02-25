@@ -13,10 +13,14 @@
         <textarea name="description" id="description" rows="6" placeholder="What is in the deck?" v-model="description"></textarea>
       </div>
       <h2>Cards</h2>
-        <div class="cards-container">
-            <button type="button" :class="currentCard === index ? 'card selected' : 'card'" @click="selectCard(index)" v-for="(card, index) in cards" :key="card[index]" :v-model="card[index]">{{ index+1 }}</button>
-            <button type="button" class="add-card" name="add-card" @click="addCard"><img src="@/assets/icons/plus.svg" width="20" height="20" alt="Plus icon"></button>
-        </div>
+      <div class="cards-container">
+        <carousel :items="6" :nav="false">
+          <button type="button" :class="currentCard === index ? 'card selected' : 'card'" @click="selectCard(index)" v-for="(card, index) in cards" :key="card[index]" :v-model="card[index]">
+            {{ index+1 }}
+          </button>
+        </carousel>
+        <button type="button" class="add-card" name="add-card" @click="addCard"><img src="@/assets/icons/plus.svg" width="20" height="20" alt="Plus icon"></button>
+      </div>
       <section class="edit-card">
         <input type="hidden" name="currentCard" id="currentCard" v-model="currentCard">
         <label for="artist"><h3>Artist</h3></label>
@@ -55,8 +59,11 @@
 
 <script>
   // import db from '@/firebase/config';
+  import carousel from 'vue-owl-carousel'
 
   export default {
+    components: { carousel },
+
     data() {
       return {
         gameId: this.$route.params.gameId,
