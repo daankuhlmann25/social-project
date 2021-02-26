@@ -27,7 +27,7 @@
         <textarea name="youSing" id="youSing" rows="3" v-model="youSing" placeholder="Lyrics"></textarea>
         <label for="theySing"><h3>They sing</h3></label>
         <textarea name="theySing" id="theySing" rows="3" v-model="theySing" placeholder="Lyrics"></textarea>
-        <button type="button" @click="removeCard()" class="delete-card"><img src="@/assets/icons/delete.svg" width="16" height="16" alt="Delete card" title="Delete this card"></button>
+        <button type="button" @click="removeCard()" class="delete-card" title="Delete this card"><img src="@/assets/icons/delete.svg" width="16" height="16" alt="Delete icon"></button>
       </section>
       <label for="author"><h2>Your name <span class="visibility">Public</span></h2></label>
       <input type="text" name="author" id="author" v-model="author">
@@ -40,8 +40,14 @@
         <p><strong>Deck saved!</strong> <span id="save-time">Just seconds ago</span></p>
       </aside>
       <nav class="deck-navigation">
-        <router-link class="button" :to="{ name: 'Game', params: { gameId: this.gameId } }"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" alt="Back arrow icon">Done editing</router-link>
-        <router-link class="button right" :to="{ name: 'Deck', params: { deckId: this.deckId } }"><img src="@/assets/icons/deck.svg" width="17" height="17" alt="Play icon">Play deck</router-link>
+        <div class="play-deck">
+          <router-link :to="{ name: 'Deck', params: { deckId: this.deckId } }"><img src="@/assets/icons/play.svg" width="30" height="30" alt="Play icon"></router-link>
+          <span>Play deck</span>
+        </div>
+        <div class="nav-group">
+          <router-link class="button" :to="{ name: 'Game', params: { gameId: this.gameId } }"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" alt="Back arrow icon">Done editing</router-link>
+          <a @click="deleteDeck()" href="javascript:;" class="button delete-deck" title="Delete this deck"><img src="@/assets/icons/delete.svg" width="16" height="16" alt="Delete icon">Delete deck</a>
+        </div>
       </nav>
       <!-- <p v-if="feedback" class="errors">{{ feedback }}</p> -->
       <h2 class="white">Want to publish your deck?</h2>
@@ -220,6 +226,17 @@
           this.selectCard(this.getPreviousCard(this.currentCard), false)
         }
         this.setMyDecksLocalStorage()
+      },
+      deleteDeck() {
+        console.log('deleteDeck() ' + this.deckId)
+        const confirmMessage = "Delete the deck?\nThis will remove the deck and all the cards in it."
+
+        // TODO: Replace confirm() with nice looking overlay
+        if (confirm(confirmMessage)) {
+          this.myDecks[this.gameId].decks.splice(this.deckId, 1)
+          this.setMyDecksLocalStorage()
+          this.$router.replace({name: 'Game', params: { gameId: this.gameId }})
+        }
       },
       getPreviousCard(cardPosition) {
         // Return cardPosition-1 if it's not 0, then return 0
