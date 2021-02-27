@@ -1,5 +1,10 @@
 <template>
   <div class="edit-deck">
+    <ConfirmModal v-if="showConfirmModal" @cancel="showConfirmModal = false" @confirm="deleteDeck()">
+      <template v-slot:heading>Delete the deck?</template>
+      <template v-slot:body>This will remove the deck and all the cards in it.</template>
+      <template v-slot:confirm>Delete</template>
+    </ConfirmModal>
     <h5>{{ gameName }}</h5>
     <h1>{{$route.name}}</h1>
 
@@ -46,7 +51,7 @@
         </div>
         <div class="nav-group">
           <router-link class="button" :to="{ name: 'Game', params: { gameId: this.gameId } }"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" alt="Back arrow icon">Done editing</router-link>
-          <a @click="deleteDeck()" href="javascript:;" class="button delete-deck" title="Delete this deck"><img src="@/assets/icons/delete.svg" width="16" height="16" alt="Delete icon">Delete deck</a>
+          <a @click="showConfirmModal = true" href="#" class="button delete-deck" title="Delete this deck"><img src="@/assets/icons/delete.svg" width="16" height="16" alt="Delete icon">Delete deck</a>
         </div>
       </nav>
       <!-- <p v-if="feedback" class="errors">{{ feedback }}</p> -->
@@ -61,8 +66,10 @@
 
 <script>
   // import db from '@/firebase/config';
+  import ConfirmModal from '@/components/ConfirmModal'
 
   export default {
+    components: { ConfirmModal },
     data() {
       return {
         gameId: this.$route.params.gameId,
@@ -87,6 +94,7 @@
         song: "",
         youSing: "",
         theySing: "",
+        showConfirmModal: false,
         // feedback: "",
       }
     },
@@ -229,14 +237,10 @@
       },
       deleteDeck() {
         console.log('deleteDeck() ' + this.deckId)
-        const confirmMessage = "Delete the deck?\nThis will remove the deck and all the cards in it."
 
-        // TODO: Replace confirm() with nice looking overlay
-        if (confirm(confirmMessage)) {
-          this.myDecks[this.gameId].decks.splice(this.deckId, 1)
-          this.setMyDecksLocalStorage()
-          this.$router.replace({name: 'Game', params: { gameId: this.gameId }})
-        }
+        this.myDecks[this.gameId].decks.splice(this.deckId, 1)
+        this.setMyDecksLocalStorage()
+        this.$router.replace({name: 'Game', params: { gameId: this.gameId }})
       },
       getPreviousCard(cardPosition) {
         // Return cardPosition-1 if it's not 0, then return 0
