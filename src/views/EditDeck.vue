@@ -51,7 +51,7 @@
         </div>
         <div class="nav-group">
           <router-link class="button" :to="{ name: 'Game', params: { gameId: this.gameId } }"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" alt="Back arrow icon">Done editing</router-link>
-          <a @click="showConfirmModal = true" href="#" class="button delete-deck" title="Delete this deck"><img src="@/assets/icons/delete.svg" width="16" height="16" alt="Delete icon">Delete deck</a>
+          <a @click.prevent="showConfirmModal = true" href="#" class="button delete-deck" title="Delete this deck"><img src="@/assets/icons/delete.svg" width="16" height="16" alt="Delete icon">Delete deck</a>
         </div>
       </nav>
       <!-- <p v-if="feedback" class="errors">{{ feedback }}</p> -->
@@ -60,7 +60,6 @@
       <p>When you feel happy with your creation, please publish it.</p>
       <button type="button">Publish on social.gg</button>
     </form>
-
   </div>
 </template>
 
