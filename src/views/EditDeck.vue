@@ -1,7 +1,12 @@
 <template>
   <div class="edit-deck">
+    <ConfirmModal v-if="showConfirmModal" @cancel="showConfirmModal = false" @confirm="deleteDeck()">
+      <template v-slot:heading>Delete the deck?</template>
+      <template v-slot:body>This will remove the deck and all the cards in it.</template>
+      <template v-slot:confirm>Delete</template>
+    </ConfirmModal>
     <h5>{{ gameName }}</h5>
-    <h1>{{$route.name}}</h1>
+    <h1>{{ $route.name }}</h1>
 
     <form v-on:change="saveDeck">
       <div class="field title">
@@ -27,21 +32,27 @@
         <textarea name="youSing" id="youSing" rows="3" v-model="youSing" placeholder="Lyrics"></textarea>
         <label for="theySing"><h3>They sing</h3></label>
         <textarea name="theySing" id="theySing" rows="3" v-model="theySing" placeholder="Lyrics"></textarea>
-        <button type="button" @click="removeCard()" class="delete-card"><img src="@/assets/icons/delete.svg" width="16" height="16" alt="Delete card" title="Delete this card"></button>
+        <button type="button" @click="removeCard()" class="delete-card" title="Delete this card"><img src="@/assets/icons/delete.svg" width="16" height="16" alt="Delete icon"></button>
       </section>
-      <h2>Your name <span class="visibility">Public</span></h2>
+      <label for="author"><h2>Your name <span class="visibility">Public</span></h2></label>
       <input type="text" name="author" id="author" v-model="author">
-      <h2>E-mail <span class="visibility">Not public</span></h2>
+      <label for="email"><h2>E-mail <span class="visibility">Not public</span></h2></label>
       <input type="email" name="email" id="email" v-model="email">
-      <h2>Message <span class="visibility">Not public</span></h2>
+      <label for="message"><h2>Message <span class="visibility">Not public</span></h2></label>
       <textarea name="message" id="message" rows="6" v-model="message"></textarea>
       <!-- TODO: Implement something like: https://github.com/runkids/vue2-timeago -->
       <aside class="save-status">
         <p><strong>Deck saved!</strong> <span id="save-time">Just seconds ago</span></p>
       </aside>
       <nav class="deck-navigation">
-        <router-link class="button" :to="{ name: 'Game', params: { gameId: this.gameId } }"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" alt="Back arrow icon">Done editing</router-link>
-        <router-link class="button right" :to="{ name: 'Deck', params: { deckId: this.deckId } }"><img src="@/assets/icons/deck.svg" width="17" height="17" alt="Play icon">Play deck</router-link>
+        <div class="play-deck">
+          <router-link :to="{ name: 'Deck', params: { deckId: this.deckId } }"><img src="@/assets/icons/play.svg" width="30" height="30" alt="Play icon"></router-link>
+          <span>Play deck</span>
+        </div>
+        <div class="nav-group">
+          <router-link class="button" :to="{ name: 'Game', params: { gameId: this.gameId } }"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" alt="Back arrow icon">Done editing</router-link>
+          <a @click.prevent="showConfirmModal = true" href="#" class="button delete-deck" title="Delete this deck"><img src="@/assets/icons/delete.svg" width="16" height="16" alt="Delete icon">Delete deck</a>
+        </div>
       </nav>
       <!-- <p v-if="feedback" class="errors">{{ feedback }}</p> -->
       <h2 class="white">Want to publish your deck?</h2>
@@ -49,14 +60,15 @@
       <p>When you feel happy with your creation, please publish it.</p>
       <button type="button">Publish on social.gg</button>
     </form>
-
   </div>
 </template>
 
 <script>
   // import db from '@/firebase/config';
+  import ConfirmModal from '@/components/ConfirmModal'
 
   export default {
+    components: { ConfirmModal },
     data() {
       return {
         gameId: this.$route.params.gameId,
@@ -81,6 +93,7 @@
         song: "",
         youSing: "",
         theySing: "",
+        showConfirmModal: false,
         // feedback: "",
       }
     },
@@ -221,6 +234,15 @@
         }
         this.setMyDecksLocalStorage()
       },
+      deleteDeck(doRouterReplace = true) {
+        console.log('deleteDeck() ' + this.deckId)
+
+        this.myDecks[this.gameId].decks.splice(this.deckId, 1)
+        this.setMyDecksLocalStorage()
+
+        if (doRouterReplace)
+          this.$router.replace({name: 'Game', params: { gameId: this.gameId }})
+      },
       getPreviousCard(cardPosition) {
         // Return cardPosition-1 if it's not 0, then return 0
         return cardPosition ? cardPosition-1 : 0;
@@ -260,7 +282,35 @@
         this.cards[this.currentCard].youSing    = this.youSing
         this.cards[this.currentCard].theySing   = this.theySing
       },
+    },
+    beforeRouteLeave (to, from, next) {
+
+    // If going back to Game view
+    if (to.name == "Game") {
+      const myDeck = this.myDecks[this.gameId].decks[this.deckId]
+
+      //If the deck is completely empty
+      if (
+        myDeck.cards &&
+        myDeck.cards.length == 1 &&
+        myDeck.cards[0].artist == "" &&
+        myDeck.cards[0].song == "" &&
+        myDeck.cards[0].youSing == "" &&
+        myDeck.cards[0].theySing == "" &&
+        myDeck.name == "" &&
+        myDeck.description == "" &&
+        myDeck.author == "" &&
+        myDeck.email == "" &&
+        myDeck.message == ""
+        ) {
+          
+          //Delete the deck
+          this.deleteDeck(false)
+      }
     }
+
+    next()
+   },
   }
 </script>
 

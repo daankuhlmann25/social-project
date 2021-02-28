@@ -9,8 +9,8 @@
           <router-link :to="{ name: 'Deck', params: { deckId: index } }">
             <img class="game-icon" width="28" height="28" alt="Deck icon" src="@/assets/icons/deck.svg" />
             <div class="game-info">
-              <div class="title">{{ deck.name }}</div>
-              <div class="subtitle">{{ deck.cards.length }} cards • {{ deck.author }}</div>
+              <div class="title">{{ deck.name ? deck.name : "[No name]" }}</div>
+              <div class="subtitle">{{ deck.cards.length }} cards • {{ deck.author ? deck.author : "[No author]" }}</div>
             </div>
             <img class="icon-arrow" width="9" height="14" alt="" src="@/assets/icons/arrow-right.svg"/>
           </router-link>

@@ -1,0 +1,66 @@
+.confirm-modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: fade(@black, 20%);
+  transition: all .35s ease-in-out;
+  z-index: 20;
+  transform-style: preserve-3d;
+  padding: @spacing__m;
+
+  .confirm-dialog {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-51%) translateX(-50%);
+    width: 100%;
+    max-width: @app-width;
+    padding: @spacing__l;
+    background-color: @night-sky;
+    transition: all .25s ease-in-out;
+    border-radius: @spacing__base;
+    
+    h2 {
+      margin: 0;
+    }
+
+    p {
+      margin: @spacing__base 0 @spacing__l;
+    }
+
+    button {
+      display: inline-flex;
+      width: min-content;
+      padding: @spacing__m @spacing__l;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 16px;
+      text-align: center;
+      color: @white;
+      background-color: fade(@black, 15%);
+  
+      &.confirm-button {
+        background-color: @sunset;
+        margin-right: @spacing__m;
+      }
+    }
+  }
+
+
+}
+
+.confirmModal-enter {
+  opacity: 0;
+}
+
+.confirmModal-leave-active {
+  opacity: 0;
+}
+
+.confirmModal-leave-active .confirm-dialog {
+  transform: scale(.9) translateY(-51%) translateX(-50%);
+}  
