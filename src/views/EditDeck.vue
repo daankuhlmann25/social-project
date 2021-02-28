@@ -6,7 +6,7 @@
       <template v-slot:confirm>Delete</template>
     </ConfirmModal>
     <h5>{{ gameName }}</h5>
-    <h1>{{$route.name}}</h1>
+    <h1>{{ $route.name }}</h1>
 
     <form v-on:change="saveDeck">
       <div class="field title">
@@ -234,12 +234,14 @@
         }
         this.setMyDecksLocalStorage()
       },
-      deleteDeck() {
+      deleteDeck(doRouterReplace = true) {
         console.log('deleteDeck() ' + this.deckId)
 
         this.myDecks[this.gameId].decks.splice(this.deckId, 1)
         this.setMyDecksLocalStorage()
-        this.$router.replace({name: 'Game', params: { gameId: this.gameId }})
+
+        if (doRouterReplace)
+          this.$router.replace({name: 'Game', params: { gameId: this.gameId }})
       },
       getPreviousCard(cardPosition) {
         // Return cardPosition-1 if it's not 0, then return 0
@@ -280,7 +282,35 @@
         this.cards[this.currentCard].youSing    = this.youSing
         this.cards[this.currentCard].theySing   = this.theySing
       },
+    },
+    beforeRouteLeave (to, from, next) {
+
+    // If going back to Game view
+    if (to.name == "Game") {
+      const myDeck = this.myDecks[this.gameId].decks[this.deckId]
+
+      //If the deck is completely empty
+      if (
+        myDeck.cards &&
+        myDeck.cards.length == 1 &&
+        myDeck.cards[0].artist == "" &&
+        myDeck.cards[0].song == "" &&
+        myDeck.cards[0].youSing == "" &&
+        myDeck.cards[0].theySing == "" &&
+        myDeck.name == "" &&
+        myDeck.description == "" &&
+        myDeck.author == "" &&
+        myDeck.email == "" &&
+        myDeck.message == ""
+        ) {
+          
+          //Delete the deck
+          this.deleteDeck(false)
+      }
     }
+
+    next()
+   },
   }
 </script>
 
