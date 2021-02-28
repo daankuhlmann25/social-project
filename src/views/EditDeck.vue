@@ -291,6 +291,7 @@
 
       //If the deck is completely empty
       if (
+        myDeck &&
         myDeck.cards &&
         myDeck.cards.length == 1 &&
         myDeck.cards[0].artist == "" &&
