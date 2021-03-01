@@ -24,6 +24,7 @@
         </div>
       <section class="edit-card">
         <input type="hidden" name="currentCard" id="currentCard" v-model="currentCard">
+        <!-- TODO: Make card fields dynamic -->
         <label for="artist"><h3>Artist</h3></label>
         <input type="text" name="artist" id="artist" placeholder="Artist name" v-model="card.artist">
         <label for="song"><h3>Song</h3></label>
