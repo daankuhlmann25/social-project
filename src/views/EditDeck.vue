@@ -1,6 +1,6 @@
 <template>
   <div class="edit-deck">
-    <ConfirmModal v-if="showConfirmModal" @cancel="showConfirmModal = false" @confirm="deleteDeck()">
+    <ConfirmModal v-if="showDeleteModal" @cancel="showDeleteModal = false" @confirm="deleteDeck()">
       <template v-slot:heading>Delete the deck?</template>
       <template v-slot:body>This will remove the deck and all the cards in it.</template>
       <template v-slot:confirm>Delete</template>
@@ -24,14 +24,7 @@
         </div>
       <section class="edit-card">
         <input type="hidden" name="currentCard" id="currentCard" v-model="currentCard">
-        <label for="artist"><h3>Artist</h3></label>
-        <input type="text" name="artist" id="artist" placeholder="Artist name" v-model="artist">
-        <label for="song"><h3>Song</h3></label>
-        <input type="text" name="song" id="song" v-model="song" placeholder="Song name">
-        <label for="youSing"><h3>You sing</h3></label>
-        <textarea name="youSing" id="youSing" rows="3" v-model="youSing" placeholder="Lyrics"></textarea>
-        <label for="theySing"><h3>They sing</h3></label>
-        <textarea name="theySing" id="theySing" rows="3" v-model="theySing" placeholder="Lyrics"></textarea>
+        <component v-bind:is="gameId" v-model="card"></component>
         <button type="button" @click="removeCard()" class="delete-card" title="Delete this card"><img src="@/assets/icons/delete.svg" width="16" height="16" alt="Delete icon"></button>
       </section>
       <label for="author"><h2>Your name <span class="visibility">Public</span></h2></label>
@@ -51,7 +44,7 @@
         </div>
         <div class="nav-group">
           <router-link class="button" :to="{ name: 'Game', params: { gameId: this.gameId } }"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" alt="Back arrow icon">Done editing</router-link>
-          <a @click.prevent="showConfirmModal = true" href="#" class="button delete-deck" title="Delete this deck"><img src="@/assets/icons/delete.svg" width="16" height="16" alt="Delete icon">Delete deck</a>
+          <a @click.prevent="showDeleteModal = true" href="#" class="button delete-deck" title="Delete this deck"><img src="@/assets/icons/delete.svg" width="16" height="16" alt="Delete icon">Delete deck</a>
         </div>
       </nav>
       <!-- <p v-if="feedback" class="errors">{{ feedback }}</p> -->
@@ -66,9 +59,15 @@
 <script>
   // import db from '@/firebase/config';
   import ConfirmModal from '@/components/ConfirmModal'
+  import singTogether from '@/components/card-fields/SingTogether'
+  import trivia from '@/components/card-fields/Trivia'
 
   export default {
-    components: { ConfirmModal },
+    components: {
+      ConfirmModal,
+      singTogether,
+      trivia,
+     },
     data() {
       return {
         gameId: this.$route.params.gameId,
@@ -81,23 +80,16 @@
         author: "",
         email: "",
         message: "",
-        cards: [
-            {
-              artist: "",
-              song: "",
-              youSing: "",
-              theySing: "",
-            },
-          ],
-        artist: "",
-        song: "",
-        youSing: "",
-        theySing: "",
-        showConfirmModal: false,
+        cards: [],
+        cardFields: new Map(),
+        card: {},
+        showDeleteModal: false,
         // feedback: "",
       }
     },
     created() {
+      //Init 
+      this.generateCardFieldsMap()
 
       // Edit an existing deck
       if (this.$route.params.deckId >= 0) {
@@ -122,6 +114,7 @@
         else {
           console.log("Deck doesn't exist");
           // TODO: Show error saying that we couldn't load the deck
+          this.addCard(true)
         }
       }
       
@@ -131,9 +124,10 @@
         this.myDecks = JSON.parse(localStorage.getItem("myDecks"))
 
         // Add a deck in current game
-        if (this.myDecks[this.gameId].decks.length) {
+        if (this.myDecks[this.gameId] && this.myDecks[this.gameId].decks.length) {
           console.log("Add a deck in current game");
           this.deckId = this.myDecks[this.gameId].decks.length
+          this.addCard(true)
           this.myDecks[this.gameId].decks[this.deckId] = this.generateDeckObject()
           
           this.setMyDecksLocalStorage()
@@ -142,6 +136,8 @@
         else {
           console.log("First deck in current game");
           this.deckId = 0
+          this.addCard(true)
+
           this.myDecks[this.gameId] = this.generateDecksObject()
 
           this.setMyDecksLocalStorage()
@@ -153,16 +149,38 @@
       else {
         console.log("The very first deck");
         this.deckId = 0
+        this.addCard(true)
 
-        localStorage.setItem("myDecks", JSON.stringify({
-          [this.gameId]: this.generateDecksObject()
-        })
+        localStorage.setItem(
+          "myDecks", 
+          JSON.stringify(
+            {
+              [this.gameId]: this.generateDecksObject()
+            }
+          )
         )
 
         this.myDecks = JSON.parse(localStorage.getItem("myDecks"))
       }
     },
     methods: {
+      generateCardFieldsMap() {
+        let map = new Map()
+
+        if (this.gameId == "sing-together") {
+          map.set("artist", "")
+            .set("song", "")
+            .set("youSing", "")
+            .set("theySing", "")
+        }
+
+        else if (this.gameId == "trivia") {
+          map.set("question", "")
+            .set("answer", "")
+        }
+
+        this.cardFields = map
+      },
       generateDeckObject() {
         return {
           name: this.name,
@@ -185,7 +203,6 @@
       },
       saveDeck() {
         console.log("saveDeck()");
-        console.log(this.gameId);
 
         this.myDecks[this.gameId].decks[this.deckId].name = this.name
         this.myDecks[this.gameId].decks[this.deckId].description = this.description
@@ -196,7 +213,8 @@
         this.myDecks[this.gameId].decks[this.deckId].cards = this.cards
 
         this.setMyDecksLocalStorage()
-
+      },
+      // sendToDB() {
         // TODO: First add to localstorage, later we can send to DB
         // // Add to database
         // db.collection("games").doc(this.$route.params.gameId).collection("decks").add({
@@ -207,18 +225,25 @@
         // }).catch(err => {
         //   console.log(err)
         // })
-      },
-      addCard() {
-        console.log('addCard'+this.cards.length)
-        this.saveCard()
-        this.cards.push({
-          artist: "",
-          song: "",
-          youSing: "",
-          theySing: "",
+      // },
+      addCard(firstCard) {
+        console.log('addCard ' + this.cards.length)
+
+        firstCard = typeof firstCard == "boolean" ? firstCard : false
+        let cardTemplate = {}
+
+        this.cardFields.forEach(function(value, key) {
+          cardTemplate[key] = value
         })
+        
+        if (!firstCard)
+          this.saveCard()
+        
+        this.cards.push(cardTemplate)
         this.selectCard(this.cards.length-1)
-        this.setMyDecksLocalStorage()
+
+        if (!firstCard)
+          this.setMyDecksLocalStorage()
       },
       removeCard() {
         console.log('removeCard ' + this.currentCard)
@@ -227,11 +252,10 @@
           this.clearCard(0)
 
         else {
-          console.log('- slice: '+this.currentCard);
-
           this.cards.splice(this.currentCard, 1)
           this.selectCard(this.getPreviousCard(this.currentCard), false)
         }
+
         this.setMyDecksLocalStorage()
       },
       deleteDeck(doRouterReplace = true) {
@@ -254,33 +278,36 @@
       clearCard() {
         console.log('clearCard ' + this.currentCard)
 
-        this.cards[this.currentCard].artist    = this.artist     = ""
-        this.cards[this.currentCard].song      = this.song       = ""
-        this.cards[this.currentCard].youSing   = this.youSing    = ""
-        this.cards[this.currentCard].theySing  = this.theySing   = ""
+        //Clear both this.card and this.cards values on current card
+        this.cardFields.forEach(function(value, key) {
+          this.cards[this.currentCard][key] = this.card[key] = ""
+        }, this)
       },
       selectCard(cardPosition, save = true, replace = true) {
         console.log('selectCard('+cardPosition+")")
-        
+
         if (save)
           this.saveCard()
 
         if (replace && this.currentCard !== cardPosition)
           this.$router.replace({path: this.generateCardPath(cardPosition)})
+        
+        this.currentCard = cardPosition
 
-        this.currentCard  = cardPosition
-        this.artist       = this.cards[cardPosition].artist
-        this.song         = this.cards[cardPosition].song
-        this.youSing      = this.cards[cardPosition].youSing
-        this.theySing     = this.cards[cardPosition].theySing
+        //Populate this.card values with selected card
+        this.cardFields.forEach(function(value, key) {
+
+          //Using $set() to make this.card.xxx reactive
+          this.$set(this.card, key, this.cards[cardPosition][key])
+        }, this)
+        // console.log(this.card)
       },
       saveCard() {
         console.log('saveCard ' + this.currentCard)
 
-        this.cards[this.currentCard].artist     = this.artist
-        this.cards[this.currentCard].song       = this.song
-        this.cards[this.currentCard].youSing    = this.youSing
-        this.cards[this.currentCard].theySing   = this.theySing
+        this.cardFields.forEach(function(value, key) {
+          this.cards[this.currentCard][key] = this.card[key]
+        }, this)
       },
     },
     beforeRouteLeave (to, from, next) {
@@ -294,10 +321,6 @@
         myDeck &&
         myDeck.cards &&
         myDeck.cards.length == 1 &&
-        myDeck.cards[0].artist == "" &&
-        myDeck.cards[0].song == "" &&
-        myDeck.cards[0].youSing == "" &&
-        myDeck.cards[0].theySing == "" &&
         myDeck.name == "" &&
         myDeck.description == "" &&
         myDeck.author == "" &&
@@ -305,8 +328,13 @@
         myDeck.message == ""
         ) {
           
-          //Delete the deck
-          this.deleteDeck(false)
+          // Check if all card fields are empty
+          const deleteDeck = Array.from(this.cardFields.keys()).every(function(key) {
+            return (typeof myDeck.cards[0][key] == "undefined" || myDeck.cards[0][key] == "")
+          }, this)
+          
+          if (deleteDeck)
+            this.deleteDeck(false)
       }
     }
 
