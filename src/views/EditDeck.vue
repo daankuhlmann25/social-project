@@ -24,15 +24,7 @@
         </div>
       <section class="edit-card">
         <input type="hidden" name="currentCard" id="currentCard" v-model="currentCard">
-        <!-- TODO: Make card fields dynamic -->
-        <label for="artist"><h3>Artist</h3></label>
-        <input type="text" name="artist" id="artist" placeholder="Artist name" v-model="card.artist">
-        <label for="song"><h3>Song</h3></label>
-        <input type="text" name="song" id="song" v-model="card.song" placeholder="Song name">
-        <label for="youSing"><h3>You sing</h3></label>
-        <textarea name="youSing" id="youSing" rows="3" v-model="card.youSing" placeholder="Lyrics"></textarea>
-        <label for="theySing"><h3>They sing</h3></label>
-        <textarea name="theySing" id="theySing" rows="3" v-model="card.theySing" placeholder="Lyrics"></textarea>
+        <component v-bind:is="gameId" v-model="card"></component>
         <button type="button" @click="removeCard()" class="delete-card" title="Delete this card"><img src="@/assets/icons/delete.svg" width="16" height="16" alt="Delete icon"></button>
       </section>
       <label for="author"><h2>Your name <span class="visibility">Public</span></h2></label>
@@ -67,9 +59,15 @@
 <script>
   // import db from '@/firebase/config';
   import ConfirmModal from '@/components/ConfirmModal'
+  import singTogether from '@/components/card-fields/SingTogether'
+  import trivia from '@/components/card-fields/Trivia'
 
   export default {
-    components: { ConfirmModal },
+    components: {
+      ConfirmModal,
+      singTogether,
+      trivia,
+     },
     data() {
       return {
         gameId: this.$route.params.gameId,
@@ -90,7 +88,7 @@
       }
     },
     created() {
-      //Setup 
+      //Init 
       this.generateCardFieldsMap()
 
       // Edit an existing deck
@@ -126,7 +124,7 @@
         this.myDecks = JSON.parse(localStorage.getItem("myDecks"))
 
         // Add a deck in current game
-        if (this.myDecks[this.gameId].decks.length) {
+        if (this.myDecks[this.gameId] && this.myDecks[this.gameId].decks.length) {
           console.log("Add a deck in current game");
           this.deckId = this.myDecks[this.gameId].decks.length
           this.addCard(true)
@@ -205,7 +203,6 @@
       },
       saveDeck() {
         console.log("saveDeck()");
-        console.log(this.gameId);
 
         this.myDecks[this.gameId].decks[this.deckId].name = this.name
         this.myDecks[this.gameId].decks[this.deckId].description = this.description
@@ -216,7 +213,8 @@
         this.myDecks[this.gameId].decks[this.deckId].cards = this.cards
 
         this.setMyDecksLocalStorage()
-
+      },
+      // sendToDB() {
         // TODO: First add to localstorage, later we can send to DB
         // // Add to database
         // db.collection("games").doc(this.$route.params.gameId).collection("decks").add({
@@ -227,9 +225,11 @@
         // }).catch(err => {
         //   console.log(err)
         // })
-      },
-      addCard(firstCard = false) {
+      // },
+      addCard(firstCard) {
         console.log('addCard ' + this.cards.length)
+
+        firstCard = typeof firstCard == "boolean" ? firstCard : false
         let cardTemplate = {}
 
         this.cardFields.forEach(function(value, key) {
@@ -286,23 +286,21 @@
       selectCard(cardPosition, save = true, replace = true) {
         console.log('selectCard('+cardPosition+")")
 
-        //Do nothing if currentCad is selected
-        if (this.currentCard == cardPosition)
-          return
-
         if (save)
           this.saveCard()
 
         if (replace && this.currentCard !== cardPosition)
           this.$router.replace({path: this.generateCardPath(cardPosition)})
-
+        
         this.currentCard = cardPosition
 
         //Populate this.card values with selected card
         this.cardFields.forEach(function(value, key) {
-          this.card[key] = this.cards[cardPosition][key]
-        }, this)
 
+          //Using $set() to make this.card.xxx reactive
+          this.$set(this.card, key, this.cards[cardPosition][key])
+        }, this)
+        // console.log(this.card)
       },
       saveCard() {
         console.log('saveCard ' + this.currentCard)
@@ -323,10 +321,6 @@
         myDeck &&
         myDeck.cards &&
         myDeck.cards.length == 1 &&
-        myDeck.cards[0].artist == "" &&
-        myDeck.cards[0].song == "" &&
-        myDeck.cards[0].youSing == "" &&
-        myDeck.cards[0].theySing == "" &&
         myDeck.name == "" &&
         myDeck.description == "" &&
         myDeck.author == "" &&
@@ -334,8 +328,13 @@
         myDeck.message == ""
         ) {
           
-          //Delete the deck
-          this.deleteDeck(false)
+          // Check if all card fields are empty
+          const deleteDeck = Array.from(this.cardFields.keys()).every(function(key) {
+            return (typeof myDeck.cards[0][key] == "undefined" || myDeck.cards[0][key] == "")
+          }, this)
+          
+          if (deleteDeck)
+            this.deleteDeck(false)
       }
     }
 

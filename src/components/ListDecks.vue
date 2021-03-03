@@ -61,7 +61,7 @@ import db from '@/firebase/config'
     created() {
       this.populateMyDecks()
 
-      db.collection("games").doc(this.$route.params.gameId).collection("decks")
+      db.collection("games").doc(this.gameId).collection("decks")
         .get()
         .then(snapshot => {
           snapshot.forEach(doc => {
@@ -76,7 +76,7 @@ import db from '@/firebase/config'
         if (localStorage.getItem("myDecks")) {
           const myDecks = JSON.parse(localStorage.getItem("myDecks"))
 
-          this.myDecks = myDecks[this.gameId].decks.length ? myDecks[this.gameId].decks : []
+          this.myDecks = myDecks[this.gameId] && myDecks[this.gameId].decks.length ? myDecks[this.gameId].decks : []
         }
       },
     }
