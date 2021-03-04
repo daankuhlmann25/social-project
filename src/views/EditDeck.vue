@@ -57,7 +57,7 @@
 </template>
 
 <script>
-  // import db from '@/firebase/config';
+  // import db from '@/firebase/config'
   import ConfirmModal from '@/components/ConfirmModal'
   import singTogether from '@/components/card-fields/SingTogether'
   import trivia from '@/components/card-fields/Trivia'
@@ -93,13 +93,13 @@
 
       // Edit an existing deck
       if (this.$route.params.deckId >= 0) {
-        console.log("Edit an existing deck");
+        console.log("Edit an existing deck")
         this.deckId = this.$route.params.deckId
         this.myDecks = JSON.parse(localStorage.getItem("myDecks"))
 
         // Does the deck exist?
         if (this.myDecks[this.gameId].decks[this.deckId]) {
-          console.log("Deck exists");
+          console.log("Deck exists")
           const myDeck = this.myDecks[this.gameId].decks[this.deckId]
 
           this.name = myDeck.name
@@ -112,7 +112,7 @@
           this.selectCard(this.currentCard, false, false)
         }
         else {
-          console.log("Deck doesn't exist");
+          console.log("Deck doesn't exist")
           // TODO: Show error saying that we couldn't load the deck
           this.addCard(true)
         }
@@ -120,12 +120,12 @@
       
       // Add a new deck
       else if (localStorage.getItem("myDecks")) {
-        console.log("Add a new deck");
+        console.log("Add a new deck")
         this.myDecks = JSON.parse(localStorage.getItem("myDecks"))
 
         // Add a deck in current game
         if (this.myDecks[this.gameId] && this.myDecks[this.gameId].decks.length) {
-          console.log("Add a deck in current game");
+          console.log("Add a deck in current game")
           this.deckId = this.myDecks[this.gameId].decks.length
           this.addCard(true)
           this.myDecks[this.gameId].decks[this.deckId] = this.generateDeckObject()
@@ -134,7 +134,7 @@
         }
         // First deck in current game
         else {
-          console.log("First deck in current game");
+          console.log("First deck in current game")
           this.deckId = 0
           this.addCard(true)
 
@@ -147,7 +147,7 @@
 
       // The very first deck
       else {
-        console.log("The very first deck");
+        console.log("The very first deck")
         this.deckId = 0
         this.addCard(true)
 
@@ -202,7 +202,7 @@
         localStorage.setItem("myDecks", JSON.stringify(this.myDecks))
       },
       saveDeck() {
-        console.log("saveDeck()");
+        console.log("saveDeck()")
 
         this.myDecks[this.gameId].decks[this.deckId].name = this.name
         this.myDecks[this.gameId].decks[this.deckId].description = this.description
@@ -269,7 +269,7 @@
       },
       getPreviousCard(cardPosition) {
         // Return cardPosition-1 if it's not 0, then return 0
-        return cardPosition ? cardPosition-1 : 0;
+        return cardPosition ? cardPosition-1 : 0
       },
       generateCardPath(cardPosition) {
         // Remove trailing front slash + digits from current path and add cardPosition
