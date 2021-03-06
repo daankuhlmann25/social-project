@@ -15,7 +15,7 @@
       </div>
       <div class="description">
         <label for="description"><h2>Description:</h2></label>
-        <textarea name="description" id="description" rows="6" placeholder="What is in the deck?" v-model="description"></textarea>
+        <textarea name="description" id="description" rows="3" placeholder="What is in the deck?" v-model="description"></textarea>
       </div>
       <h2>Cards</h2>
         <div class="cards-container">
@@ -32,7 +32,7 @@
       <label for="email"><h2>E-mail <span class="visibility">Not public</span></h2></label>
       <input type="email" name="email" id="email" v-model="email">
       <label for="message"><h2>Message <span class="visibility">Not public</span></h2></label>
-      <textarea name="message" id="message" rows="6" v-model="message"></textarea>
+      <textarea name="message" id="message" rows="3" v-model="message"></textarea>
       <!-- TODO: Implement something like: https://github.com/runkids/vue2-timeago -->
       <aside class="save-status">
         <p><strong>Deck saved!</strong> <span id="save-time">Just seconds ago</span></p>
@@ -51,7 +51,7 @@
       <h2 class="white">Want to publish your deck?</h2>
       <p>We would love you to share your fantastic deck with all our fellow players!</p>
       <p>When you feel happy with your creation, please publish it.</p>
-      <button type="button">Publish on social.gg</button>
+      <button type="button" class="submit">Send for review</button>
     </form>
   </div>
 </template>
@@ -61,6 +61,7 @@
   import ConfirmModal from '@/components/ConfirmModal'
   import singTogether from '@/components/card-fields/SingTogether'
   import trivia from '@/components/card-fields/Trivia'
+  import { setResizeListeners } from "@/helpers/auto-resize.js"
 
   export default {
     components: {
@@ -162,6 +163,9 @@
 
         this.myDecks = JSON.parse(localStorage.getItem("myDecks"))
       }
+    },
+    mounted() {
+      setResizeListeners(this.$el, "textarea")
     },
     methods: {
       generateCardFieldsMap() {
@@ -300,7 +304,6 @@
           //Using $set() to make this.card.xxx reactive
           this.$set(this.card, key, this.cards[cardPosition][key])
         }, this)
-        // console.log(this.card)
       },
       saveCard() {
         console.log('saveCard ' + this.currentCard)
