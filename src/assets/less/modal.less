@@ -1,17 +1,18 @@
-.confirm-modal {
+.modal {
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: fade(@black, 20%);
-  transition: all .35s ease-in-out;
+  background-color: fade(@black, 33%);
+  transition: all .35s ease-in;
   z-index: 20;
   transform-style: preserve-3d;
   padding: @spacing__m;
-
-  .confirm-dialog {
-    position: relative;
+  
+  .dialog {
+    
+    position: fixed;
     display: flex;
     flex-flow: column;
     top: 50%;
@@ -21,11 +22,28 @@
     max-width: @app-width;
     padding: @spacing__l;
     background-color: @night-sky;
-    transition: all .25s ease-in-out;
+    transition: all .25s ease-in;
     border-radius: @spacing__base;
+    max-height: 100%;
+    
+    section {
+      &.body {
+        max-height: 100%;
+        overflow-y: auto;
+
+        :last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
     
     h2 {
       margin: 0;
+      padding-bottom: @spacing__base;
+    }
+
+    h3 {
+      color: @white;
     }
 
     p {
@@ -48,19 +66,37 @@
         margin-right: @spacing__m;
       }
     }
+
+    .close {
+      position: fixed;
+      display: flex;
+      background-color: fade(@white, 10%);
+      backdrop-filter: blur(@spacing__l);
+      border-radius: 50%;
+      padding: @spacing__ms;
+      margin: -@spacing__base -@spacing__base 0 0;
+      width: 37px;
+      height: 37px;
+      align-self: flex-end;
+      cursor: pointer;
+
+      &:hover {
+        background-color: fade(@white, 15%);
+      }
+    }
   }
 
 
 }
 
-.confirmModal-enter {
+.modal-enter {
   opacity: 0;
 }
 
-.confirmModal-leave-active {
+.modal-leave-active {
   opacity: 0;
 }
 
-.confirmModal-leave-active .confirm-dialog {
+.modal-leave-active .dialog {
   transform: scale(.9) translateY(-51%) translateX(-50%);
 }  

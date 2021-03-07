@@ -2,9 +2,7 @@
   <div id="game-list">
     <!-- TODO: Implement https://github.com/willmcpo/body-scroll-lock when it's an overlay -->
     <div class="game-list">
-      <a v-on:click="closeGameList" class="close">
-        <img alt="Close" src="@/assets/icons/close.svg"/>
-      </a>
+      <a v-on:click="closeGameList" class="close"><img alt="Close" src="@/assets/icons/close.svg"/></a>
       <section class="games-group">
         <h2>Party games</h2>
         <ul>

@@ -5,6 +5,23 @@
       <template v-slot:body>This will remove the deck and all the cards in it.</template>
       <template v-slot:confirm>Delete</template>
     </ConfirmModal>
+    <InfoModal v-if="showFormattingModal" @close="showFormattingModal = false">
+      <template v-slot:heading>Formatting help</template>
+      <template v-slot:body>
+        <h3>Paragraphs</h3>
+        <p>Add two new rows to start a new paragraph.</p>
+        <h3>Bold</h3>
+        <p>This text is **bold.**</p>
+        <h3>Italic</h3>
+        <p>Because it is very _important._</p>
+        <h3>Lists</h3>
+        <p>Remember<br />
+          - Sing out of tune<br />
+          - Dance<br />
+          - Have **fun**<br />
+        </p>
+      </template>
+    </InfoModal>
     <h5>{{ gameName }}</h5>
     <h1>{{ $route.name }}</h1>
 
@@ -16,10 +33,11 @@
       <div class="description">
         <label for="description"><h2>Description:</h2></label>
         <textarea name="description" id="description" rows="3" placeholder="What is in the deck?" v-model="description"></textarea>
+        <a @click.prevent="showFormattingModal = true" href="#" class="button small">Formatting help</a>
       </div>
       <h2>Cards</h2>
         <div class="cards-container">
-            <button type="button" :class="currentCard === index ? 'card selected' : 'card'" @click="selectCard(index)" v-for="(card, index) in cards" :key="card[index]" :v-model="card[index]">{{ index+1 }}</button>
+            <button type="button" :class="currentCard == index ? 'card selected' : 'card'" @click="selectCard(index)" v-for="(card, index) in cards" :key="card[index]" :v-model="card[index]">{{ index+1 }}</button>
             <button type="button" class="add-card" name="add-card" @click="addCard"><img src="@/assets/icons/plus.svg" width="20" height="20" alt="Plus icon"></button>
         </div>
       <section class="edit-card">
@@ -59,13 +77,15 @@
 <script>
   // import db from '@/firebase/config'
   import ConfirmModal from '@/components/ConfirmModal'
+  import InfoModal from '@/components/InfoModal'
   import singTogether from '@/components/card-fields/SingTogether'
   import trivia from '@/components/card-fields/Trivia'
-  import { setResizeListeners } from "@/helpers/auto-resize.js"
+  import { setResizeListeners, resizeTextareas } from "@/helpers/auto-resize.js"
 
   export default {
     components: {
       ConfirmModal,
+      InfoModal,
       singTogether,
       trivia,
      },
@@ -85,8 +105,14 @@
         cardFields: new Map(),
         card: {},
         showDeleteModal: false,
+        showFormattingModal: false,
         // feedback: "",
       }
+    },
+    updated() {
+      this.$nextTick(function () {
+        resizeTextareas(this.$el, "textarea")
+      })
     },
     created() {
       //Init 
@@ -293,7 +319,7 @@
         if (save)
           this.saveCard()
 
-        if (replace && this.currentCard !== cardPosition)
+        if (replace && this.currentCard != cardPosition)
           this.$router.replace({path: this.generateCardPath(cardPosition)})
         
         this.currentCard = cardPosition
