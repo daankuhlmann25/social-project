@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import { parseMarkDown } from "@/helpers/markdown.js"
+import { parseMartDown } from "@/helpers/martdown.js"
 
 export default {
   mounted() {
-    this.$el.innerHTML = parseMarkDown(this.$el.innerHTML)
+    this.$el.innerHTML = parseMartDown(this.$el.innerHTML)
   }
 }
 </script>

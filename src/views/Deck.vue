@@ -5,7 +5,7 @@
       <h1>{{ name }}</h1>
       <h4>{{ numberOfCards }} cards • {{ author }}</h4>
     </hgroup>
-    <MarkDown class="description">{{ description }}</MarkDown>
+    <MartDown class="description">{{ description }}</MartDown>
     <div class="play-deck">
       <router-link to="play" append><img src="@/assets/icons/play.svg" width="30" height="30" alt="Play icon"></router-link>
       <span>Play</span>
@@ -16,10 +16,10 @@
 
 <script>
 import db from '@/firebase/config'
-import MarkDown from '@/components/MarkDown'
+import MartDown from '@/components/MartDown'
 
 export default {
-  components: { MarkDown },
+  components: { MartDown },
 
   data() {
     return {

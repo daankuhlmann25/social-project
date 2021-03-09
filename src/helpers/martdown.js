@@ -23,7 +23,7 @@ function olList(text, item) {
 //     return `<h${level}>${content.trim()}</h${level}>`
 // }
 
-export const parseMarkDown = (md) => {
+export const parseMartDown = (md) => {
   
   let rules = [
     // {regex: /(#+)(.*)/g, replacement: header},                                         // headers
