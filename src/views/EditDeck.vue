@@ -8,18 +8,28 @@
     <InfoModal v-if="showFormattingModal" @close="showFormattingModal = false">
       <template v-slot:heading>Formatting help</template>
       <template v-slot:body>
-        <h3>Paragraphs</h3>
-        <p>Add two new rows to start a new paragraph.</p>
         <h3>Bold</h3>
-        <p>This text is **bold.**</p>
+        <p>This text is *bold.*</p>
         <h3>Italic</h3>
         <p>Because it is very _important._</p>
-        <h3>Lists</h3>
-        <p>Remember<br />
-          - Sing out of tune<br />
-          - Dance<br />
-          - Have **fun**<br />
+        <h3>Strike through</h3>
+        <p>Please -forget- about that.</p>
+        <h3>Bullet list</h3>
+        <p>Remember to:<br>
+          * Sing out of tune<br>
+          * Dance<br>
+          * Have *fun*<br>
         </p>
+        <h3>Numbered list</h3>
+        <p>Steps:<br>
+          # Raise your hand<br>
+          # Wave<br>
+          # Smile<br>
+        </p>
+        <h3>Horizontal rule</h3>
+        <p>Two dashes on a new line separates this text<br>
+          --<br>
+          from this one with a horizontal rule.</p>
       </template>
     </InfoModal>
     <h5>{{ gameName }}</h5>

@@ -154,6 +154,13 @@ body {
     }
   }
 
+  hr {
+    border: none;
+    background: fade(@white, 15%);
+    height: 1px;
+    margin: 1.5em 0;
+  }
+
   *:focus {
     outline-color: transparent;
   }
@@ -299,6 +306,18 @@ body {
     .deck {
       display: flex;
       flex-direction: column;
+
+      .description {
+        margin-top: @spacing__l;
+
+        :first-child {
+          margin-top: 0;
+        }
+
+        :last-child {
+          margin-bottom: 0;
+        }
+      }
 
       .play-deck {
         display: inline-flex;
