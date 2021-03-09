@@ -4,8 +4,6 @@
     <div class="decks-group">
       <ul>
         <li v-for="(deck, index) in myDecks" :key="index">
-          <!-- TODO: Make it possible to "Send deck" from localstorage to seperate collection in Firebase -->
-
           <router-link :to="{ name: 'Deck', params: { deckId: index } }">
             <img class="game-icon" width="28" height="28" alt="Deck icon" src="@/assets/icons/deck.svg" />
             <div class="game-info">
