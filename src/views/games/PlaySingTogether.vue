@@ -50,7 +50,7 @@
 
 
 <script>
-import db from '@/firebase/config';
+import db from '@/firebase/config'
 
   export default {
 
@@ -67,12 +67,13 @@ import db from '@/firebase/config';
         randomizedSongArray: [],
         localStorageData: [],
         cards: [],
+        deckSlug: this.$route.params.deckSlug ? this.$route.params.deckSlug : false,
       }
     },
     
     methods: {
       shuffle(array) {
-        let ctr = array.length, temp, index;
+        let ctr = array.length, temp, index
         while (ctr > 0) {
           index = Math.floor(Math.random() * ctr)
           ctr--
@@ -119,7 +120,10 @@ import db from '@/firebase/config';
           this.finishGame()
       },
       finishGame() {
-        this.$router.push({name: "The end"});
+        if (this.deckSlug)
+          this.$router.push({ name: "The end", params: { deckSlug: this.deckSlug } })
+        else
+          this.$router.push({ name: "The end" })
       }
     },
 
@@ -146,9 +150,9 @@ import db from '@/firebase/config';
           .then(snapshot => {
             snapshot.forEach((doc) => {
               this.songArray.push(doc.data())
-            });
+            })
 
-            this.numberOfCards = snapshot.size;
+            this.numberOfCards = snapshot.size
 
             if (!this.$route.params.cardPosition) //When you just pushed the Play-button
               this.setToLocalstorage()
