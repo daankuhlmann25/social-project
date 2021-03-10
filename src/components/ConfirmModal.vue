@@ -1,7 +1,7 @@
 <template>
-  <transition name="confirmModal">
-    <div class="confirm-modal">
-      <div class="confirm-dialog">
+  <transition name="modal">
+    <div class="modal confirm">
+      <div class="dialog confirm">
         <h2 class="white"><slot name="heading">Are you sure?</slot></h2>
         <p><slot name="body">Please confirm or cancel.</slot></p>
         <div class="button-group">

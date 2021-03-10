@@ -5,7 +5,7 @@
       <h1>{{ name }}</h1>
       <h4>{{ numberOfCards }} cards • {{ author }}</h4>
     </hgroup>
-    <p>{{ description }}</p>
+    <MartDown class="description">{{ description }}</MartDown>
     <div class="play-deck">
       <router-link to="play" append><img src="@/assets/icons/play.svg" width="30" height="30" alt="Play icon"></router-link>
       <span>Play</span>
@@ -15,9 +15,12 @@
 
 
 <script>
-import db from '@/firebase/config';
+import db from '@/firebase/config'
+import MartDown from '@/components/MartDown'
 
 export default {
+  components: { MartDown },
+
   data() {
     return {
       gameId: this.$route.params.gameId,
@@ -29,6 +32,7 @@ export default {
       myDecks: {},
     }
   },
+  
   created() {
     // Set header right
     this.$store.commit('header/setRight', 'gameList')

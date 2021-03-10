@@ -1,5 +1,13 @@
 .edit-deck {
 
+  .description {
+
+    a.small {
+      margin-top: @spacing__base;
+
+    }
+  }
+
   h2 {
     display: flex;
     justify-content: space-between;
@@ -101,10 +109,12 @@
 
   .save-status {
     position: sticky;
-    bottom: 0;
-    padding: @spacing__base 0;
+    bottom: 2px;
+    padding: @spacing__base @spacing__ms;
     background-color: fade(@night-sky, 70%);
     backdrop-filter: blur(@spacing__xl);
+    margin: 0 -@spacing__ms;
+    border-radius: 6px;
 
     p {
       margin: 0;

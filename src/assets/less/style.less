@@ -3,7 +3,7 @@
 @import "normalize";
 @import "play-game";
 @import "edit-deck";
-@import "confirm-modal";
+@import "modal";
 
 html, body {
   height: 100%;
@@ -58,6 +58,11 @@ body {
 
       &:focus, &:hover {
         background-color: fade(@black, 20%);
+      }
+
+      &.small {
+        font-size: 14px;
+        padding: 8px 12px;
       }
     }
 
@@ -139,6 +144,21 @@ body {
     &:focus, &:hover {
       outline: none;
     }
+
+    &.submit {
+      padding: @spacing__m @spacing__l;
+      border-radius: 25px;
+      color: @night-sky;
+      font-weight: bold;
+      background-color: @sun;
+    }
+  }
+
+  hr {
+    border: none;
+    background: fade(@white, 15%);
+    height: 1px;
+    margin: 1.5em 0;
   }
 
   *:focus {
@@ -286,6 +306,18 @@ body {
     .deck {
       display: flex;
       flex-direction: column;
+
+      .description {
+        margin-top: @spacing__l;
+
+        :first-child {
+          margin-top: 0;
+        }
+
+        :last-child {
+          margin-bottom: 0;
+        }
+      }
 
       .play-deck {
         display: inline-flex;

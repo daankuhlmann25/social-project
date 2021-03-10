@@ -5,6 +5,33 @@
       <template v-slot:body>This will remove the deck and all the cards in it.</template>
       <template v-slot:confirm>Delete</template>
     </ConfirmModal>
+    <InfoModal v-if="showFormattingModal" @close="showFormattingModal = false">
+      <template v-slot:heading>Formatting help</template>
+      <template v-slot:body>
+        <h3>Bold</h3>
+        <p>This text is *bold.*</p>
+        <h3>Italic</h3>
+        <p>Because it is very _important._</p>
+        <h3>Strike through</h3>
+        <p>Please -forget- about that.</p>
+        <h3>Bullet list</h3>
+        <p>Remember to:<br>
+          * Sing out of tune<br>
+          * Dance<br>
+          * Have *fun*<br>
+        </p>
+        <h3>Numbered list</h3>
+        <p>Steps:<br>
+          # Raise your hand<br>
+          # Wave<br>
+          # Smile<br>
+        </p>
+        <h3>Horizontal rule</h3>
+        <p>Two dashes on a new line separates this text<br>
+          --<br>
+          from this one with a horizontal rule.</p>
+      </template>
+    </InfoModal>
     <h5>{{ gameName }}</h5>
     <h1>{{ $route.name }}</h1>
 
@@ -15,11 +42,12 @@
       </div>
       <div class="description">
         <label for="description"><h2>Description:</h2></label>
-        <textarea name="description" id="description" rows="6" placeholder="What is in the deck?" v-model="description"></textarea>
+        <textarea name="description" id="description" rows="3" placeholder="What is in the deck?" v-model="description"></textarea>
+        <a @click.prevent="showFormattingModal = true" href="#" class="button small">Formatting help</a>
       </div>
       <h2>Cards</h2>
         <div class="cards-container">
-            <button type="button" :class="currentCard === index ? 'card selected' : 'card'" @click="selectCard(index)" v-for="(card, index) in cards" :key="card[index]" :v-model="card[index]">{{ index+1 }}</button>
+            <button type="button" :class="currentCard == index ? 'card selected' : 'card'" @click="selectCard(index)" v-for="(card, index) in cards" :key="card[index]" :v-model="card[index]">{{ index+1 }}</button>
             <button type="button" class="add-card" name="add-card" @click="addCard"><img src="@/assets/icons/plus.svg" width="20" height="20" alt="Plus icon"></button>
         </div>
       <section class="edit-card">
@@ -32,7 +60,7 @@
       <label for="email"><h2>E-mail <span class="visibility">Not public</span></h2></label>
       <input type="email" name="email" id="email" v-model="email">
       <label for="message"><h2>Message <span class="visibility">Not public</span></h2></label>
-      <textarea name="message" id="message" rows="6" v-model="message"></textarea>
+      <textarea name="message" id="message" rows="3" v-model="message"></textarea>
       <!-- TODO: Implement something like: https://github.com/runkids/vue2-timeago -->
       <aside class="save-status">
         <p><strong>Deck saved!</strong> <span id="save-time">Just seconds ago</span></p>
@@ -51,20 +79,23 @@
       <h2 class="white">Want to publish your deck?</h2>
       <p>We would love you to share your fantastic deck with all our fellow players!</p>
       <p>When you feel happy with your creation, please publish it.</p>
-      <button type="button">Publish on social.gg</button>
+      <button type="button" class="submit">Send for review</button>
     </form>
   </div>
 </template>
 
 <script>
-  // import db from '@/firebase/config';
+  // import db from '@/firebase/config'
   import ConfirmModal from '@/components/ConfirmModal'
+  import InfoModal from '@/components/InfoModal'
   import singTogether from '@/components/card-fields/SingTogether'
   import trivia from '@/components/card-fields/Trivia'
+  import { setResizeListeners, resizeTextareas } from "@/helpers/auto-resize.js"
 
   export default {
     components: {
       ConfirmModal,
+      InfoModal,
       singTogether,
       trivia,
      },
@@ -84,8 +115,14 @@
         cardFields: new Map(),
         card: {},
         showDeleteModal: false,
+        showFormattingModal: false,
         // feedback: "",
       }
+    },
+    updated() {
+      this.$nextTick(function () {
+        resizeTextareas(this.$el, "textarea")
+      })
     },
     created() {
       //Init 
@@ -93,13 +130,13 @@
 
       // Edit an existing deck
       if (this.$route.params.deckId >= 0) {
-        console.log("Edit an existing deck");
+        console.log("Edit an existing deck")
         this.deckId = this.$route.params.deckId
         this.myDecks = JSON.parse(localStorage.getItem("myDecks"))
 
         // Does the deck exist?
         if (this.myDecks[this.gameId].decks[this.deckId]) {
-          console.log("Deck exists");
+          console.log("Deck exists")
           const myDeck = this.myDecks[this.gameId].decks[this.deckId]
 
           this.name = myDeck.name
@@ -112,7 +149,7 @@
           this.selectCard(this.currentCard, false, false)
         }
         else {
-          console.log("Deck doesn't exist");
+          console.log("Deck doesn't exist")
           // TODO: Show error saying that we couldn't load the deck
           this.addCard(true)
         }
@@ -120,12 +157,12 @@
       
       // Add a new deck
       else if (localStorage.getItem("myDecks")) {
-        console.log("Add a new deck");
+        console.log("Add a new deck")
         this.myDecks = JSON.parse(localStorage.getItem("myDecks"))
 
         // Add a deck in current game
         if (this.myDecks[this.gameId] && this.myDecks[this.gameId].decks.length) {
-          console.log("Add a deck in current game");
+          console.log("Add a deck in current game")
           this.deckId = this.myDecks[this.gameId].decks.length
           this.addCard(true)
           this.myDecks[this.gameId].decks[this.deckId] = this.generateDeckObject()
@@ -134,7 +171,7 @@
         }
         // First deck in current game
         else {
-          console.log("First deck in current game");
+          console.log("First deck in current game")
           this.deckId = 0
           this.addCard(true)
 
@@ -147,7 +184,7 @@
 
       // The very first deck
       else {
-        console.log("The very first deck");
+        console.log("The very first deck")
         this.deckId = 0
         this.addCard(true)
 
@@ -162,6 +199,9 @@
 
         this.myDecks = JSON.parse(localStorage.getItem("myDecks"))
       }
+    },
+    mounted() {
+      setResizeListeners(this.$el, "textarea")
     },
     methods: {
       generateCardFieldsMap() {
@@ -202,7 +242,7 @@
         localStorage.setItem("myDecks", JSON.stringify(this.myDecks))
       },
       saveDeck() {
-        console.log("saveDeck()");
+        console.log("saveDeck()")
 
         this.myDecks[this.gameId].decks[this.deckId].name = this.name
         this.myDecks[this.gameId].decks[this.deckId].description = this.description
@@ -269,7 +309,7 @@
       },
       getPreviousCard(cardPosition) {
         // Return cardPosition-1 if it's not 0, then return 0
-        return cardPosition ? cardPosition-1 : 0;
+        return cardPosition ? cardPosition-1 : 0
       },
       generateCardPath(cardPosition) {
         // Remove trailing front slash + digits from current path and add cardPosition
@@ -289,7 +329,7 @@
         if (save)
           this.saveCard()
 
-        if (replace && this.currentCard !== cardPosition)
+        if (replace && this.currentCard != cardPosition)
           this.$router.replace({path: this.generateCardPath(cardPosition)})
         
         this.currentCard = cardPosition
@@ -300,7 +340,6 @@
           //Using $set() to make this.card.xxx reactive
           this.$set(this.card, key, this.cards[cardPosition][key])
         }, this)
-        // console.log(this.card)
       },
       saveCard() {
         console.log('saveCard ' + this.currentCard)
