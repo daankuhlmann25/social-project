@@ -1,45 +1,24 @@
 <template>
-  <div class="play-container play-game">
-    <form @submit.prevent="setToLocalstorage">
-      <button style="display:none" type="submit">Randomize Deck</button>
-    </form>
-
-    <div class="current-song-container">
-      <div class="current-song">
-      <span class="icon"><img src="@/assets/icons/music-note.svg" width="28" height="28"
-                              alt="Current song"></span>
-          <div class="current-song-container">
-              <span class="song-title">{{ song }}</span>
-              <span class="song-artist">By: {{ artist }}</span>
-          </div>
-      </div>
+  <div class="play-game">
+    
+    <div class="card-container" ref="cardContainer">
+      <PlayCard>
+        <template v-slot:song>{{ song }}</template>
+        <template v-slot:artist>{{ artist }}</template>
+        <template v-slot:youSing>{{ youSing }}</template>
+        <template v-slot:theySing>{{ theySing }}</template>
+        <template v-slot:currentCard>{{ currentCard + 1 }}</template>
+        <template v-slot:numberOfCards>{{ numberOfCards }}</template>
+      </PlayCard>
     </div>
 
-    <div class="container-spacer">
-      <div class="legend">YOU SING:</div>
-      <div id="you-sing">{{ youSing }}</div>
-    </div>
-
-    <div class="container-spacer">
-      <div class="legend">THEY SING:</div>
-      <div id="they-sing">{{ theySing }}</div>
-    </div>
-
-    <hr/>
     <div class="information">
       <p>Pass the phone before hitting next</p>
     </div>
+    
     <div class="navigation">
       <span :class="currentCard > 0 ? 'icon-cards left colored' : 'icon-cards left'" v-on:click="goToPreviousCard()">
           <img src="@/assets/icons/arrow-next.svg" width="16" height="16" alt="Previous">
-      </span>
-      <span class="number-of-cards">
-        <div class="number">
-          <div class="legend">CARD</div>
-        </div>
-          <span class="counting">
-              {{ currentCard + 1 }} / {{ numberOfCards }}
-          </span>
       </span>
       <span class="icon-cards right" v-on:click="goToNextCard()">
           <img :src="currentCard === numberOfCards - 1 ? require('@/assets/icons/check.svg') : require('@/assets/icons/arrow-next.svg')" width="16" height="16" alt="Next">
@@ -50,28 +29,74 @@
 
 
 <script>
+import Vue from 'vue'
 import db from '@/firebase/config'
+import PlayCard from '@/components/PlayCard'
+import { transitionEndEventName } from '@/helpers/animation.js'
 
   export default {
+    components: { PlayCard },
 
     data() {
       return {
         showHowToPlay: false,
-        artist: '',
         song: '',
+        artist: '',
         youSing: '',
         theySing: '',
         songArray: [],
         numberOfCards: '',
         currentCard: 0,
+        currentCardElement: {},
+        cardDirection: 'next',
         randomizedSongArray: [],
         localStorageData: [],
         cards: [],
         deckSlug: this.$route.params.deckSlug ? this.$route.params.deckSlug : false,
+        transitionEnd: transitionEndEventName(),
       }
     },
     
     methods: {
+      async addCard(song, artist, youSing, theySing, currentCard, numberOfCards) {
+        let ComponentClass = Vue.extend(PlayCard),
+            instance = new ComponentClass(),
+            rotationIn = (Math.random()*2-1)*5, //random number between -5 and +5
+            rotationOut = (Math.random()*2-1)*5 //random number between -5 and +5
+        instance.$slots.song = song
+        instance.$slots.artist = artist
+        instance.$slots.youSing = youSing
+        instance.$slots.theySing = theySing
+        instance.$slots.currentCard = currentCard + 1
+        instance.$slots.numberOfCards = numberOfCards
+        instance.$mount()
+        
+        instance.$el.style.transform = this.cardDirection == "next" ? `translateX(60%) translateX(50vw) rotate(${rotationIn}deg)` : `translateX(-60%) translateX(-50vw) rotate(${rotationIn}deg)`
+        
+        await this.$refs.cardContainer.appendChild(instance.$el)
+        this.$refs.cardContainer.style.height = instance.$el.offsetHeight + "px"
+
+        //Run cardAnimationEnd when the transition ends
+        instance.$el.addEventListener(this.transitionEnd, this.cardAnimationEnd, {once: true})
+
+        //Animate in new card
+        instance.$el.style.transform = ""
+        
+        //Run removeCard when the transition ends
+        this.currentCardElement.addEventListener(this.transitionEnd, this.removeCard, {once: true})
+
+        //Animate out current card
+        this.currentCardElement.style.transform = this.cardDirection == "next" ? `translateX(-60%) translateX(-50vw) rotate(${rotationOut}deg)` : `translateX(60%) translateX(50vw) rotate(${rotationOut}deg)`
+
+        //Set new currenCardElement
+        this.currentCardElement = instance.$el
+      },
+      removeCard(event) {
+        event.target.remove()
+      },
+      cardAnimationEnd(event) {
+        event.target.style = ""
+      },
       shuffle(array) {
         let ctr = array.length, temp, index
         while (ctr > 0) {
@@ -101,19 +126,22 @@ import db from '@/firebase/config'
       },
       goToCard(cardPosition, replace = true) {
         this.currentCard = cardPosition
-        this.updateTemplate()
-        if (replace)
+        if (replace) {
+          this.addCard(this.cards[this.currentCard]['song'], this.cards[this.currentCard]['artist'], this.cards[this.currentCard]['youSing'], this.cards[this.currentCard]['theySing'], this.currentCard, this.numberOfCards)
           this.$router.replace({path: this.generatePlayPath(this.currentCard)})
+        }
       },
       goToPreviousCard() {
         if (this.currentCard > 0) {
           this.currentCard--
+          this.cardDirection = 'previous'
           this.goToCard(this.currentCard)
         }
       },
       goToNextCard() {
         if (this.currentCard < this.numberOfCards - 1) {
           this.currentCard++
+          this.cardDirection = 'next'
           this.goToCard(this.currentCard)
         }
         else
@@ -140,8 +168,11 @@ import db from '@/firebase/config'
 
         if (!this.$route.params.cardPosition) //When you just pushed the Play-button
           this.setToLocalstorage()
-        else
+        else {
+          this.currentCard = this.$route.params.cardPosition
+          this.updateTemplate()
           this.goToCard(parseInt(this.$route.params.cardPosition), false) //Go to card without route change
+        }
       }
       // Deck from db (All decks)
       else {
@@ -156,13 +187,21 @@ import db from '@/firebase/config'
 
             if (!this.$route.params.cardPosition) //When you just pushed the Play-button
               this.setToLocalstorage()
-            else
+            else {
+              this.currentCard = this.$route.params.cardPosition
+              this.updateTemplate()
               this.goToCard(parseInt(this.$route.params.cardPosition), false) //Go to card without route change
+            }
           })
           .catch((error) => {
             console.log("Error getting documents: ", error)
           })
       }
+    },
+
+    mounted() {
+      this.currentCardElement = this.$refs.cardContainer.firstChild
+      this.$refs.cardContainer.style.height = this.currentCardElement.offsetHeight + "px"
     },
   }
 </script>
