@@ -14,12 +14,12 @@
 
       <div class="container-spacer">
         <div class="legend">YOU SING:</div>
-        <div id="you-sing"><slot name="youSing">Lyrics</slot></div>
+        <div id="you-sing" ref="youSing"><slot name="youSing">Lyrics</slot></div>
       </div>
 
       <div class="container-spacer">
         <div class="legend">THEY SING:</div>
-        <div id="they-sing"><slot name="theySing">Lyrics</slot></div>
+        <div id="they-sing" ref="theySing"><slot name="theySing">Lyrics</slot></div>
       </div>
 
       <span class="number-of-cards">
@@ -32,7 +32,10 @@
 
 <script>
 export default {
-
+  mounted() {
+    this.$refs.youSing.innerHTML  = typeof this.$slots.youSing == "string" ? this.$slots.youSing : this.$slots.youSing[0].text
+    this.$refs.theySing.innerHTML = typeof this.$slots.theySing == "string" ? this.$slots.theySing : this.$slots.theySing[0].text
+  },
 }
 </script>
 

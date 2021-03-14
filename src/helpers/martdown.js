@@ -52,3 +52,8 @@ export const parseMartDown = (md) => {
   return md.trim()
   
 }
+
+
+export const parseNewLines = (md) => {
+  return md.trim().replace(/\n/g, "<br>")
+}

@@ -33,6 +33,7 @@ import Vue from 'vue'
 import db from '@/firebase/config'
 import PlayCard from '@/components/PlayCard'
 import { transitionEndEventName } from '@/helpers/animation.js'
+import { parseNewLines } from '@/helpers/martdown.js'
 
   export default {
     components: { PlayCard },
@@ -62,7 +63,11 @@ import { transitionEndEventName } from '@/helpers/animation.js'
         let ComponentClass = Vue.extend(PlayCard),
             instance = new ComponentClass(),
             rotationIn = (Math.random()*2-1)*5, //random number between -5 and +5
-            rotationOut = (Math.random()*2-1)*5 //random number between -5 and +5
+            rotationOut = (Math.random()*2-1)*5
+
+        youSing = parseNewLines(youSing)
+        theySing = parseNewLines(theySing)
+        
         instance.$slots.song = song
         instance.$slots.artist = artist
         instance.$slots.youSing = youSing
@@ -112,8 +117,8 @@ import { transitionEndEventName } from '@/helpers/animation.js'
         this.cards = JSON.parse(localStorage.getItem('cards'))
         this.artist = this.cards[this.currentCard]['artist']
         this.song = this.cards[this.currentCard]['song']
-        this.youSing = this.cards[this.currentCard]['youSing']
-        this.theySing = this.cards[this.currentCard]['theySing']
+        this.youSing = parseNewLines(this.cards[this.currentCard]['youSing'])
+        this.theySing = parseNewLines(this.cards[this.currentCard]['theySing'])
       },
       setToLocalstorage() {
         this.randomizedSongArray = this.shuffle(this.songArray)
@@ -127,7 +132,7 @@ import { transitionEndEventName } from '@/helpers/animation.js'
       goToCard(cardPosition, replace = true) {
         this.currentCard = cardPosition
         if (replace) {
-          this.addCard(this.cards[this.currentCard]['song'], this.cards[this.currentCard]['artist'], this.cards[this.currentCard]['youSing'], this.cards[this.currentCard]['theySing'], this.currentCard, this.numberOfCards)
+          this.addCard(this.cards[this.currentCard]['song'], this.cards[this.currentCard]['artist'], parseNewLines(this.cards[this.currentCard]['youSing']), parseNewLines(this.cards[this.currentCard]['theySing']), this.currentCard, this.numberOfCards)
           this.$router.replace({path: this.generatePlayPath(this.currentCard)})
         }
       },
@@ -173,6 +178,7 @@ import { transitionEndEventName } from '@/helpers/animation.js'
           this.updateTemplate()
           this.goToCard(parseInt(this.$route.params.cardPosition), false) //Go to card without route change
         }
+
       }
       // Deck from db (All decks)
       else {
@@ -201,6 +207,7 @@ import { transitionEndEventName } from '@/helpers/animation.js'
 
     mounted() {
       this.currentCardElement = this.$refs.cardContainer.firstChild
+      console.log(this.currentCardElement.offsetHeight);
       this.$refs.cardContainer.style.height = this.currentCardElement.offsetHeight + "px"
     },
   }
