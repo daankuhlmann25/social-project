@@ -1,16 +1,12 @@
-.play-container.play-game {
+.play-game {
   min-height: 100%;
-
-  hr {
-    margin-bottom: 40px;
-  }
-
+  
   .legend {
     font-size: 16px;
     margin-bottom: 8px;
     text-align: center;
   }
-
+  
   button {
     width: 50%;
     margin: 0 auto;
@@ -26,92 +22,126 @@
     border-radius: 3px;
     margin-bottom: 15px;
     padding: 10px;
-
+    
     &:hover {
       background-color: fade(@black, 40%);
       color: @white;
       cursor: pointer;
     }
   }
-
-  .current-song-container {
-    display: flex;
-
-    .current-song {
-      background-color: fade(@black, 40%);
-      padding: 15px;
-      width: auto;
-      margin: 0 auto;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 3px;
-
-      .icon {
-        img {
-          margin-right: 15px;
+  
+  .card-container {
+    position: relative;
+    height: 50vh;
+    transition: all 400ms cubic-bezier(0.165, 0.84, 0.44, 1);
+    
+    .card {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      background-color: fade(@black, 23%);
+      padding: @spacing__l;
+      border-radius: @spacing__m;
+      transition: all 777ms cubic-bezier(0.3,1.22,.5,1);
+      
+      .song {
+        width: auto;
+        margin-bottom: @spacing__l;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        
+        .icon {
+          img {
+            margin-right: 15px;
+          }
+        }
+        
+        .song-container {
+          display: flex;
+          flex-direction: column;
+          
+          .song-artist, .song-title {
+            font-size: 16px;
+            line-height: @line-height__s;
+            flex: 0 0 100%;
+          }
+          
+          .song-artist {
+            color: @normal-grey;
+          }
+          
+          .song-title {
+            color: @white;
+          }
         }
       }
-
-      .current-song-container {
-        display: flex;
-        flex-direction: column;
-
-        .song-artist, .song-title {
-          font-size: 16px;
-          line-height: @line-height__s;
-          flex: 0 0 100%;
-        }
-
-        .song-artist {
-          color: #C7C7C7;
-        }
-
-        .song-title {
-          color: @white;
-        }
+      
+      hr {
+        margin: 0;
+        height: 2px;
+        background-color: @night-sky;
+        border-radius: 1px;
+      }
+      
+      .container-spacer {
+        margin: @spacing__xl 0 @spacing__xxl;
+      }
+      
+      .container-spacer:last-of-type {
+        margin-top: 0;
+      }
+      
+      
+      #you-sing, #they-sing {
+        font-size: 28px;
+        font-weight: 700;
+        margin: 0;
+        text-align: center;
+      }
+      
+      #you-sing {
+        color: @sun;
+      }
+      
+      #they-sing {
+        color: @white;
+      }
+      
+      .number-of-cards {
+        text-align: center;
+        color: fade(@white, 50%);
+        font-size: 12px;
+        font-weight: 500;
       }
     }
   }
-
-  .container-spacer {
-    margin: 40px 0;
-  }
-
-  #you-sing, #they-sing {
-    font-size: 28px;
-    font-weight: 700;
-    margin: 0;
-    text-align: center;
-  }
-
-  #you-sing {
-    color: @sun;
-  }
-
-  #they-sing {
-    color: @white;
-  }
-
+  
+  
   .information p {
     text-align: center;
     font-size: 16px;
     color: #C7C7C7;
     margin-top: 30px;
   }
+  
 
   .navigation {
-    background-color: fade(@night-sky, 70%);
-    backdrop-filter: blur(@spacing__xl);
-    text-align: center;
-    position: sticky;
+    position: fixed;
     bottom: 0;
-    width: 100%;
+    left: 0;
+    right: 0;
     display: flex;
     justify-content: space-between;
-    vertical-align: middle;
-    align-items: center;
-    padding: 8px 0;
+    padding: @spacing__m;
+    z-index: 2;
+    
+    @media @desktop {
+      position: initial;
+      padding: 0;
+      margin-top: @spacing__xl;
+    }
 
     .icon-cards {
       background-color: #C7C7C7;
@@ -154,23 +184,6 @@
       }
     }
 
-    .number-of-cards {
-      vertical-align: middle;
-      align-items: center;
-
-      .number {
-        margin: 0 0 4px;
-      }
-
-      .legend {
-        font-size: 14px;
-      }
-
-      .counting {
-        font-size: 18px;
-        font-weight: bold;
-        color: @white;
-      }
-    }
   }
+
 }
