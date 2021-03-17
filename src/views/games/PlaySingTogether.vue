@@ -3,10 +3,10 @@
     
     <div class="card-container" ref="cardContainer">
       <PlayCard>
-        <template v-slot:song>{{ song }}</template>
-        <template v-slot:artist>{{ artist }}</template>
-        <template v-slot:youSing>{{ youSing }}</template>
-        <template v-slot:theySing>{{ theySing }}</template>
+        <template v-if="song != ''" v-slot:song>{{ song }}</template>
+        <template v-if="artist != ''" v-slot:artist>{{ artist }}</template>
+        <template v-if="youSing != ''" v-slot:youSing>{{ youSing }}</template>
+        <template v-if="theySing != ''" v-slot:theySing>{{ theySing }}</template>
         <template v-slot:currentCard>{{ currentCard + 1 }}</template>
         <template v-slot:numberOfCards>{{ numberOfCards }}</template>
       </PlayCard>
@@ -55,6 +55,7 @@ import { parseNewLines } from '@/helpers/martdown.js'
         cards: [],
         deckSlug: this.$route.params.deckSlug ? this.$route.params.deckSlug : false,
         transitionEnd: transitionEndEventName(),
+        deckFromLocalStorage: false,
       }
     },
     
@@ -64,6 +65,12 @@ import { parseNewLines } from '@/helpers/martdown.js'
             instance = new ComponentClass(),
             rotationIn = (Math.random()*2-1)*5, //random number between -5 and +5
             rotationOut = (Math.random()*2-1)*5
+
+        // Destroy the current instance to prevent updated() to fire again. No idea why the first instance (from the template) is actually the parent
+        if (this.currentCardElement.__vue__.$parent && !this.deckFromLocalStorage)
+          this.currentCardElement.__vue__.$parent.$destroy()
+        else
+          this.currentCardElement.__vue__.$destroy()
 
         youSing = parseNewLines(youSing)
         theySing = parseNewLines(theySing)
@@ -79,7 +86,7 @@ import { parseNewLines } from '@/helpers/martdown.js'
         instance.$el.style.transform = this.cardDirection == "next" ? `translateX(60%) translateX(50vw) rotate(${rotationIn}deg)` : `translateX(-60%) translateX(-50vw) rotate(${rotationIn}deg)`
         
         await this.$refs.cardContainer.appendChild(instance.$el)
-        this.$refs.cardContainer.style.height = instance.$el.offsetHeight + "px"
+        this.setCardContainerHeight(instance)
 
         //Run cardAnimationEnd when the transition ends
         instance.$el.addEventListener(this.transitionEnd, this.cardAnimationEnd, {once: true})
@@ -97,10 +104,21 @@ import { parseNewLines } from '@/helpers/martdown.js'
         this.currentCardElement = instance.$el
       },
       removeCard(event) {
+        //Remove DOM
         event.target.remove()
       },
       cardAnimationEnd(event) {
         event.target.style = ""
+      },
+      setCardContainerHeight(instance) {
+        this.$refs.cardContainer.style.height = instance.$el.offsetHeight + "px"
+      },
+      playCardUpdated(instance) {
+        this.setCardContainerHeight(instance)
+      },
+      windowResize() {
+        if (this.$refs.cardContainer.style.height != this.currentCardElement.__vue__.$el.offsetHeight + "px")
+          this.setCardContainerHeight(this.currentCardElement.__vue__)
       },
       shuffle(array) {
         let ctr = array.length, temp, index
@@ -161,6 +179,8 @@ import { parseNewLines } from '@/helpers/martdown.js'
     },
 
     created() {
+      window.addEventListener("resize", this.windowResize)
+
       // Set header right
       this.$store.commit('header/setRight', 'howToPlay')
 
@@ -168,15 +188,16 @@ import { parseNewLines } from '@/helpers/martdown.js'
       if (!this.$route.params.deckSlug) {
         console.log('Deck from localStorage (My decks)')
 
+        this.deckFromLocalStorage = true
         this.songArray = JSON.parse(localStorage.getItem("myDecks"))[this.$route.params.gameId].decks[this.$route.params.deckId].cards
         this.numberOfCards = this.songArray.length
 
         if (!this.$route.params.cardPosition) //When you just pushed the Play-button
           this.setToLocalstorage()
         else {
-          this.currentCard = this.$route.params.cardPosition
+          this.currentCard = parseInt(this.$route.params.cardPosition)
           this.updateTemplate()
-          this.goToCard(parseInt(this.$route.params.cardPosition), false) //Go to card without route change
+          this.goToCard(this.currentCard, false) //Go to card without route change
         }
 
       }
@@ -194,9 +215,9 @@ import { parseNewLines } from '@/helpers/martdown.js'
             if (!this.$route.params.cardPosition) //When you just pushed the Play-button
               this.setToLocalstorage()
             else {
-              this.currentCard = this.$route.params.cardPosition
+              this.currentCard = parseInt(this.$route.params.cardPosition)
               this.updateTemplate()
-              this.goToCard(parseInt(this.$route.params.cardPosition), false) //Go to card without route change
+              this.goToCard(this.currentCard, false) //Go to card without route change
             }
           })
           .catch((error) => {
@@ -207,8 +228,11 @@ import { parseNewLines } from '@/helpers/martdown.js'
 
     mounted() {
       this.currentCardElement = this.$refs.cardContainer.firstChild
-      console.log(this.currentCardElement.offsetHeight);
-      this.$refs.cardContainer.style.height = this.currentCardElement.offsetHeight + "px"
+      this.setCardContainerHeight(this.currentCardElement.__vue__)
+    },
+
+    destroyed() {
+      window.removeEventListener("resize", this.windowResize)
     },
   }
 </script>

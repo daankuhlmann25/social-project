@@ -32,9 +32,26 @@
 
 <script>
 export default {
+  methods: {
+    fixHtml() {
+      if (typeof this.$slots.youSing == "string" && this.$slots.youSing.length)
+        this.$refs.youSing.innerHTML = this.$slots.youSing
+      else if (typeof this.$slots.youSing == "object" && this.$slots.youSing[0] && this.$slots.youSing[0].text.length)
+        this.$refs.youSing.innerHTML = this.$slots.youSing[0].text
+      
+      if (typeof this.$slots.theySing == "string" && this.$slots.theySing.length)
+        this.$refs.theySing.innerHTML = this.$slots.theySing
+      else if (typeof this.$slots.theySing == "object" && this.$slots.theySing[0] && this.$slots.theySing[0].text.length)
+        this.$refs.theySing.innerHTML = this.$slots.theySing[0].text
+    },
+  },
   mounted() {
-    this.$refs.youSing.innerHTML  = typeof this.$slots.youSing == "string" ? this.$slots.youSing : this.$slots.youSing[0].text
-    this.$refs.theySing.innerHTML = typeof this.$slots.theySing == "string" ? this.$slots.theySing : this.$slots.theySing[0].text
+    this.fixHtml()
+  },
+  async updated() {
+    await this.fixHtml()
+    if (this.$parent.playCardUpdated)
+      this.$parent.playCardUpdated(this)
   },
 }
 </script>
