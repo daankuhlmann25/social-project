@@ -83,7 +83,7 @@ import { parseNewLines } from '@/helpers/martdown.js'
         instance.$slots.numberOfCards = numberOfCards
         instance.$mount()
         
-        instance.$el.style.transform = this.cardDirection == "next" ? `translateX(60%) translateX(50vw) rotate(${rotationIn}deg)` : `translateX(-60%) translateX(-50vw) rotate(${rotationIn}deg)`
+        instance.$el.style.transform = this.cardDirection == "next" ? `translateX(120%) rotate(${rotationIn}deg)` : `translateX(-120%) rotate(${rotationIn}deg)`
         
         await this.$refs.cardContainer.appendChild(instance.$el)
         this.setCardContainerHeight(instance)
@@ -98,7 +98,7 @@ import { parseNewLines } from '@/helpers/martdown.js'
         this.currentCardElement.addEventListener(this.transitionEnd, this.removeCard, {once: true})
 
         //Animate out current card
-        this.currentCardElement.style.transform = this.cardDirection == "next" ? `translateX(-60%) translateX(-50vw) rotate(${rotationOut}deg)` : `translateX(60%) translateX(50vw) rotate(${rotationOut}deg)`
+        this.currentCardElement.style.transform = this.cardDirection == "next" ? `translateX(-120%) rotate(${rotationOut}deg)` : `translateX(120%) rotate(${rotationOut}deg)`
 
         //Set new currenCardElement
         this.currentCardElement = instance.$el

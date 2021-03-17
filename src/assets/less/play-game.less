@@ -135,6 +135,13 @@
     display: flex;
     justify-content: space-between;
     padding: @spacing__m;
+    z-index: 2;
+    
+    @media @desktop {
+      position: initial;
+      padding: 0;
+      margin-top: @spacing__xl;
+    }
 
     .icon-cards {
       background-color: #C7C7C7;
