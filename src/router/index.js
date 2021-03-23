@@ -1,25 +1,25 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+import Vue from "vue"
+import VueRouter from "vue-router"
 
-import Home from "@/views/Home";
-import Play from "@/views/Play";
-import EditDeck from "@/views/EditDeck";
-import Deck from "@/views/Deck";
-import TheEnd from "@/views/TheEnd";
-import NotFound from "@/views/NotFound";
+import Home from "@/views/Home"
+import Play from "@/views/Play"
+import EditDeck from "@/views/EditDeck"
+import Deck from "@/views/Deck"
+import TheEnd from "@/views/TheEnd"
+import NotFound from "@/views/NotFound"
 
 // GAMES
-import Games from "@/views/Games";
-import SingTogether from "@/views/games/SingTogether";
-import PlaySingTogether from "@/views/games/PlaySingTogether";
-import Trivia from "@/views/games/Trivia";
-import PlayTrivia from "@/views/games/PlayTrivia";
-import SendDeck from "@/views/SendDeck";
+import Games from "@/views/Games"
+import SingTogether from "@/views/games/SingTogether"
+import PlaySingTogether from "@/views/games/PlaySingTogether"
+import Trivia from "@/views/games/Trivia"
+import PlayTrivia from "@/views/games/PlayTrivia"
+import SendDeck from "@/views/SendDeck"
 
 // TOOLS
-import UpdateDatabase from "@/tools/UpdateDatabase";
+import UpdateDatabase from "@/tools/UpdateDatabase"
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
   {
@@ -99,7 +99,7 @@ const routes = [
     name: "Not found",
     component: NotFound,
   }
-];
+]
 
 const router = new VueRouter({
   mode: "history",
@@ -113,6 +113,6 @@ const router = new VueRouter({
       return { x: 0, y: 0 }
     }
   }
-});
+})
 
-export default router;
+export default router
