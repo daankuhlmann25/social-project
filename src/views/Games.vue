@@ -2,9 +2,11 @@
   <main class="games">
     <Header />
     <GameList :class="{ show: showGameList }" />
-    <!-- TODO: Add nice error message if gameId is wrong -->
-    <router-view :name="$route.params.gameId" />
-    <router-view /> <!-- This is used by EditDeck -->
+    <transition :name="transitionName" mode="out-in">
+      <!-- TODO: Add nice error message if gameId is wrong -->
+      <router-view :name="$route.params.gameId" />
+      <router-view /> <!-- This is used by EditDeck -->
+    </transition>
   </main>
 </template>
 
@@ -21,6 +23,7 @@ export default {
         ['sing-together']: "Sing together",
         trivia: "Trivia"
       },
+      transitionName: 'forward',
     }
   },
   computed: {
@@ -29,6 +32,17 @@ export default {
   created() {
     // Set header right
     this.$store.commit('header/setRight', 'gameList')
+  },
+  watch: {
+    '$route' (to, from) {
+      if (to.matched.some(m => m.meta.transitionName))
+        this.transitionName = to.meta.transitionName
+      else {
+        const toDepth = to.path.split('/').length
+        const fromDepth = from.path.split('/').length
+        this.transitionName = toDepth < fromDepth ? 'back' : 'forward'
+      }
+    }
   },
 }
 </script>

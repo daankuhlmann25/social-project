@@ -40,14 +40,16 @@ const routes = [
         }
       },
       {
-        path: ":gameId/:deckId?/add-deck/:cardPosition?",
+        path: ":gameId/add-deck/:cardPosition?",
         name: "Add deck",
         component: EditDeck,
+        meta: { disableScroll: true },
       },
       {
         path: ":gameId/:deckId/edit-deck/:cardPosition?",
         name: "Edit deck",
         component: EditDeck,
+        meta: { disableScroll: true },
       },
       {
         path: ":gameId/send-deck",
@@ -58,10 +60,12 @@ const routes = [
         path: ":gameId/:deckSlug?/:deckId/the-end",
         name: "The end",
         component: TheEnd,
+        meta: { transitionName: 'fade' }
       },
       {
         path: ":gameId/:deckSlug?/:deckId/play/:cardPosition?",
         component: Play,
+        meta: { smoothScroll: true },
         children: [
           {
             path: "",
@@ -71,7 +75,7 @@ const routes = [
               'trivia': PlayTrivia,
             }
           }
-        ]
+        ],
       },
       {
         path: ":gameId/:deckSlug?/:deckId",
@@ -106,12 +110,31 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
   scrollBehavior (to, from, savedPosition) {
+
+    //Only disable scroll if cardPosition is defined
+    if (to.matched.some(m => m.meta.disableScroll) && (to.params.cardPosition ?? false))
+      return
+    
+    const position = {
+      x: 0,
+      y: 0,
+      behavior: 'auto',
+    }
+    
+    //Only use smooth if cardPosition is defined
+    if (to.matched.some(m => m.meta.smoothScroll) && (to.params.cardPosition ?? false))
+      position.behavior = 'smooth'
+  
     if (savedPosition) {
-      return savedPosition
+      position.x = savedPosition.x
+      position.y = savedPosition.y
     }
-    else {
-      return { x: 0, y: 0 }
-    }
+  
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(position)
+      }, 250)
+    })
   }
 })
 
