@@ -35,7 +35,11 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      if (to.matched.some(m => m.meta.transitionName))
+      if (from.name == "The end") {
+        if (["Edit deck", "Add deck", "Deck"].includes(to.name))
+          this.transitionName = 'forward'
+      }
+      else if (to.matched.some(m => m.meta.transitionName))
         this.transitionName = to.meta.transitionName
       else {
         const toDepth = to.path.split('/').length
