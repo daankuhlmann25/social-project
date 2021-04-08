@@ -105,13 +105,13 @@ export default {
 .hero {
   position: relative;
   overflow: hidden;
-
   padding: 64px 0;
+  z-index: 0;
 }
 
 .hero * {
   position: relative;
-  z-index: 2;
+  z-index: 3;
 }
 
 .hero:after {
