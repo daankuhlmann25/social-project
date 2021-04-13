@@ -4,7 +4,7 @@
       <h1>Trivia</h1>
       <h4>Questions and answers</h4>
     </hgroup>
-    <section class="how-to-play-section">
+    <ExpandableSection>
     <h2>How to play</h2>
       <p>You take turns answering questions. If your answer is correct, you gain one point and get to answer another question.</p>
       <p>If you get it wrong, it’s the next persons turn.</p>
@@ -12,7 +12,7 @@
       <ul>
         <li>Pen & paper (for counting points)</li>
       </ul>
-    </section>
+    </ExpandableSection>
     <ListDecks />
   </div>
 </template>
@@ -20,9 +20,10 @@
 
 <script>
 import ListDecks from '@/components/ListDecks'
+import ExpandableSection from '@/components/ExpandableSection'
 
 export default {
-  components: { ListDecks },
+  components: { ListDecks, ExpandableSection },
 }
 </script>
 
