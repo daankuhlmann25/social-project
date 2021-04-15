@@ -75,6 +75,7 @@
           <a @click.prevent="showDeleteModal = true" href="#" class="button delete-deck" title="Delete this deck"><img src="@/assets/icons/delete.svg" width="16" height="16" alt="Delete icon">Delete deck</a>
         </div>
       </nav>
+      <!-- TODO: What feedback do we need? How do we want it to work? -->
       <!-- <p v-if="feedback" class="errors">{{ feedback }}</p> -->
       <h2 class="white">Want to publish your deck?</h2>
       <p>We would love you to share your fantastic deck with all our fellow players!</p>
