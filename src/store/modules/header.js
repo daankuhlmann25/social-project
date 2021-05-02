@@ -3,6 +3,7 @@ const state = () => ({
   hideLeft: false,
   showGameList: false,
   showHowToPlay: false,
+  transparent: false,
 })
 
 const getters = {
@@ -18,6 +19,9 @@ const getters = {
   getShowHowToPlay: (state) => {
     return state.showHowToPlay
   },
+  getTransparent: (state) => {
+    return state.transparent
+  },
 }
 
 const mutations = {
@@ -26,6 +30,9 @@ const mutations = {
   },
   setHideLeft: (state, bool) => {
     state.hideLeft = bool
+  },
+  setTransparent: (state, bool) => {
+    state.transparent = bool
   },
   toggleGameList: (state) => {
     state.showGameList = !state.showGameList

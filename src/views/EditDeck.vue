@@ -128,6 +128,7 @@
     created() {
       //Init 
       this.generateCardFieldsMap()
+      this.$store.commit('header/setTransparent', false)
 
       // Edit an existing deck
       if (this.$route.params.deckId >= 0) {

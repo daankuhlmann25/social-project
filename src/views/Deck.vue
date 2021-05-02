@@ -36,6 +36,7 @@ export default {
   created() {
     // Set header right
     this.$store.commit('header/setRight', 'gameList')
+    this.$store.commit('header/setTransparent', false)
 
     //Deck from localStorage (My decks)
       if (!this.$route.params.deckSlug) {
