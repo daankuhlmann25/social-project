@@ -44,7 +44,7 @@ export default {
   
     handleScroll() {
       //Scrolled to top
-      if (!window.scrollY)
+      if (window.scrollY < 1)
         this.makeTransparent()
       else
         this.clearElStyle()
