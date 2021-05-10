@@ -106,7 +106,7 @@ export default {
   position: relative;
   overflow: hidden;
   padding: 64px 0;
-  z-index: 0;
+  z-index: 2;
 }
 
 .hero * {
