@@ -5,6 +5,11 @@
 @import "edit-deck";
 @import "modal";
 
+:root {
+  --gameHeaderDecorationSharp: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYxIiBoZWlnaHQ9IjIzMSIgdmlld0JveD0iMCAwIDM2MSAyMzEiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIG9wYWNpdHk9IjAuMTUiIGQ9Ik0yMzkgMTIzTDM2MSAyMzAuNTcySDI5OC45NEwyMzkgMTIzWiIgZmlsbD0iYmxhY2siLz4KPHBhdGggb3BhY2l0eT0iMC4xNSIgZD0iTTI4LjUgMTQwTDExOCAyMzFINTYuMTg4N0wyOC41IDE0MFoiIGZpbGw9ImJsYWNrIi8+CjxwYXRoIG9wYWNpdHk9IjAuMTUiIGQ9Ik0xNjAgMTM3LjMyNkwwIC0zLjA1MTc2ZS0wNUg4OC43NDUzTDE2MCAxMzcuMzI2WiIgZmlsbD0iYmxhY2siLz4KPHBhdGggb3BhY2l0eT0iMC4xNSIgZD0iTTMyMCA5NC45ODRMMjg1IDUuMzQwNThlLTA1SDIxN0wzMjAgOTQuOTg0WiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==');
+  --gameHeaderDecorationRound: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzc1IiBoZWlnaHQ9IjIzMSIgdmlld0JveD0iMCAwIDM3NSAyMzEiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxtYXNrIGlkPSJtYXNrMCIgbWFzay10eXBlPSJhbHBoYSIgbWFza1VuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeD0iMCIgeT0iMCIgd2lkdGg9IjM3NSIgaGVpZ2h0PSIyMzEiPgo8cmVjdCB3aWR0aD0iMzc1IiBoZWlnaHQ9IjIzMSIgZmlsbD0iI0M0QzRDNCIvPgo8L21hc2s+CjxnIG1hc2s9InVybCgjbWFzazApIj4KPGNpcmNsZSBvcGFjaXR5PSIwLjE1IiBjeD0iMzA4LjUiIGN5PSIyNDIuNSIgcj0iMTAxLjUiIGZpbGw9ImJsYWNrIi8+CjxjaXJjbGUgb3BhY2l0eT0iMC4xNSIgY3g9IjkyIiBjeT0iMTk4IiByPSI1NSIgZmlsbD0iYmxhY2siLz4KPGNpcmNsZSBvcGFjaXR5PSIwLjE1IiBjeD0iMTg4IiBjeT0iLTcxIiByPSIxODQiIGZpbGw9ImJsYWNrIi8+CjwvZz4KPC9zdmc+Cg==');
+}
+
 html, body {
   height: 100%;
 }
@@ -270,6 +275,43 @@ body {
       }
     }
 
+    // Game header
+    header.top {
+      position: relative;
+      margin: -@spacing__xxl*2 calc(@spacing__m*-1) 0;
+      padding: @spacing__xxl*2 @spacing__m @spacing__xl;
+      width: calc(100% + @spacing__m*2);
+      z-index: 3;
+      
+      h1 {
+        margin-top: @spacing__base;
+        color: @white;
+      }
+    }
+    
+    .game.sing-together {
+      
+      header.top {
+        background:
+        var(--gameHeaderDecorationSharp) center,
+        linear-gradient(265deg, rgba(28, 26, 33, 0.5) 0%, rgba(43, 37, 7, 0.75) 100%);
+        background-size: cover;
+        background-position-y: 57%;
+      }
+    }
+    
+    .game.trivia {
+      
+      header.top {
+        background:
+        var(--gameHeaderDecorationRound) center,
+        linear-gradient(265deg, rgba(28, 26, 33, 0.5) 0%, rgba(56, 22, 26, 0.5) 100%);
+        background-size: cover;
+        background-position-y: 65%;
+      }
+    }
+
+
     // Header
     header {
       position: fixed;
@@ -280,6 +322,7 @@ body {
       background: fade(@night-sky, 70%);
       backdrop-filter: blur(@spacing__xl);
       z-index: 8;
+      transition: background-color 300ms;
 
       .header-wrap {
         display: flex;
@@ -368,17 +411,6 @@ body {
           color: @white;
           font-weight: 700;
           margin-top: 8px;
-        }
-      }
-    }
-
-    // Games
-    .games {
-
-      .how-to-play-section {
-
-        h2, h3, h4 {
-          color: @white;
         }
       }
     }

@@ -14,19 +14,66 @@ import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'Header',
+
   computed: {
     ...mapState({
       hideLeft: state => state.header.hideLeft,
       right: state => state.header.right,
+      transparent: state => state.header.transparent,
     }),
   },
+  
   methods: {
     ...mapMutations({
       toggleGameList: 'header/toggleGameList',
       toggleHowToPlay: 'header/toggleHowToPlay',
       setRight: 'header/setRight',
       setHideLeft: 'header/setHideLeft',
+      setTransparent: 'header/setTransparent',
     }),
+
+    makeTransparent() {
+      this.$el.style.backdropFilter =
+      this.$el.style.webkitBackdropFilter = "blur(0px)"
+      this.$el.style.backgroundColor = "rgba(53, 50, 61, 0)"
+    },
+
+    clearElStyle() {
+      this.$el.style = ""
+    },
+  
+    handleScroll() {
+      //Scrolled to top
+      if (window.scrollY < 1)
+        this.makeTransparent()
+      else
+        this.clearElStyle()
+    },
+  },
+
+  mounted() {
+    if (this.transparent) {
+      window.addEventListener('scroll', this.handleScroll)
+      this.handleScroll()
+    }
+  },
+
+  watch: {
+    '$store.state.header.transparent': function() {
+      if(this.$store.state.header.transparent) {
+        window.addEventListener('scroll', this.handleScroll)
+        this.handleScroll()
+      }
+      else {
+        window.removeEventListener('scroll', this.handleScroll)
+        this.clearElStyle()
+      }
+    }
+  },
+  
+  destroyed: function () {
+    if (this.transparent)
+      window.removeEventListener('scroll', this.handleScroll)
   },
 }
 </script>

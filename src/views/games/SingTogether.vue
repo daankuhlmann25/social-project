@@ -1,15 +1,15 @@
 <template>
   <div class="game sing-together">
-    <!-- TODO: Fetch info from firebase and parse markdown for How to play (vue-simple-markdown?) -->
-    <hgroup>
+    <header class="top">
+      <img class="game-icon" width="50" height="50" alt="music icon" src="@/assets/icons/game-icon-music.svg">
       <h1>Sing together</h1>
       <h4>Team up, finish the lyrics</h4>
-    </hgroup>
-    <section class="how-to-play-section">
+    </header>
+    <ExpandableSection>
       <h2>How to play</h2>
       <p>Divide your group into two teams. The team with the phone sings the first part. If the other team can sing the second part, they get one point.</p>
       <p>Pass the phone to the other team and let them go to the next card.</p>
-    </section>
+    </ExpandableSection>
     <ListDecks />
   </div>
 </template>
@@ -17,12 +17,30 @@
 
 <script>
 import ListDecks from '@/components/ListDecks'
+import ExpandableSection from '@/components/ExpandableSection'
 
 export default {
-  components: { ListDecks },
+  components: { ListDecks, ExpandableSection },
+
+  created() {
+    this.$store.commit('header/setTransparent', true)
+  },
 }
 </script>
 
 <style scoped>
-
+header.top::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .03;
+  background-image: url('../../assets/images/white-noise.png');
+  background-repeat: repeat;
+  background-position: center;
+  pointer-events: none;
+}
 </style>
