@@ -8,6 +8,7 @@
     },
 
     "download": {
+        "includeSourceLang": true,
         "files": "src/translations/${lang}.json"
     }
 }
