@@ -9,15 +9,15 @@
         <!-- TODO: Make numbers dynamic -->
         <div class="number">
           <div class="int" id="num-of-decks">156</div>
-          <div class="legend">Decks</div>
+          <div class="legend">{{$t('Decks')}}</div>
         </div>
         <div class="number">
           <div class="int" id="num-of-cards">6240</div>
-          <div class="legend">Playing cards</div>
+          <div class="legend">{{$t('Playing cards')}}</div>
         </div>
         <div class="number">
           <div class="int" id="num-of-games">12</div>
-          <div class="legend">Games</div>
+          <div class="legend">{{$t('Games')}}</div>
         </div>
       </div>
       <p>{{$t('created by our users')}} <img width="14" height="17" src="../assets/icons/text-heart.svg" alt="Heart icon"></p>
