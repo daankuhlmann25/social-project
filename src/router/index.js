@@ -1,5 +1,5 @@
 import Vue from "vue"
-import VueRouter from "vue-router"
+import LangRouter from 'vue-lang-router'
 
 import Home from "@/views/Home"
 import Play from "@/views/Play"
@@ -18,8 +18,14 @@ import SendDeck from "@/views/SendDeck"
 
 // TOOLS
 import UpdateDatabase from "@/tools/UpdateDatabase"
+import translations from '../lang/translations'
+import localizedURLs from '../lang/localized-urls'
 
-Vue.use(VueRouter)
+Vue.use(LangRouter, {
+	defaultLanguage: 'en',// TODO: Set this depending on the domain name
+	translations,
+	localizedURLs,
+})
 
 const routes = [
   {
@@ -36,7 +42,9 @@ const routes = [
         name: "Game",
         components: {
           'sing-together': SingTogether,
+          'sjung-tillsammans': SingTogether,
           'trivia': Trivia,
+          'fragor-och-svar': Trivia,
         }
       },
       {
@@ -72,7 +80,9 @@ const routes = [
             name: "Play",
             components: {
               'sing-together': PlaySingTogether,
+              'sjung-tillsammans': PlaySingTogether,
               'trivia': PlayTrivia,
+              'fragor-och-svar': PlayTrivia,
             }
           }
         ],
@@ -105,7 +115,7 @@ const routes = [
   }
 ]
 
-const router = new VueRouter({
+const router = new LangRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
