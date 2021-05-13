@@ -72,7 +72,7 @@
         </div>
         <div class="nav-group">
           <router-link class="button" :to="{ name: 'Game', params: { gameId: this.gameId } }"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" :alt="$t('Back arrow icon')">{{ $t('Done editing') }}</router-link>
-          <a @click.prevent="showDeleteModal = true" href="#" class="button delete-deck" :title="$t('Delete this deck')"><img src="@/assets/icons/delete.svg" width="16" height="16" :alt="$('Delete icon')">{{ $t('Delete deck') }}</a>
+          <a @click.prevent="showDeleteModal = true" href="#" class="button delete-deck" :title="$t('Delete this deck')"><img src="@/assets/icons/delete.svg" width="16" height="16" :alt="$t('Delete icon')">{{ $t('Delete deck') }}</a>
         </div>
       </nav>
       <!-- TODO: What feedback do we need? How do we want it to work? -->
