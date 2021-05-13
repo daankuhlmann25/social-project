@@ -13,15 +13,15 @@
     </div>
 
     <div class="information">
-      <p>Pass the phone before hitting next</p>
+      <p>{{ $t('Pass the phone before hitting next') }}</p>
     </div>
     
     <div class="navigation">
       <span :class="currentCard > 0 ? 'icon-cards left colored' : 'icon-cards left'" v-on:click="goToPreviousCard()">
-          <img src="@/assets/icons/arrow-next.svg" width="16" height="16" alt="Previous">
+          <img src="@/assets/icons/arrow-next.svg" width="16" height="16" :alt="$t('Previous')">
       </span>
       <span class="icon-cards right" v-on:click="goToNextCard()">
-          <img :src="currentCard === numberOfCards - 1 ? require('@/assets/icons/check.svg') : require('@/assets/icons/arrow-next.svg')" width="16" height="16" alt="Next">
+          <img :src="currentCard === numberOfCards - 1 ? require('@/assets/icons/check.svg') : require('@/assets/icons/arrow-next.svg')" width="16" height="16" :alt="$t('Next')">
       </span>
     </div>
   </div>

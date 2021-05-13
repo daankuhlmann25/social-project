@@ -3,23 +3,23 @@
     <div class="card">
       
       <div class="song">
-        <span class="icon"><img src="@/assets/icons/music-note.svg" width="28" height="28" alt="Music note icon"></span>
+        <span class="icon"><img src="@/assets/icons/music-note.svg" width="28" height="28" :alt="$t('Music note icon')"></span>
           <div class="song-container">
-              <span class="song-title"><slot name="song">Song name</slot></span>
-              <span class="song-artist">By: <slot name="artist">Artist name</slot></span>
+              <span class="song-title"><slot name="song">{{ $t('Song name') }}</slot></span>
+              <span class="song-artist">{{ $t('By:') }} <slot name="artist">{{ $t('Artist name') }}</slot></span>
           </div>
       </div>
 
       <hr>
 
       <div class="container-spacer">
-        <div class="legend">YOU SING:</div>
-        <div id="you-sing" ref="youSing"><slot name="youSing">Lyrics</slot></div>
+        <div class="legend">{{ $t('You sing:') }}</div>
+        <div id="you-sing" ref="youSing"><slot name="youSing">{{ $t('Lyrics') }}</slot></div>
       </div>
 
       <div class="container-spacer">
-        <div class="legend">THEY SING:</div>
-        <div id="they-sing" ref="theySing"><slot name="theySing">Lyrics</slot></div>
+        <div class="legend">{{ $t('They sing:') }}</div>
+        <div id="they-sing" ref="theySing"><slot name="theySing">{{ $t('Lyrics') }}</slot></div>
       </div>
 
       <span class="number-of-cards">

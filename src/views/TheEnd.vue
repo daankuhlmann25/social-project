@@ -14,8 +14,8 @@
       @enterFrame="enterFrame"
     />
     <hgroup>
-      <h5>All done!</h5>
-      <h1>You have reached the end of <span>{{ deckName }}</span></h1>
+      <h5>{{ $t('All done!') }}</h5>
+      <h1>{{ $t('You have reached the end of') }} <span>{{ deckName }}</span></h1>
     </hgroup>
     <ListDecks />
   </div>

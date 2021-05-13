@@ -2,7 +2,7 @@
   <main class="NotFound">
     <Header right="gameList" />
     <GameList v-bind:class="{ show: showGameList }" />
-    <h1>Page not found</h1>
+    <h1>{{ $t('Page not found') }}</h1>
   </main>
 </template>
 

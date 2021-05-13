@@ -20,7 +20,7 @@
           <div class="legend">{{$t('Games')}}</div>
         </div>
       </div>
-      <p>{{$t('created by our users')}} <img width="14" height="17" src="../assets/icons/text-heart.svg" alt="Heart icon"></p>
+      <p>{{$t('created by our users')}} <img width="14" height="17" src="../assets/icons/text-heart.svg" :alt="$t('Heart icon')"></p>
     </section>
     <game-list></game-list>
   </main>

@@ -1,10 +1,10 @@
 <template>
   <div class="send-deck">
-    <h1>Deck sent!</h1>
-    <p>We’ll take a look at it and publish it as soon as possible, promise.</p>
-    <p>Thank you, you’re the best! <img width="14" height="17" src="../assets/icons/text-heart.svg" alt="Heart icon"></p>
+    <h1>{{ $t('Deck sent!') }}</h1>
+    <p>{{ $t('We’ll take a look at it and publish it as soon as possible, promise.') }}</p>
+    <p>{{ $t('Thank you, you’re the best!') }} <img width="14" height="17" src="../assets/icons/text-heart.svg" :alt="$t('Heart icon')"></p>
     <div class="button-container">
-      <router-link class="button" :to="{ name: 'Game', params: { gameId: this.gameId } }"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" alt="Back arrow icon">Sing Together</router-link>
+      <router-link class="button" :to="{ name: 'Game', params: { gameId: this.gameId } }"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" :alt="$t('Back arrow icon')">{{ $t('Sing together') }}</router-link>
     </div>
   </div>
 </template>

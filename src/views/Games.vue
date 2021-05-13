@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       niceGameName: {
-        ['sing-together']: "Sing together",
+        ['sing-together']: "Sing together", //TODO: $t('Sing together') not working here, how do we translate?
         trivia: "Trivia"
       },
       transitionName: 'forward',

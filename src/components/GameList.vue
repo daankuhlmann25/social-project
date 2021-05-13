@@ -4,22 +4,22 @@
     <div class="game-list">
       <a v-on:click="closeGameList" class="close"><img alt="Close" src="@/assets/icons/close.svg"/></a>
       <section class="games-group">
-        <h2>Party games</h2>
+        <h2>{{ $t('Party games') }}</h2>
         <ul>
           <li v-for="(game, index) in games" :key="index" v-on:click="closeGameList">
             <router-link :to="'/party-games/' + game.slug">
-              <img class="game-icon" width="50" height="50" :alt="game.iconName + ' icon'" :src="iconUrl(game.iconName)">
+              <img class="game-icon" width="50" height="50" :alt="$t(game.iconName + ' icon')" :src="iconUrl(game.iconName)">
               <div class="game-info">
                 <span class="title">{{ game.title }}</span>
                 <span class="subtitle">{{ game.subtitle }}</span>
               </div>
-              <img class="icon-arrow" width="9" height="14" alt="" src="@/assets/icons/arrow-right.svg">
+              <img class="icon-arrow" width="9" height="14" :alt="$t('Arrow icon')" src="@/assets/icons/arrow-right.svg">
             </router-link>
           </li>
         </ul>
       </section>
       <section class="games-group">
-        <h2>Conversation games</h2>
+        <h2>{{ $t('Conversation games') }}</h2>
         <ul>
           <li v-on:click="closeGameList">Conversation starters</li>
         </ul>
