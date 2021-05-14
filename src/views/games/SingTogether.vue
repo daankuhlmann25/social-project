@@ -7,8 +7,7 @@
     </header>
     <ExpandableSection>
       <h2>{{ $t('How to play') }}</h2>
-      <p>Divide your group into two teams. The team with the phone sings the first part. If the other team can sing the second part, they get one point.</p>
-      <p>Pass the phone to the other team and let them go to the next card.</p>
+      <MartDown>{{ $t('sing-together_how-to-play_description') }}</MartDown>
     </ExpandableSection>
     <ListDecks />
   </div>
@@ -18,9 +17,14 @@
 <script>
 import ListDecks from '@/components/ListDecks'
 import ExpandableSection from '@/components/ExpandableSection'
+import MartDown from '@/components/MartDown'
 
 export default {
-  components: { ListDecks, ExpandableSection },
+  components: { 
+    ListDecks,
+    ExpandableSection,
+    MartDown,
+  },
 
   created() {
     this.$store.commit('header/setTransparent', true)
