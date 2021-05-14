@@ -13,12 +13,12 @@
       <hr>
 
       <div class="container-spacer">
-        <div class="legend">{{ $t('You sing:') }}</div>
+        <div class="legend">{{ $t('You sing') }}:</div>
         <div id="you-sing" ref="youSing"><slot name="youSing">{{ $t('Lyrics') }}</slot></div>
       </div>
 
       <div class="container-spacer">
-        <div class="legend">{{ $t('They sing:') }}</div>
+        <div class="legend">{{ $t('They sing') }}:</div>
         <div id="they-sing" ref="theySing"><slot name="theySing">{{ $t('Lyrics') }}</slot></div>
       </div>
 
