@@ -1,7 +1,7 @@
 <template>
   <div class="deck">
     <hgroup>
-      <h5>{{ gameName }}</h5>
+      <h5>{{ $t(gameId) }}</h5>
       <h1>{{ name }}</h1>
       <h4>{{ numberOfCards }} cards • {{ author }}</h4>
     </hgroup>
@@ -24,7 +24,6 @@ export default {
   data() {
     return {
       gameId: this.$route.params.gameId,
-      gameName: this.$parent.niceGameName[this.$route.params.gameId],
       name: "",
       numberOfCards: 0,
       author: "",

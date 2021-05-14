@@ -33,6 +33,7 @@
   "Done editing": "Klar",
   "E-mail": "E-post",
   "Edit": "Redigera",
+  "Edit deck": "Redigera kortlek",
   "Formatting help": "Formateringshjälp",
   "Games": "Spel",
   "Great content for your game night with friends": "Riktigt bra kortlekar till spelkvällar med vänner",
@@ -82,6 +83,10 @@
   "Your name": "Ditt namn",
   "cards": "kort",
   "created by our users": "skapade av våra användare",
+  "fragor-och-svar": "Frågor och svar",
   "music icon": "Musik-ikon",
-  "qna icon": "Frågor och svar-ikon"
+  "qna icon": "Frågor och svar-ikon",
+  "sing-together": "Sjung tillsammans",
+  "sjung-tillsammans": "Sjung tillsammans",
+  "trivia": "Frågor och svar"
 }

@@ -32,8 +32,8 @@
           from this one with a horizontal rule.</p>
       </template>
     </InfoModal>
-    <h5>{{ gameName }}</h5>
-    <h1>{{ $route.name }}</h1>
+    <h5>{{ $t(gameId) }}</h5>
+    <h1>{{ $t($route.name) }}</h1>
 
     <form v-on:change="saveDeck">
       <div class="field title">
@@ -103,7 +103,6 @@
     data() {
       return {
         gameId: this.$route.params.gameId,
-        gameName: this.$parent.niceGameName[this.$route.params.gameId],
         deckId: null,
         currentCard: this.$route.params.cardPosition ? this.$route.params.cardPosition : 0,
         myDecks: {},
