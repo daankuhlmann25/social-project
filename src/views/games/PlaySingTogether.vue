@@ -62,7 +62,9 @@ import { parseNewLines } from '@/helpers/martdown.js'
     methods: {
       async addCard(song, artist, youSing, theySing, currentCard, numberOfCards) {
         let ComponentClass = Vue.extend(PlayCard),
-            instance = new ComponentClass(),
+            instance = new ComponentClass({
+              parent: this,
+            }),
             rotationIn = (Math.random()*2-1)*5, //random number between -5 and +5
             rotationOut = (Math.random()*2-1)*5
 
@@ -82,6 +84,7 @@ import { parseNewLines } from '@/helpers/martdown.js'
         instance.$slots.currentCard = currentCard + 1
         instance.$slots.numberOfCards = numberOfCards
         instance.$mount()
+        console.log(instance)
         
         instance.$el.style.transform = this.cardDirection == "next" ? `translateX(120%) rotate(${rotationIn}deg)` : `translateX(-120%) rotate(${rotationIn}deg)`
         
