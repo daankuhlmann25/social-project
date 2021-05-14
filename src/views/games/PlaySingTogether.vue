@@ -84,7 +84,6 @@ import { parseNewLines } from '@/helpers/martdown.js'
         instance.$slots.currentCard = currentCard + 1
         instance.$slots.numberOfCards = numberOfCards
         instance.$mount()
-        console.log(instance)
         
         instance.$el.style.transform = this.cardDirection == "next" ? `translateX(120%) rotate(${rotationIn}deg)` : `translateX(-120%) rotate(${rotationIn}deg)`
         
