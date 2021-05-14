@@ -7,12 +7,9 @@
     </header>
     <ExpandableSection>
       <h2>{{ $t('How to play') }}</h2>
-      <p>You take turns answering questions. If your answer is correct, you gain one point and get to answer another question.</p>
-      <p>If you get it wrong, it’s the next persons turn.</p>
-      <h2>What you need</h2>
-      <ul>
-        <li>Pen & paper (for counting points)</li>
-      </ul>
+      <MartDown>{{ $t('trivia_how-to-play_description') }}</MartDown>
+      <h2>{{ $t('What you need') }}</h2>
+      <MartDown>{{ $t('trivia_what-you-need_description') }}</MartDown>
     </ExpandableSection>
     <ListDecks />
   </div>
@@ -22,9 +19,14 @@
 <script>
 import ListDecks from '@/components/ListDecks'
 import ExpandableSection from '@/components/ExpandableSection'
+import MartDown from '../../components/MartDown.vue'
 
 export default {
-  components: { ListDecks, ExpandableSection },
+  components: { 
+    ListDecks,
+    ExpandableSection,
+    MartDown,
+  },
 
   created() {
     this.$store.commit('header/setTransparent', true)

@@ -77,6 +77,7 @@
   "We would love you to share your fantastic deck with all our fellow players!": "Vi ser gärna att du delar din fantastiska kortlek med alla våra medspelare!",
   "We’ll take a look at it and publish it as soon as possible, promise.": "Vi tar en titt på den och publicerar den så snart som möjligt, vi lovar.",
   "What is in the deck?": "Vad finns i kortleken?",
+  "What you need": "Det här behöver ni",
   "When you feel happy with your creation, please publish it.": "När du känner dig nöjd med din skapelse, vänligen publicera den.",
   "You have reached the end of": "Du har nått slutet av",
   "You sing": "Sjung",
@@ -89,5 +90,7 @@
   "sing-together": "Sjung tillsammans",
   "sing-together_how-to-play_description": "Dela upp er i två lag. Laget med telefonen sjunger den första delen.\n\nOm det andra laget kan sjunga den andra delen får de en poäng. Skicka telefonen till det andra laget och låt dem gå till nästa kort.",
   "sjung-tillsammans": "Sjung tillsammans",
-  "trivia": "Frågor och svar"
+  "trivia": "Frågor och svar",
+  "trivia_how-to-play_description": "Ni turas om att svara på frågor. Om svaret är rätt, får du en poäng och får svara på en till fråga.\n\nSvarar du fel, så går turen till nästa person.",
+  "trivia_what-you-need_description": "- Penna & papper (för att räkna poäng)"
 }

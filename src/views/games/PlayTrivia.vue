@@ -2,6 +2,7 @@
   <div class="play-container play-game">
     <HowToPlay v-bind:class="{ show: showHowToPlay }"></HowToPlay>
     <h1>Play Trivia</h1>
+    <p>Under construction</p>
   </div>
 </template>
 

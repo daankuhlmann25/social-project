@@ -77,6 +77,7 @@
   "We would love you to share your fantastic deck with all our fellow players!": "We would love you to share your fantastic deck with all our fellow players!",
   "We’ll take a look at it and publish it as soon as possible, promise.": "We’ll take a look at it and publish it as soon as possible, promise.",
   "What is in the deck?": "What is in the deck?",
+  "What you need": "What you need",
   "When you feel happy with your creation, please publish it.": "When you feel happy with your creation, please publish it.",
   "You have reached the end of": "You have reached the end of",
   "You sing": "You sing",
@@ -89,5 +90,7 @@
   "sing-together": "Sing together",
   "sing-together_how-to-play_description": "Divide your group into two teams. The team with the phone sings the first part.\n\nIf the other team can sing the second part, they get one point. Pass the phone to the other team and let them go to the next card.",
   "sjung-tillsammans": "Sjung tillsammans",
-  "trivia": "Trivia"
+  "trivia": "Trivia",
+  "trivia_how-to-play_description": "You take turns answering questions. If your answer is correct, you gain one point and get to answer another question.\n\nIf you get it wrong, it’s the next persons turn.",
+  "trivia_what-you-need_description": "- Pen & paper (for counting points)"
 }
