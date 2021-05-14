@@ -32,7 +32,7 @@
           from this one with a horizontal rule.</p>
       </template>
     </InfoModal>
-    <h5>{{ $t(gameId) }}</h5>
+    <h5>{{ $t(localeGameId) }}</h5>
     <h1>{{ $t($route.name) }}</h1>
 
     <form v-on:change="saveDeck">
@@ -71,7 +71,7 @@
           <span>{{ $t('Play deck') }}</span>
         </div>
         <div class="nav-group">
-          <router-link class="button" :to="{ name: 'Game', params: { gameId: this.gameId } }"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" :alt="$t('Back arrow icon')">{{ $t('Done editing') }}</router-link>
+          <router-link class="button" :to="{ name: 'Game', params: { gameId: localeGameId } }"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" :alt="$t('Back arrow icon')">{{ $t('Done editing') }}</router-link>
           <a @click.prevent="showDeleteModal = true" href="#" class="button delete-deck" :title="$t('Delete this deck')"><img src="@/assets/icons/delete.svg" width="16" height="16" :alt="$t('Delete icon')">{{ $t('Delete deck') }}</a>
         </div>
       </nav>
@@ -102,7 +102,10 @@
      },
     data() {
       return {
-        gameId: this.$route.params.gameId,
+        gameId: this.$route.params.gameId == "sjung-tillsammans" 
+        ? "sing-together" : this.$route.params.gameId == "fragor-och-svar" 
+        ? "trivia" : this.$route.params.gameId,
+        localeGameId: this.$route.params.gameId,
         deckId: null,
         currentCard: this.$route.params.cardPosition ? this.$route.params.cardPosition : 0,
         myDecks: {},
@@ -136,9 +139,9 @@
         this.myDecks = JSON.parse(localStorage.getItem("myDecks"))
 
         // Does the deck exist?
-        if (this.myDecks[this.gameId].decks[this.deckId]) {
+        if (this.myDecks[this.localeGameId].decks[this.deckId]) {
           console.log("Deck exists")
-          const myDeck = this.myDecks[this.gameId].decks[this.deckId]
+          const myDeck = this.myDecks[this.localeGameId].decks[this.deckId]
 
           this.name = myDeck.name
           this.description = myDeck.description
@@ -162,11 +165,11 @@
         this.myDecks = JSON.parse(localStorage.getItem("myDecks"))
 
         // Add a deck in current game
-        if (this.myDecks[this.gameId] && this.myDecks[this.gameId].decks.length) {
+        if (this.myDecks[this.localeGameId] && this.myDecks[this.localeGameId].decks.length) {
           console.log("Add a deck in current game")
-          this.deckId = this.myDecks[this.gameId].decks.length
+          this.deckId = this.myDecks[this.localeGameId].decks.length
           this.addCard(true)
-          this.myDecks[this.gameId].decks[this.deckId] = this.generateDeckObject()
+          this.myDecks[this.localeGameId].decks[this.deckId] = this.generateDeckObject()
           
           this.setMyDecksLocalStorage()
         }
@@ -176,7 +179,7 @@
           this.deckId = 0
           this.addCard(true)
 
-          this.myDecks[this.gameId] = this.generateDecksObject()
+          this.myDecks[this.localeGameId] = this.generateDecksObject()
 
           this.setMyDecksLocalStorage()
         }
@@ -193,7 +196,7 @@
           "myDecks", 
           JSON.stringify(
             {
-              [this.gameId]: this.generateDecksObject()
+              [this.localeGameId]: this.generateDecksObject()
             }
           )
         )
@@ -245,13 +248,13 @@
       saveDeck() {
         console.log("saveDeck()")
 
-        this.myDecks[this.gameId].decks[this.deckId].name = this.name
-        this.myDecks[this.gameId].decks[this.deckId].description = this.description
-        this.myDecks[this.gameId].decks[this.deckId].author = this.author
-        this.myDecks[this.gameId].decks[this.deckId].email = this.email
-        this.myDecks[this.gameId].decks[this.deckId].message = this.message
+        this.myDecks[this.localeGameId].decks[this.deckId].name = this.name
+        this.myDecks[this.localeGameId].decks[this.deckId].description = this.description
+        this.myDecks[this.localeGameId].decks[this.deckId].author = this.author
+        this.myDecks[this.localeGameId].decks[this.deckId].email = this.email
+        this.myDecks[this.localeGameId].decks[this.deckId].message = this.message
         this.saveCard()
-        this.myDecks[this.gameId].decks[this.deckId].cards = this.cards
+        this.myDecks[this.localeGameId].decks[this.deckId].cards = this.cards
 
         this.setMyDecksLocalStorage()
       },
@@ -302,11 +305,11 @@
       deleteDeck(doRouterReplace = true) {
         console.log('deleteDeck() ' + this.deckId)
 
-        this.myDecks[this.gameId].decks.splice(this.deckId, 1)
+        this.myDecks[this.localeGameId].decks.splice(this.deckId, 1)
         this.setMyDecksLocalStorage()
 
         if (doRouterReplace)
-          this.$router.replace({name: 'Game', params: { gameId: this.gameId }})
+          this.$router.replace({name: 'Game', params: { gameId: this.localeGameId }})
       },
       getPreviousCard(cardPosition) {
         // Return cardPosition-1 if it's not 0, then return 0
@@ -354,7 +357,7 @@
 
     // If going back to Game view
     if (to.name == "Game") {
-      const myDeck = this.myDecks[this.gameId].decks[this.deckId]
+      const myDeck = this.myDecks[this.localeGameId].decks[this.deckId]
 
       //If the deck is completely empty
       if (
