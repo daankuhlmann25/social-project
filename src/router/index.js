@@ -44,7 +44,7 @@ const routes = [
           'sing-together': SingTogether,
           'sjung-tillsammans': SingTogether,
           'trivia': Trivia,
-          'fragor-och-svar': Trivia,
+          'fragesport': Trivia,
         }
       },
       {
@@ -82,7 +82,7 @@ const routes = [
               'sing-together': PlaySingTogether,
               'sjung-tillsammans': PlaySingTogether,
               'trivia': PlayTrivia,
-              'fragor-och-svar': PlayTrivia,
+              'fragesport': PlayTrivia,
             }
           }
         ],

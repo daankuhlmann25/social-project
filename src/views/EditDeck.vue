@@ -103,7 +103,7 @@
     data() {
       return {
         gameId: this.$route.params.gameId == "sjung-tillsammans" 
-        ? "sing-together" : this.$route.params.gameId == "fragor-och-svar" 
+        ? "sing-together" : this.$route.params.gameId == "fragesport" 
         ? "trivia" : this.$route.params.gameId,
         localeGameId: this.$route.params.gameId,
         deckId: null,
