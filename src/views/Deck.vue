@@ -7,7 +7,7 @@
     </hgroup>
     <MartDown class="description">{{ description }}</MartDown>
     <div class="play-deck">
-      <router-link to="play" append><img src="@/assets/icons/play.svg" width="30" height="30" :alt="$t('Play icon')"></router-link>
+      <localized-link to="play" append><img src="@/assets/icons/play.svg" width="30" height="30" :alt="$t('Play icon')"></localized-link>
       <span>{{ $t('Play') }}</span>
     </div>
   </div>

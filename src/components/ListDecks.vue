@@ -4,21 +4,21 @@
       <h2>{{ $t('My decks') }}</h2>
       <ul>
         <li v-for="(deck, index) in myDecks" :key="index">
-          <router-link :to="{ name: 'Deck', params: { deckId: index } }">
+          <localized-link :to="{ name: 'Deck', params: { deckId: index } }">
             <img class="game-icon" width="28" height="28" :alt="$t('Deck icon')" src="@/assets/icons/deck.svg" />
             <div class="game-info">
               <div class="title">{{ deck.name ? deck.name : "[No name]" }}</div>
               <div class="subtitle">{{ deck.cards.length }} {{ $t('cards') }} • {{ deck.author ? deck.author : "[No author]" }}</div>
             </div>
             <img class="icon-arrow" width="9" height="14" :alt="$t('Arrow right icon')" src="@/assets/icons/arrow-right.svg"/>
-          </router-link>
-          <router-link :to="{ name: 'Edit deck', params: {deckId: index} }" class="deck-edit" append>{{ $t('Edit') }}</router-link>
+          </localized-link>
+          <localized-link :to="{ name: 'Edit deck', params: {deckId: index} }" class="deck-edit" append>{{ $t('Edit') }}</localized-link>
         </li>
         <li>
-          <router-link class="add-deck" :to="{ path: `${gameURI}/add-deck`}">
+          <localized-link class="add-deck" :to="{ path: `${gameURI}/add-deck`}">
             <img class="add-deck" width="28" height="28" :alt="$t('Add deck icon')" src="@/assets/icons/add-deck.svg" />
             <span>{{ $t('Add deck') }}</span>
-          </router-link>
+          </localized-link>
         </li>
       </ul>
     </div>
@@ -26,20 +26,20 @@
       <h2>{{ $t('Popular decks') }}</h2>
       <ul>
         <li v-for="(deck, index) in decks" :key="index">
-           <router-link :to="{ name: 'Deck', params: { deckSlug: deck.slug, deckId: deck.id } }">
+           <localized-link :to="{ name: 'Deck', params: { deckSlug: deck.slug, deckId: deck.id } }">
             <img class="game-icon" width="28" height="36" :alt="$t('Deck icon')" src="@/assets/icons/deck.svg" />
             <div class="game-info">
               <div class="title">{{ deck.name }}</div>
               <div class="subtitle">{{ deck.numberOfCards }} {{ $t('cards') }} • {{ deck.author }}</div>
             </div>
             <img class="icon-arrow" width="9" height="14" :alt="$t('Arrow right icon')" src="@/assets/icons/arrow-right.svg"/>
-          </router-link> 
+          </localized-link> 
         </li>
         <li>
-          <router-link class="deck-category" :to="{ path: `${gameURI}/category/popular-decks`, params: { gameId: this.gameId } }">
+          <localized-link class="deck-category" :to="{ path: `${gameURI}/category/popular-decks`, params: { gameId: this.gameId } }">
             <span class="title">{{ $t('Show more decks') }}</span>
             <img class="icon-arrow" width="9" height="14" :alt="$t('Arrow right icon')" src="@/assets/icons/arrow-right.svg"/>
-          </router-link>
+          </localized-link>
         </li>
       </ul>
     </div>
@@ -53,10 +53,10 @@
           </div>
         </li>
         <li>
-          <router-link class="add-deck" :to="{ path: `${gameURI}/add-deck`}">
+          <localized-link class="add-deck" :to="{ path: `${gameURI}/add-deck`}">
             <img class="add-deck" width="28" height="28" :alt="$t('Add deck icon')" src="@/assets/icons/add-deck.svg" />
             <span>{{ $t('Add deck') }}</span>
-          </router-link>
+          </localized-link>
         </li>
       </ul>
     </div>
