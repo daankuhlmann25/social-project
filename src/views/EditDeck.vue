@@ -67,11 +67,11 @@
       </aside>
       <nav class="deck-navigation">
         <div class="play-deck">
-          <localized-link :to="{ name: 'Deck', params: { deckId: this.deckId } }"><img src="@/assets/icons/play.svg" width="30" height="30" :alt="$t('Play icon')"></localized-link>
+          <router-link :to="{ name: 'Deck', params: { deckId: this.deckId } }"><img src="@/assets/icons/play.svg" width="30" height="30" :alt="$t('Play icon')"></router-link>
           <span>{{ $t('Play deck') }}</span>
         </div>
         <div class="nav-group">
-          <localized-link class="button" :to="{ name: 'Game', params: { gameId: localeGameId } }"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" :alt="$t('Back arrow icon')">{{ $t('Done editing') }}</localized-link>
+          <router-link class="button" :to="{ name: 'Game', params: { gameId: localeGameId } }"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" :alt="$t('Back arrow icon')">{{ $t('Done editing') }}</router-link>
           <a @click.prevent="showDeleteModal = true" href="#" class="button delete-deck" :title="$t('Delete this deck')"><img src="@/assets/icons/delete.svg" width="16" height="16" :alt="$t('Delete icon')">{{ $t('Delete deck') }}</a>
         </div>
       </nav>

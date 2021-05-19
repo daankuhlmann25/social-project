@@ -7,14 +7,14 @@
         <h2>{{ $t('Party games') }}</h2>
         <ul>
           <li v-for="(game, index) in games" :key="index" v-on:click="closeGameList">
-            <localized-link :to="'/party-games/' + game.slug">
+            <router-link :to="'/party-games/' + game.slug">
               <img class="game-icon" width="50" height="50" :alt="$t(game.iconName + ' icon')" :src="iconUrl(game.iconName)">
               <div class="game-info">
                 <span class="title">{{ $t(game.title) }}</span>
                 <span class="subtitle">{{ $t(game.subtitle) }}</span>
               </div>
               <img class="icon-arrow" width="9" height="14" :alt="$t('Arrow icon')" src="@/assets/icons/arrow-right.svg">
-            </localized-link>
+            </router-link>
           </li>
         </ul>
       </section>
