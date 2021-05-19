@@ -61,9 +61,8 @@
       <input type="email" name="email" id="email" v-model="email">
       <label for="message"><h2>Message <span class="visibility">Not public</span></h2></label>
       <textarea name="message" id="message" rows="3" v-model="message"></textarea>
-      <!-- TODO: Implement something like: https://github.com/runkids/vue2-timeago -->
-      <aside class="save-status">
-        <p><strong>Deck saved!</strong> <span id="save-time">Just seconds ago</span></p>
+      <aside ref="saveStatus" class="save-status">
+        <p><strong>Deck saved:</strong> <span id="save-time"><time-ago refresh long :datetime="lastSaved" locale="en"></time-ago></span></p>
       </aside>
       <nav class="deck-navigation">
         <div class="play-deck">
@@ -91,7 +90,8 @@
   import InfoModal from '@/components/InfoModal'
   import singTogether from '@/components/card-fields/SingTogether'
   import trivia from '@/components/card-fields/Trivia'
-  import { setResizeListeners, resizeTextareas } from "@/helpers/auto-resize.js"
+  import { setResizeListeners, resizeTextareas } from '@/helpers/auto-resize.js'
+  import { TimeAgo } from 'vue2-timeago'
 
   export default {
     components: {
@@ -99,6 +99,7 @@
       InfoModal,
       singTogether,
       trivia,
+      TimeAgo
      },
     data() {
       return {
@@ -112,13 +113,35 @@
         author: "",
         email: "",
         message: "",
+        created: Date.now(),
+        lastSaved: Date.now(),
         cards: [],
         cardFields: new Map(),
         card: {},
         showDeleteModal: false,
         showFormattingModal: false,
+        saveTimeout: undefined,
         // feedback: "",
       }
+    },
+    watch: {
+      lastSaved: function (to, from) {
+
+        // Prevent funtion from firing on init
+        if (to <= from)
+          return
+        
+        if (!this.$refs.saveStatus.classList.contains("alert"))
+          this.$refs.saveStatus.classList.add("alert")
+        
+        if (this.saveTimeout)
+          clearTimeout(this.saveTimeout)
+        
+        this.saveTimeout = setTimeout(() => {
+          this.$refs.saveStatus.classList.remove("alert")
+        }, 5000)
+
+      },
     },
     updated() {
       this.$nextTick(function () {
@@ -146,6 +169,8 @@
           this.author = myDeck.author
           this.email = myDeck.email
           this.message = myDeck.message
+          this.lastSaved = myDeck.lastSaved
+          this.created = myDeck.created
           this.cards = myDeck.cards
 
           this.selectCard(this.currentCard, false, false)
@@ -230,6 +255,8 @@
           author: this.author,
           email: this.email,
           message: this.message,
+          lastSaved: this.lastSaved,
+          created: this.created,
           cards: this.cards,
         }
       },
@@ -246,11 +273,14 @@
       saveDeck() {
         console.log("saveDeck()")
 
+        this.lastSaved = Date.now()
+
         this.myDecks[this.gameId].decks[this.deckId].name = this.name
         this.myDecks[this.gameId].decks[this.deckId].description = this.description
         this.myDecks[this.gameId].decks[this.deckId].author = this.author
         this.myDecks[this.gameId].decks[this.deckId].email = this.email
         this.myDecks[this.gameId].decks[this.deckId].message = this.message
+        this.myDecks[this.gameId].decks[this.deckId].lastSaved = this.lastSaved
         this.saveCard()
         this.myDecks[this.gameId].decks[this.deckId].cards = this.cards
 
@@ -326,7 +356,7 @@
         }, this)
       },
       selectCard(cardPosition, save = true, replace = true) {
-        console.log('selectCard('+cardPosition+")")
+        console.log(`selectCard(${cardPosition}, ${save}, ${replace})`)
 
         if (save)
           this.saveCard()
@@ -352,6 +382,9 @@
       },
     },
     beforeRouteLeave (to, from, next) {
+
+    if (this.saveTimeout)
+      clearTimeout(this.saveTimeout)
 
     // If going back to Game view
     if (to.name == "Game") {
