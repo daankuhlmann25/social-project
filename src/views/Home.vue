@@ -1,10 +1,5 @@
 <template>
   <main class="home">
-    <language-switcher v-slot="{ links }">
-			<router-link :to="link.url" v-for="link in links" :key="link.langIndex">
-				<span>{{ link.langName }}</span>
-			</router-link>
-		</language-switcher>
     <div class="hero">
       <img class="logo" alt="Social.gg logo" src="../assets/logo.svg" />
       <h1>{{$t('Great content for your game night with friends')}}</h1>
