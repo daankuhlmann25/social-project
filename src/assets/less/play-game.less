@@ -1,5 +1,30 @@
 .play-game {
   min-height: 100%;
+  overflow-x: hidden;
+  margin: -@spacing__m;
+  padding: @spacing__m;
+    
+    @media @desktop {
+      position: relative;
+
+      &::after, &::before {
+        background-image: linear-gradient(to left, @night-sky, fade(@night-sky, 0%));
+        content: "";
+        top: 0;
+        bottom: 0;
+        right: 0;
+        pointer-events: none;
+        position: absolute;
+        width: @spacing__m;
+        z-index: 1;
+      }
+    
+      &::before {
+        background-image: linear-gradient(to right, @night-sky, fade(@night-sky, 0%));
+        right: initial;
+        left: 0;
+      }
+    }
   
   .legend {
     font-size: 16px;

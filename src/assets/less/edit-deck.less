@@ -109,12 +109,18 @@
 
   .save-status {
     position: sticky;
-    bottom: 2px;
+    bottom: -40px;
     padding: @spacing__base @spacing__ms;
     background-color: fade(@night-sky, 70%);
     backdrop-filter: blur(@spacing__xl);
-    margin: 0 -@spacing__ms;
+    margin: @spacing__base -@spacing__ms 0;
     border-radius: 6px;
+    transition: all 400ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+
+    &.alert {
+      bottom: 2px;
+      background-color: rgba(0,0,0,.15);
+    }
 
     p {
       margin: 0;
