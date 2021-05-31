@@ -62,7 +62,8 @@
       <label for="message"><h2>{{ $t('Message') }} <span class="visibility">{{ $t('Not public') }}</span></h2></label>
       <textarea name="message" id="message" rows="3" v-model="message"></textarea>
       <aside ref="saveStatus" class="save-status">
-        <p><strong>Deck saved:</strong> <span id="save-time"><time-ago refresh long :datetime="lastSaved" locale="en"></time-ago></span></p>
+        <!-- TODO: Localize locale="en" to sv / nl -->
+        <p><strong>{{ $t('Deck saved') }}:</strong> <span id="save-time"><time-ago refresh long :datetime="lastSaved" locale="en"></time-ago></span></p>
       </aside>
       <nav class="deck-navigation">
         <div class="play-deck">
