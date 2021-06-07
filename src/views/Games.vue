@@ -31,9 +31,18 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      if (from.name == "The end") {
-        if (["Edit deck", "Add deck", "Deck"].includes(to.name))
-          this.transitionName = 'forward'
+      if (
+        from.name == "The end" && ["Edit deck", "Add deck", "Deck"].includes(to.name) ||
+        from.name == "Edit deck" && to.name == "Deck"
+      ) {
+        this.transitionName = 'forward'
+      }
+      else if (
+        from.name == "Deck" && to.name == "Edit deck" ||
+        from.name == "The end" && to.name == "Play" ||
+        from.name == "Edit deck" && to.name == "The end"
+      ) {
+        this.transitionName = 'back'
       }
       else if (to.matched.some(m => m.meta.transitionName))
         this.transitionName = to.meta.transitionName
