@@ -177,6 +177,17 @@ import { parseNewLines } from '@/helpers/martdown.js'
           this.$router.push({ name: "The end", params: { deckSlug: this.deckSlug } })
         else
           this.$router.push({ name: "The end" })
+      },
+      setupDeckData() {
+        this.numberOfCards = this.songArray.length
+
+        if (!this.$route.params.cardPosition) //When you just pushed the Play-button
+          this.setToLocalstorage()
+        else {
+          this.currentCard = parseInt(this.$route.params.cardPosition)
+          this.updateTemplate()
+          this.goToCard(this.currentCard, false) //Go to card without route change
+        }
       }
     },
 
@@ -194,14 +205,7 @@ import { parseNewLines } from '@/helpers/martdown.js'
         this.songArray = JSON.parse(localStorage.getItem("myDecks"))[this.$route.params.gameId].decks[this.$route.params.deckId].cards
         this.numberOfCards = this.songArray.length
 
-        if (!this.$route.params.cardPosition) //When you just pushed the Play-button
-          this.setToLocalstorage()
-        else {
-          this.currentCard = parseInt(this.$route.params.cardPosition)
-          this.updateTemplate()
-          this.goToCard(this.currentCard, false) //Go to card without route change
-        }
-
+        this.setupDeckData()
       }
       // Deck from db (All decks)
       else {
@@ -212,15 +216,7 @@ import { parseNewLines } from '@/helpers/martdown.js'
               this.songArray.push(doc.data())
             })
 
-            this.numberOfCards = snapshot.size
-
-            if (!this.$route.params.cardPosition) //When you just pushed the Play-button
-              this.setToLocalstorage()
-            else {
-              this.currentCard = parseInt(this.$route.params.cardPosition)
-              this.updateTemplate()
-              this.goToCard(this.currentCard, false) //Go to card without route change
-            }
+            this.setupDeckData()
           })
           .catch((error) => {
             console.log("Error getting documents: ", error)
