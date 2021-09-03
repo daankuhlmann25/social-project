@@ -1,8 +1,8 @@
 <template>
   <div class="play-container play-game">
     <HowToPlay v-bind:class="{ show: showHowToPlay }"></HowToPlay>
-    <h1>Play Trivia</h1>
-    <p>Under construction</p>
+    <h1>{{ $t('Play Trivia') }}</h1>
+    <p>{{ $t('Under construction') }}</p>
   </div>
 </template>
 
