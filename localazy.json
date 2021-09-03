@@ -4,11 +4,11 @@
 
     "upload": {
         "type": "json",
-        "files": "src/lang/translations/en.json"
+        "files": "src/translations/en.json"
     },
 
     "download": {
         "includeSourceLang": true,
-        "files": "src/lang/translations/${lang}.json"
+        "files": "src/translations/${lang}.json"
     }
 }
