@@ -15,7 +15,7 @@
           <router-link :to="{ name: 'Edit deck', params: {deckId: index} }" class="deck-edit" append>{{ $t('Edit') }}</router-link>
         </li>
         <li>
-          <router-link class="add-deck" :to="{ path: `${gameURI}/add-deck`}">
+          <router-link class="add-deck" :to="{ name: 'Add deck', params: {gameId: gameId} }">
             <img class="add-deck" width="28" height="28" :alt="$t('Add deck icon')" src="@/assets/icons/add-deck.svg" />
             <span>{{ $t('Add deck') }}</span>
           </router-link>
@@ -53,7 +53,7 @@
           </div>
         </li>
         <li>
-          <router-link class="add-deck" :to="{ path: `${gameURI}/add-deck`}">
+          <router-link class="add-deck" :to="{ name: 'Add deck', params: {gameId: gameId} }">
             <img class="add-deck" width="28" height="28" :alt="$t('Add deck icon')" src="@/assets/icons/add-deck.svg" />
             <span>{{ $t('Add deck') }}</span>
           </router-link>
