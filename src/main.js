@@ -1,22 +1,15 @@
 import Vue from "vue"
 import App from "./App.vue"
 import store from './store'
+import language from "./language"
 import router from "./router"
 import VueI18n from "vue-i18n"
-import en from "./translations/en.json"
-import sv from "./translations/sv.json"
-import nl from "./translations/nl.json"
+import messages from "./translations"
 import 'fast-text-encoding'
-
-const messages = {
-  en,
-  sv,
-  nl,
-}
 
 Vue.use(VueI18n)
 const i18n = new VueI18n({
-  locale: 'sv',
+  locale: language,
   messages
 })
 

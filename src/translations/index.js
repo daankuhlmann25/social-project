@@ -1,14 +1,9 @@
+import en from "./en.json"
+import sv from "./sv.json"
+import nl from "./nl.json"
+
 export default {
-	en: {
-		name: 'Great Britain',
-		load: () => { return import('./en.json'); },
-	},
-	sv: {
-		name: 'Sverige',
-		load: () => { return import('./sv.json'); },
-	},
-	nl: {
-		name: 'Nederland',
-		load: () => { return import('./nl.json'); },
-	},
-};
+	en,
+	sv,
+	nl,
+}
