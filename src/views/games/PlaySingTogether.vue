@@ -13,15 +13,15 @@
     </div>
 
     <div class="information">
-      <p>Pass the phone before hitting next</p>
+      <p>{{ $t('Pass the phone before hitting next') }}</p>
     </div>
     
     <div class="navigation">
       <span :class="currentCard > 0 ? 'icon-cards left colored' : 'icon-cards left'" v-on:click="goToPreviousCard()">
-          <img src="@/assets/icons/arrow-next.svg" width="16" height="16" alt="Previous">
+          <img src="@/assets/icons/arrow-next.svg" width="16" height="16" :alt="$t('Previous')">
       </span>
       <span class="icon-cards right" v-on:click="goToNextCard()">
-          <img :src="currentCard === numberOfCards - 1 ? require('@/assets/icons/check.svg') : require('@/assets/icons/arrow-next.svg')" width="16" height="16" alt="Next">
+          <img :src="currentCard === numberOfCards - 1 ? require('@/assets/icons/check.svg') : require('@/assets/icons/arrow-next.svg')" width="16" height="16" :alt="$t('Next')">
       </span>
     </div>
   </div>
@@ -56,20 +56,27 @@ import { parseNewLines } from '@/helpers/martdown.js'
         deckSlug: this.$route.params.deckSlug ? this.$route.params.deckSlug : false,
         transitionEnd: transitionEndEventName(),
         deckFromLocalStorage: false,
+        updated: false,
       }
     },
     
     methods: {
       async addCard(song, artist, youSing, theySing, currentCard, numberOfCards) {
+        // console.log('addCard')
         let ComponentClass = Vue.extend(PlayCard),
-            instance = new ComponentClass(),
+            instance = new ComponentClass({
+              parent: this,
+            }),
             rotationIn = (Math.random()*2-1)*5, //random number between -5 and +5
             rotationOut = (Math.random()*2-1)*5
 
+        // console.log(this.currentCardElement.__vue__)
+        // console.log(this.currentCardElement.__vue__.$parent)
+
         // Destroy the current instance to prevent updated() to fire again. No idea why the first instance (from the template) is actually the parent
-        if (this.currentCardElement.__vue__.$parent && !this.deckFromLocalStorage)
-          this.currentCardElement.__vue__.$parent.$destroy()
-        else
+        // if (this.currentCardElement.__vue__.$parent && !this.deckFromLocalStorage)
+        //   this.currentCardElement.__vue__.$parent.$destroy()
+        // else
           this.currentCardElement.__vue__.$destroy()
 
         youSing = parseNewLines(youSing)
@@ -175,6 +182,17 @@ import { parseNewLines } from '@/helpers/martdown.js'
           this.$router.push({ name: "The end", params: { deckSlug: this.deckSlug } })
         else
           this.$router.push({ name: "The end" })
+      },
+      setupDeckData() {
+        this.numberOfCards = this.songArray.length
+
+        if (!this.$route.params.cardPosition) //When you just pushed the Play-button
+          this.setToLocalstorage()
+        else {
+          this.currentCard = parseInt(this.$route.params.cardPosition)
+          this.updateTemplate()
+          this.goToCard(this.currentCard, false) //Go to card without route change
+        }
       }
     },
 
@@ -186,20 +204,12 @@ import { parseNewLines } from '@/helpers/martdown.js'
 
       //Deck from localStorage (My decks)
       if (!this.$route.params.deckSlug) {
-        console.log('Deck from localStorage (My decks)')
+        // console.log('Deck from localStorage (My decks)')
 
         this.deckFromLocalStorage = true
         this.songArray = JSON.parse(localStorage.getItem("myDecks"))[this.$route.params.gameId].decks[this.$route.params.deckId].cards
-        this.numberOfCards = this.songArray.length
 
-        if (!this.$route.params.cardPosition) //When you just pushed the Play-button
-          this.setToLocalstorage()
-        else {
-          this.currentCard = parseInt(this.$route.params.cardPosition)
-          this.updateTemplate()
-          this.goToCard(this.currentCard, false) //Go to card without route change
-        }
-
+        this.setupDeckData()
       }
       // Deck from db (All decks)
       else {
@@ -210,15 +220,7 @@ import { parseNewLines } from '@/helpers/martdown.js'
               this.songArray.push(doc.data())
             })
 
-            this.numberOfCards = snapshot.size
-
-            if (!this.$route.params.cardPosition) //When you just pushed the Play-button
-              this.setToLocalstorage()
-            else {
-              this.currentCard = parseInt(this.$route.params.cardPosition)
-              this.updateTemplate()
-              this.goToCard(this.currentCard, false) //Go to card without route change
-            }
+            this.setupDeckData()
           })
           .catch((error) => {
             console.log("Error getting documents: ", error)
@@ -228,7 +230,17 @@ import { parseNewLines } from '@/helpers/martdown.js'
 
     mounted() {
       this.currentCardElement = this.$refs.cardContainer.firstChild
+      // console.log(this.currentCardElement.__vue__)
       this.setCardContainerHeight(this.currentCardElement.__vue__)
+    },
+
+    updated() {
+      // console.log('updated')
+      if (!this.updated) {
+        this.currentCardElement = this.$refs.cardContainer.firstChild
+        this.updated = true
+        // console.log(this.currentCardElement.__vue__)
+      }
     },
 
     destroyed() {

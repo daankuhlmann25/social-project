@@ -1,18 +1,15 @@
 <template>
   <div class="game trivia">
     <header class="top">
-      <img class="game-icon" width="50" height="50" alt="music icon" src="@/assets/icons/game-icon-qna.svg">
-      <h1>Trivia</h1>
-      <h4>Questions and answers</h4>
+      <img class="game-icon" width="50" height="50" :alt="$t('qna icon')" src="@/assets/icons/game-icon-qna.svg">
+      <h1>{{ $t('Trivia') }}</h1>
+      <h4>{{ $t('Questions and answers') }}</h4>
     </header>
     <ExpandableSection>
-      <h2>How to play</h2>
-      <p>You take turns answering questions. If your answer is correct, you gain one point and get to answer another question.</p>
-      <p>If you get it wrong, it’s the next persons turn.</p>
-      <h2>What you need</h2>
-      <ul>
-        <li>Pen & paper (for counting points)</li>
-      </ul>
+      <h2>{{ $t('How to play') }}</h2>
+      <MartDown>{{ $t('trivia_how-to-play_description') }}</MartDown>
+      <h2>{{ $t('What you need') }}</h2>
+      <MartDown>{{ $t('trivia_what-you-need_description') }}</MartDown>
     </ExpandableSection>
     <ListDecks />
   </div>
@@ -22,9 +19,14 @@
 <script>
 import ListDecks from '@/components/ListDecks'
 import ExpandableSection from '@/components/ExpandableSection'
+import MartDown from '../../components/MartDown.vue'
 
 export default {
-  components: { ListDecks, ExpandableSection },
+  components: { 
+    ListDecks,
+    ExpandableSection,
+    MartDown,
+  },
 
   created() {
     this.$store.commit('header/setTransparent', true)

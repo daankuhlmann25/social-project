@@ -2,25 +2,25 @@
   <main class="home">
     <div class="hero">
       <img class="logo" alt="Social.gg logo" src="../assets/logo.svg" />
-      <h1>Great content for your game night with friends</h1>
+      <h1>{{$t('Great content for your game night with friends')}}</h1>
     </div>
     <section class="statistics">
       <div class="stats">
         <!-- TODO: Make numbers dynamic -->
         <div class="number">
           <div class="int" id="num-of-decks">156</div>
-          <div class="legend">Decks</div>
+          <div class="legend">{{$t('Decks')}}</div>
         </div>
         <div class="number">
           <div class="int" id="num-of-cards">6240</div>
-          <div class="legend">Playing cards</div>
+          <div class="legend">{{$t('Playing cards')}}</div>
         </div>
         <div class="number">
           <div class="int" id="num-of-games">12</div>
-          <div class="legend">Games</div>
+          <div class="legend">{{$t('Games')}}</div>
         </div>
       </div>
-      <p>created by our users <img width="14" height="17" src="../assets/icons/text-heart.svg" alt="Heart icon"></p>
+      <p>{{$t('created by our users')}} <img width="14" height="17" src="../assets/icons/text-heart.svg" :alt="$t('Heart icon')"></p>
     </section>
     <game-list></game-list>
   </main>

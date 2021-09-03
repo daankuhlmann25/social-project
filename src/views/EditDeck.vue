@@ -1,12 +1,12 @@
 <template>
   <div class="edit-deck">
     <ConfirmModal v-if="showDeleteModal" @cancel="showDeleteModal = false" @confirm="deleteDeck()">
-      <template v-slot:heading>Delete the deck?</template>
-      <template v-slot:body>This will remove the deck and all the cards in it.</template>
-      <template v-slot:confirm>Delete</template>
+      <template v-slot:heading>{{ $t('Delete the deck?') }}</template>
+      <template v-slot:body>{{ $t('This will remove the deck and all the cards in it.') }}</template>
+      <template v-slot:confirm>{{ $t('Delete') }}</template>
     </ConfirmModal>
     <InfoModal v-if="showFormattingModal" @close="showFormattingModal = false">
-      <template v-slot:heading>Formatting help</template>
+      <template v-slot:heading>{{ $t('Formatting help') }}</template>
       <template v-slot:body>
         <h3>Bold</h3>
         <p>This text is *bold.*</p>
@@ -32,54 +32,55 @@
           from this one with a horizontal rule.</p>
       </template>
     </InfoModal>
-    <h5>{{ gameName }}</h5>
-    <h1>{{ $route.name }}</h1>
+    <h5>{{ $t(localeGameId) }}</h5>
+    <h1>{{ $t($route.name) }}</h1>
 
     <form v-on:change="saveDeck">
       <div class="field title">
-        <label for="deck-name"><h2>Deck name:<span class="counter">{{ name.length }}/40</span></h2></label>
-        <input type="text" id="deck-name" name="deck-name" placeholder="Name your deck" maxlength="40" v-model="name">
+        <label for="deck-name"><h2>{{ $t('Deck name') }}:<span class="counter">{{ name.length }}/40</span></h2></label>
+        <input type="text" id="deck-name" name="deck-name" :placeholder="$t('Name your deck')" maxlength="40" v-model="name">
       </div>
       <div class="description">
-        <label for="description"><h2>Description:</h2></label>
-        <textarea name="description" id="description" rows="3" placeholder="What is in the deck?" v-model="description"></textarea>
-        <a @click.prevent="showFormattingModal = true" href="#" class="button small">Formatting help</a>
+        <label for="description"><h2>{{ $t('Description') }}:</h2></label>
+        <textarea name="description" id="description" rows="3" :placeholder="$t('What is in the deck?')" v-model="description"></textarea>
+        <a @click.prevent="showFormattingModal = true" href="#" class="button small">{{ $t('Formatting help') }}</a>
       </div>
-      <h2>Cards</h2>
+      <h2>{{ $t('Cards') }}</h2>
         <div class="cards-container">
             <button type="button" :class="currentCard == index ? 'card selected' : 'card'" @click="selectCard(index)" v-for="(card, index) in cards" :key="card[index]" :v-model="card[index]">{{ index+1 }}</button>
-            <button type="button" class="add-card" name="add-card" @click="addCard"><img src="@/assets/icons/plus.svg" width="20" height="20" alt="Plus icon"></button>
+            <button type="button" class="add-card" name="add-card" @click="addCard"><img src="@/assets/icons/plus.svg" width="20" height="20" :alt="$t('Plus icon')"></button>
         </div>
       <section class="edit-card">
         <input type="hidden" name="currentCard" id="currentCard" v-model="currentCard">
         <component v-bind:is="gameId" v-model="card"></component>
-        <button type="button" @click="removeCard()" class="delete-card" title="Delete this card"><img src="@/assets/icons/delete.svg" width="16" height="16" alt="Delete icon"></button>
+        <button type="button" @click="removeCard()" class="delete-card" :title="$t('Delete this card')"><img src="@/assets/icons/delete.svg" width="16" height="16" :alt="$t('Delete icon')"></button>
       </section>
-      <label for="author"><h2>Your name <span class="visibility">Public</span></h2></label>
+      <label for="author"><h2>{{ $t('Your name') }} <span class="visibility">{{ $t('Public') }}</span></h2></label>
       <input type="text" name="author" id="author" v-model="author">
-      <label for="email"><h2>E-mail <span class="visibility">Not public</span></h2></label>
+      <label for="email"><h2>{{ $t('E-mail') }} <span class="visibility">{{ $t('Not public') }}</span></h2></label>
       <input type="email" name="email" id="email" v-model="email">
-      <label for="message"><h2>Message <span class="visibility">Not public</span></h2></label>
+      <label for="message"><h2>{{ $t('Message') }} <span class="visibility">{{ $t('Not public') }}</span></h2></label>
       <textarea name="message" id="message" rows="3" v-model="message"></textarea>
       <aside ref="saveStatus" class="save-status">
-        <p><strong>Deck saved:</strong> <span id="save-time"><time-ago refresh long :datetime="lastSaved" locale="en"></time-ago></span></p>
+        <!-- TODO: Localize locale="en" to sv / nl -->
+        <p><strong>{{ $t('Deck saved') }}:</strong> <span id="save-time"><time-ago refresh long :datetime="lastSaved" locale="en"></time-ago></span></p>
       </aside>
       <nav class="deck-navigation">
         <div class="play-deck">
-          <router-link :to="{ name: 'Deck', params: { deckId: this.deckId } }"><img src="@/assets/icons/play.svg" width="30" height="30" alt="Play icon"></router-link>
-          <span>Play deck</span>
+          <router-link :to="{ name: 'Deck', params: { deckId: this.deckId } }"><img src="@/assets/icons/play.svg" width="30" height="30" :alt="$t('Play icon')"></router-link>
+          <span>{{ $t('Play deck') }}</span>
         </div>
         <div class="nav-group">
-          <router-link class="button" :to="{ name: 'Game', params: { gameId: this.gameId } }"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" alt="Back arrow icon">Done editing</router-link>
-          <a @click.prevent="showDeleteModal = true" href="#" class="button delete-deck" title="Delete this deck"><img src="@/assets/icons/delete.svg" width="16" height="16" alt="Delete icon">Delete deck</a>
+          <router-link class="button" :to="{ name: 'Game', params: { gameId: localeGameId } }"><img src="@/assets/icons/arrow-left.svg" width="9" height="17" :alt="$t('Back arrow icon')">{{ $t('Done editing') }}</router-link>
+          <a @click.prevent="showDeleteModal = true" href="#" class="button delete-deck" :title="$t('Delete this deck')"><img src="@/assets/icons/delete.svg" width="16" height="16" :alt="$t('Delete icon')">{{ $t('Delete deck') }}</a>
         </div>
       </nav>
       <!-- TODO: What feedback do we need? How do we want it to work? -->
       <!-- <p v-if="feedback" class="errors">{{ feedback }}</p> -->
-      <h2 class="white">Want to publish your deck?</h2>
-      <p>We would love you to share your fantastic deck with all our fellow players!</p>
-      <p>When you feel happy with your creation, please publish it.</p>
-      <button type="button" class="submit">Send for review</button>
+      <h2 class="white">{{ $t('Want to publish your deck?') }}</h2>
+      <p>{{ $t('We would love you to share your fantastic deck with all our fellow players!') }}</p>
+      <p>{{ $t('When you feel happy with your creation, please publish it.') }}</p>
+      <button type="button" class="submit">{{ $t('Send for review') }}</button>
     </form>
   </div>
 </template>
@@ -103,8 +104,10 @@
      },
     data() {
       return {
-        gameId: this.$route.params.gameId,
-        gameName: this.$parent.niceGameName[this.$route.params.gameId],
+        gameId: this.$route.params.gameId == "sjung-tillsammans" 
+        ? "sing-together" : this.$route.params.gameId == "fragesport" 
+        ? "trivia" : this.$route.params.gameId,
+        localeGameId: this.$route.params.gameId,
         deckId: null,
         currentCard: this.$route.params.cardPosition ? this.$route.params.cardPosition : 0,
         myDecks: {},
@@ -160,9 +163,9 @@
         this.myDecks = JSON.parse(localStorage.getItem("myDecks"))
 
         // Does the deck exist?
-        if (this.myDecks[this.gameId].decks[this.deckId]) {
+        if (this.myDecks[this.localeGameId].decks[this.deckId]) {
           console.log("Deck exists")
-          const myDeck = this.myDecks[this.gameId].decks[this.deckId]
+          const myDeck = this.myDecks[this.localeGameId].decks[this.deckId]
 
           this.name = myDeck.name
           this.description = myDeck.description
@@ -188,11 +191,11 @@
         this.myDecks = JSON.parse(localStorage.getItem("myDecks"))
 
         // Add a deck in current game
-        if (this.myDecks[this.gameId] && this.myDecks[this.gameId].decks.length) {
+        if (this.myDecks[this.localeGameId] && this.myDecks[this.localeGameId].decks.length) {
           console.log("Add a deck in current game")
-          this.deckId = this.myDecks[this.gameId].decks.length
+          this.deckId = this.myDecks[this.localeGameId].decks.length
           this.addCard(true)
-          this.myDecks[this.gameId].decks[this.deckId] = this.generateDeckObject()
+          this.myDecks[this.localeGameId].decks[this.deckId] = this.generateDeckObject()
           
           this.setMyDecksLocalStorage()
         }
@@ -202,7 +205,7 @@
           this.deckId = 0
           this.addCard(true)
 
-          this.myDecks[this.gameId] = this.generateDecksObject()
+          this.myDecks[this.localeGameId] = this.generateDecksObject()
 
           this.setMyDecksLocalStorage()
         }
@@ -219,7 +222,7 @@
           "myDecks", 
           JSON.stringify(
             {
-              [this.gameId]: this.generateDecksObject()
+              [this.localeGameId]: this.generateDecksObject()
             }
           )
         )
@@ -275,14 +278,14 @@
 
         this.lastSaved = Date.now()
 
-        this.myDecks[this.gameId].decks[this.deckId].name = this.name
-        this.myDecks[this.gameId].decks[this.deckId].description = this.description
-        this.myDecks[this.gameId].decks[this.deckId].author = this.author
-        this.myDecks[this.gameId].decks[this.deckId].email = this.email
-        this.myDecks[this.gameId].decks[this.deckId].message = this.message
-        this.myDecks[this.gameId].decks[this.deckId].lastSaved = this.lastSaved
+        this.myDecks[this.localeGameId].decks[this.deckId].name = this.name
+        this.myDecks[this.localeGameId].decks[this.deckId].description = this.description
+        this.myDecks[this.localeGameId].decks[this.deckId].author = this.author
+        this.myDecks[this.localeGameId].decks[this.deckId].email = this.email
+        this.myDecks[this.localeGameId].decks[this.deckId].message = this.message
+        
         this.saveCard()
-        this.myDecks[this.gameId].decks[this.deckId].cards = this.cards
+        this.myDecks[this.localeGameId].decks[this.deckId].cards = this.cards
 
         this.setMyDecksLocalStorage()
       },
@@ -333,11 +336,11 @@
       deleteDeck(doRouterReplace = true) {
         console.log('deleteDeck() ' + this.deckId)
 
-        this.myDecks[this.gameId].decks.splice(this.deckId, 1)
+        this.myDecks[this.localeGameId].decks.splice(this.deckId, 1)
         this.setMyDecksLocalStorage()
 
         if (doRouterReplace)
-          this.$router.replace({name: 'Game', params: { gameId: this.gameId }})
+          this.$router.replace({name: 'Game', params: { gameId: this.localeGameId }})
       },
       getPreviousCard(cardPosition) {
         // Return cardPosition-1 if it's not 0, then return 0
@@ -388,7 +391,7 @@
 
     // If going back to Game view
     if (to.name == "Game") {
-      const myDeck = this.myDecks[this.gameId].decks[this.deckId]
+      const myDeck = this.myDecks[this.localeGameId].decks[this.deckId]
 
       //If the deck is completely empty
       if (

@@ -36,7 +36,9 @@ const routes = [
         name: "Game",
         components: {
           'sing-together': SingTogether,
+          'sjung-tillsammans': SingTogether,
           'trivia': Trivia,
+          'fragesport': Trivia,
         }
       },
       {
@@ -72,7 +74,9 @@ const routes = [
             name: "Play",
             components: {
               'sing-together': PlaySingTogether,
+              'sjung-tillsammans': PlaySingTogether,
               'trivia': PlayTrivia,
+              'fragesport': PlayTrivia,
             }
           }
         ],
