@@ -56,11 +56,13 @@ import { parseNewLines } from '@/helpers/martdown.js'
         deckSlug: this.$route.params.deckSlug ? this.$route.params.deckSlug : false,
         transitionEnd: transitionEndEventName(),
         deckFromLocalStorage: false,
+        updated: false,
       }
     },
     
     methods: {
       async addCard(song, artist, youSing, theySing, currentCard, numberOfCards) {
+        // console.log('addCard')
         let ComponentClass = Vue.extend(PlayCard),
             instance = new ComponentClass({
               parent: this,
@@ -68,10 +70,13 @@ import { parseNewLines } from '@/helpers/martdown.js'
             rotationIn = (Math.random()*2-1)*5, //random number between -5 and +5
             rotationOut = (Math.random()*2-1)*5
 
+        // console.log(this.currentCardElement.__vue__)
+        // console.log(this.currentCardElement.__vue__.$parent)
+
         // Destroy the current instance to prevent updated() to fire again. No idea why the first instance (from the template) is actually the parent
-        if (this.currentCardElement.__vue__.$parent && !this.deckFromLocalStorage)
-          this.currentCardElement.__vue__.$parent.$destroy()
-        else
+        // if (this.currentCardElement.__vue__.$parent && !this.deckFromLocalStorage)
+        //   this.currentCardElement.__vue__.$parent.$destroy()
+        // else
           this.currentCardElement.__vue__.$destroy()
 
         youSing = parseNewLines(youSing)
@@ -199,11 +204,10 @@ import { parseNewLines } from '@/helpers/martdown.js'
 
       //Deck from localStorage (My decks)
       if (!this.$route.params.deckSlug) {
-        console.log('Deck from localStorage (My decks)')
+        // console.log('Deck from localStorage (My decks)')
 
         this.deckFromLocalStorage = true
         this.songArray = JSON.parse(localStorage.getItem("myDecks"))[this.$route.params.gameId].decks[this.$route.params.deckId].cards
-        this.numberOfCards = this.songArray.length
 
         this.setupDeckData()
       }
@@ -226,7 +230,17 @@ import { parseNewLines } from '@/helpers/martdown.js'
 
     mounted() {
       this.currentCardElement = this.$refs.cardContainer.firstChild
+      // console.log(this.currentCardElement.__vue__)
       this.setCardContainerHeight(this.currentCardElement.__vue__)
+    },
+
+    updated() {
+      // console.log('updated')
+      if (!this.updated) {
+        this.currentCardElement = this.$refs.cardContainer.firstChild
+        this.updated = true
+        // console.log(this.currentCardElement.__vue__)
+      }
     },
 
     destroyed() {

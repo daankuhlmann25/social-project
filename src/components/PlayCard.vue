@@ -49,7 +49,7 @@ export default {
     this.fixHtml()
   },
   async updated() {
-    await this.fixHtml()
+    // await this.fixHtml()
     if (this.$parent.playCardUpdated)
       this.$parent.playCardUpdated(this)
   },
